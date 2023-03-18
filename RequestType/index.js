@@ -31,6 +31,7 @@ app.get('/request', function (req, res) {
     result.push(new Item("params",req.path));   //路劲参数: /x/y/z/
     result.push(new Item("protocol",req.protocol));
     result.push(new Item("query",req.query));
+    result.push(new Item("body",req.body));
     result.push(new Item("route",req.route));
     result.push(new Item("is:Content-Type",req.is('application/json')));
 
