@@ -194,5 +194,58 @@ app.get('/db/:tbname/record', async function (req, res) {
 ]
 ```
 
+### 改
+
+接下来我们修改uname=evanp这条记录的passwd为123456
+```js
+app.post('/db/:tbname/record', async function (req, res) {
+    //前端携带query: uname=evanp
+    /*前端请求体格式:
+    {
+        "passwd": "123456"
+    }
+    */
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).update(req.body).where('uname',req.query.uname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+```
+尝试用api调试工具POST 127.0.0.1:8080/db/user/record?uname=evanp，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了
+
+### 删
+
+接下来我们删除uname=evanp且passwd=123456的这条记录
+```js
+app.delete('/db/:tbname/record', async function (req, res) {
+    /*前端请求体格式:
+    {
+        "uname": "evanp",
+        "passwd": "123456"
+    }
+    */
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).del().where(req.body);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+```
+尝试用api调试工具DELETE 127.0.0.1:8080/db/user/record，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了
+## 总结
+
+以上给出了使用knex实现增删改查的基本操作，这些方法并不是唯一的，在实际开发中往往要应对更复杂的场景，基础crud也是远远不够的  
+关于knex的更多使用方法，请移步knex官方文档<https://knexjs.org/guide/>
 
 ## 下一章-Sql-ORM增删改查

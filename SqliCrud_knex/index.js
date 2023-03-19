@@ -83,6 +83,44 @@ app.get('/db/:tbname/record', async function (req, res) {
     res.json(resultSet);
 });
 
+app.post('/db/:tbname/record', async function (req, res) {
+    //前端携带query: uname=evanp
+    /*前端请求体格式:
+    {
+        "passwd": "123456"
+    }
+    */
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).update(req.body).where('uname',req.query.uname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+
+app.delete('/db/:tbname/record', async function (req, res) {
+    /*前端请求体格式:
+    {
+        "uname": "evanp",
+        "passwd": "123456"
+    }
+    */
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).del().where(req.body);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+
 const server = app.listen(8080, () => {
     let host = server.address().address;
     let port = server.address().port;
