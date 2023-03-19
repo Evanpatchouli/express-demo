@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">10.</strong> 本章简介</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">10.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -505,6 +505,160 @@ const uploads = multer();
 <p>是的，我刚刚传了一张名为 C.jpeg 的图片到服务器</p>
 <h2 id="下一章-sql增删改查"><a class="header" href="#下一章-sql增删改查">下一章-Sql增删改查</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sql增删改查"><a class="header" href="#sql增删改查">Sql增删改查</a></h1>
+<p>本节使用knex作为sql框架，以sqlite数据库为例</p>
+<h2 id="准备工作-1"><a class="header" href="#准备工作-1">准备工作</a></h2>
+<p>knex是一个运行在各自数据库Driver上的框架，因此需要安装相应的js版数据库Driver，如: PostgreSQL -&gt; pg, mysql/mariadb -&gt; mysql, sqlite -&gt; sqlite3...</p>
+<ul>
+<li>安装sqlite3依赖 <code>npm install sqlite3</code></li>
+<li>安装knex依赖 <code>npm install knex</code></li>
+<li>引入依赖</li>
+</ul>
+<pre><code class="language-js">const app = express();
+const knex = require('knex');
+</code></pre>
+<ul>
+<li>建议安装一款合适的数据库界面工具，笔者使用的是Beekeeper Studio.</li>
+</ul>
+<h2 id="创建项目-1"><a class="header" href="#创建项目-1">创建项目</a></h2>
+<p>拷贝第一节HelloWorld的项目</p>
+<h2 id="创建sqlite连接"><a class="header" href="#创建sqlite连接">创建sqlite连接</a></h2>
+<p>指明client为sqlite3（刚刚安装的sqlite3依赖），并指明要操作的sqlite数据库路径</p>
+<pre><code>const sqlite = knex({
+    client: 'sqlite3',
+    connection: {
+      filename: './data.db',
+    },
+});
+</code></pre>
+<p>创建了一个连接实例后，会自动创建一个连接池，因此初始化数据库只会发生一次</p>
+<h3 id="连接配置"><a class="header" href="#连接配置">连接配置</a></h3>
+<p>sqlite3默认的是单连接，如果你希望连接池有更多的连接，创建时带上pool:</p>
+<pre><code class="language-js">const sqlite = knex({
+    client: 'sqlite3',
+    connection: {
+      filename: './data.db',
+    },
+    pool: { min: 0, max: 7 }
+});
+</code></pre>
+<h4 id="创建连接池的回调"><a class="header" href="#创建连接池的回调">创建连接池的回调</a></h4>
+<p>用于检查连接池是否正常，通常不需要这步</p>
+<pre><code>pool: {
+    afterCreate: function (conn, done) {//...}
+}
+</code></pre>
+<h4 id="acquireconnectiontimeout"><a class="header" href="#acquireconnectiontimeout">acquireConnectionTimeout</a></h4>
+<p>连接超时时间</p>
+<h4 id="日志"><a class="header" href="#日志">日志</a></h4>
+<p>knex内置了打印警告、错误、弃用和调试信息的日志函数，如果你希望自定义日志操作，可以在log项里重写它们</p>
+<pre><code class="language-JS">log: {
+    warn(message) {
+    },
+    error(message) {
+    },
+    deprecate(message) {
+    },
+    debug(message) {
+    }
+}
+</code></pre>
+<h2 id="数据表"><a class="header" href="#数据表">数据表</a></h2>
+<h3 id="建表"><a class="header" href="#建表">建表</a></h3>
+<p>语法: <code>sqlite.schema.createTable(表名, table=&gt;{表结构})</code></p>
+<p>添加一个PUT接口，监听 127.0.0.1:8080/db/:tbname<br />
+根据我们想创建的表名尝试创建一个表，注意: sql执行是异步的，为了得到结果，建议使用 <strong>async/await</strong> 语法糖（当然你就是喜欢地狱回调也不是不行）</p>
+<pre><code class="language-js">app.put('/db/:tbname', async function (req, res) {
+    let resultSet = null;
+    try {
+        // Create a table
+        resultSet = await sqlite.schema
+          .createTable(req.params.tbname, table =&gt; {
+            table.increments('id');
+            table.string('uname');
+            table.string('passwd');
+          })
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+</code></pre>
+<p>瞅瞅控制台:</p>
+<pre><code class="language-bash">sqlite does not support inserting default values. Set the `useNullAsDefault` flag to hide this warning. (see docs https://knexjs.org/guide/query-builder.html#insert).
+</code></pre>
+<p>嗯？sqlite不支持default？不用管他，去看数据库，反正成功创建了user表，你要是加了<code>useNullAsDefault</code>这个flag，反而会告诉你<code> not supported by node-sqlite3</code></p>
+<pre><code class="language-js">const sqlite = knex({
+    client: 'sqlite3',
+    connection: {
+      filename: './data.db',
+    },
+});
+</code></pre>
+<h3 id="删表"><a class="header" href="#删表">删表</a></h3>
+<p>语法: <code>sqlite.schema.deleteTable(表名)</code></p>
+<pre><code class="language-js">app.delete('/db/:tbname', async function (req, res) {
+    try {
+        // Delete a table
+        await sqlite.schema.dropTable(req.params.tbname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+    };
+    res.json(null);
+});
+
+</code></pre>
+<h2 id="表记录crud"><a class="header" href="#表记录crud">表记录crud</a></h2>
+<h3 id="增"><a class="header" href="#增">增</a></h3>
+<p>往user表里面插入一条新的记录</p>
+<pre><code class="language-js">app.use(express.json({type: 'application/json'}));
+app.put('/db/:tbname/record', async function (req, res) {
+    /*前端请求体格式:
+    {
+        &quot;uname&quot;: &quot;evanp&quot;,
+        &quot;passwd&quot;: &quot;iloveu&quot;
+    }
+    */
+   let resultSet = null;
+    try {
+        // Insert a record
+        resultSet = await sqlite(req.params.tbname).insert(req.body);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+</code></pre>
+<p>尝试用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到<code>[1]</code>，这是影响的记录数，1代表成功了</p>
+<h3 id="查"><a class="header" href="#查">查</a></h3>
+<p>从user表里查询uname=我们刚刚插入的记录</p>
+<pre><code class="language-js">app.get('/db/:tbname/record', async function (req, res) {
+    //前端携带query: uname=evanp
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).select('*').where('uname',req.query.uname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
+});
+</code></pre>
+<p>尝试用api调试工具GET 127.0.0.1:8080/db/user/record?uname=evanp，将会得到:</p>
+<pre><code class="language-json">[
+    {
+        &quot;id&quot;: 1,
+        &quot;uname&quot;: &quot;evanp&quot;,
+        &quot;passwd&quot;: &quot;iloveu&quot;
+    }
+]
+</code></pre>
 <h2 id="下一章-sql-orm增删改查"><a class="header" href="#下一章-sql-orm增删改查">下一章-Sql-ORM增删改查</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sql-orm增删改查"><a class="header" href="#sql-orm增删改查">Sql-ORM增删改查</a></h1>
 <h2 id="下一章-路由控制"><a class="header" href="#下一章-路由控制">下一章-路由控制</a></h2>
@@ -533,6 +687,22 @@ const uploads = multer();
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
