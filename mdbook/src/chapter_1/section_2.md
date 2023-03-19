@@ -36,6 +36,7 @@ PUT的超类，指定资源的局部更新
 
 ## express处理不同的请求
 
+通过调用get,post,pu,delete...对应不同方法下的路由  
 由于实际受不同的开发规范和业务环境影响，在这里只以GET和POST举例
 
 ### get请求
@@ -96,5 +97,15 @@ app.post('/post', function (req, res) {
 
 ### 测试接口
 使用api调试工具，尝试用不同的携带数据方法以post形式访问该接口，比较不同的返回结果
+
+### 不限方法
+
+如果你想让某个某个路由能以任意方法访问:
+```js
+app.use('/any', function (req, res) {
+    res.send('Bad World!');
+});
+```
+尝试使用各种方法去访问 127.0.0.1:8080/any，都可以得到Bad World!
 
 ## 下一章-处理请求数据

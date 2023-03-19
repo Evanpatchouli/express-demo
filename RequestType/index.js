@@ -21,6 +21,10 @@ class Item {
     }
 }
 
+app.use('/any', function (req, res) {
+    res.send('Bad World!');
+});
+
 app.get('/request', function (req, res) {
     let result = [];
     result.push(new Item("baseUrl",req.baseUrl));

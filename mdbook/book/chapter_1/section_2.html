@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html" class="active"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">10.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html" class="active"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">11.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,7 +178,8 @@ PUT的超类，指定资源的局部更新</li>
 <p>其中 GET, POST 最为广泛使用，同时可以使用PUT和DELETE让我们的接口的目的更具有指向性<br />
 本书绝大部分接口都将采用类REST风格，即普遍的返回码200，数据格式为json</p>
 <h2 id="express处理不同的请求"><a class="header" href="#express处理不同的请求">express处理不同的请求</a></h2>
-<p>由于实际受不同的开发规范和业务环境影响，在这里只以GET和POST举例</p>
+<p>通过调用get,post,pu,delete...对应不同方法下的路由<br />
+由于实际受不同的开发规范和业务环境影响，在这里只以GET和POST举例</p>
 <h3 id="get请求"><a class="header" href="#get请求">get请求</a></h3>
 <pre><code class="language-js">//省略了express项目的创建
 class Item {
@@ -232,6 +233,13 @@ app.post('/post', function (req, res) {
 </code></pre>
 <h3 id="测试接口-1"><a class="header" href="#测试接口-1">测试接口</a></h3>
 <p>使用api调试工具，尝试用不同的携带数据方法以post形式访问该接口，比较不同的返回结果</p>
+<h3 id="不限方法"><a class="header" href="#不限方法">不限方法</a></h3>
+<p>如果你想让某个某个路由能以任意方法访问:</p>
+<pre><code class="language-js">app.use('/any', function (req, res) {
+    res.send('Bad World!');
+});
+</code></pre>
+<p>尝试使用各种方法去访问 127.0.0.1:8080/any，都可以得到Bad World!</p>
 <h2 id="下一章-处理请求数据"><a class="header" href="#下一章-处理请求数据">下一章-处理请求数据</a></h2>
 
                     </main>

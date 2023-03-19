@@ -13,6 +13,7 @@
 - [路由控制](./chapter_1/section_6.md)
 - [JWT基础鉴权](./chapter_1/section_7.md)
 - [全局错误处理](./chapter_1/section_8.md)
+- [中间件](./chapter_1/section_9.md)
 
 # 架构整合
 
