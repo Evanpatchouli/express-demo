@@ -243,9 +243,20 @@ app.delete('/db/:tbname/record', async function (req, res) {
 });
 ```
 尝试用api调试工具DELETE 127.0.0.1:8080/db/user/record，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了
+
+## 原生sql
+
+当然了，如果你需要直接使用sql语句，也是可以的，调用`raw(sqlStr)`即可，既可以作为某一段sql的绑定，也可以直接当作整句sql
+
+格式: `knex.raw(sql, [bindings]`
+```json
+sqlite.raw("select * from user",[1]).then((resp)=>{//..})
+```
+在这里不做介绍
+
 ## 总结
 
 以上给出了使用knex实现增删改查的基本操作，这些方法并不是唯一的，在实际开发中往往要应对更复杂的场景，基础crud也是远远不够的  
-关于knex的更多使用方法，请移步knex官方文档<https://knexjs.org/guide/>
+关于knex的更多拓展使用方法，请移步knex官方文档<https://knexjs.org/guide/>
 
 ## 下一章-Sql-ORM增删改查
