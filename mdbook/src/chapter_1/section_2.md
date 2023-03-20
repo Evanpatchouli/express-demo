@@ -100,7 +100,7 @@ app.post('/post', function (req, res) {
 
 ### 不限方法
 
-如果你想让某个某个路由能以任意方法访问:
+如果你想让某个路由能以任意方法访问:
 ```js
 app.use('/any', function (req, res) {
     res.send('Bad World!');

@@ -334,7 +334,7 @@ app.post('/post', function (req, res) {
 <h3 id="测试接口-3"><a class="header" href="#测试接口-3">测试接口</a></h3>
 <p>使用api调试工具，尝试用不同的携带数据方法以post形式访问该接口，比较不同的返回结果</p>
 <h3 id="不限方法"><a class="header" href="#不限方法">不限方法</a></h3>
-<p>如果你想让某个某个路由能以任意方法访问:</p>
+<p>如果你想让某个路由能以任意方法访问:</p>
 <pre><code class="language-js">app.use('/any', function (req, res) {
     res.send('Bad World!');
 });
@@ -1185,6 +1185,62 @@ app.get('/1/2/3/4/5',(req,res)=&gt;{
 <p>尝试用api调试工具先访问 login 接口，利用正确的用户名和密码获取token，然后用得到的token去访问 root 接口</p>
 <h2 id="下一章-全局错误处理"><a class="header" href="#下一章-全局错误处理">下一章-全局错误处理</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="全局错误处理"><a class="header" href="#全局错误处理">全局错误处理</a></h1>
+<p>在前面几节里，我们处理异常的方法都是手动在可能引发异常的地方捕捉错误，这固然是必要的，可以有针对性得处理异常，但很多时候，有许多潜在的异常，有一句话叫永远不要相信输入的数据，你永远都不知道什么时候可能会以什么方式触发某些阴间异常从而造成系统崩溃。因此，我们需要有一位好帮手能帮助我们捕获各种错误</p>
+<p>而这位好帮手就是，<strong>异常处理中间件</strong></p>
+<h2 id="自定义异常处理中间件"><a class="header" href="#自定义异常处理中间件">自定义异常处理中间件</a></h2>
+<h3 id="同步异常"><a class="header" href="#同步异常">同步异常</a></h3>
+<p>异常处理中间件需要传入4个参数: err,req,res和next，这样才会被express识别为异常处理中间件<br />
+创建一个exhandler，并挂载到服务器上:<br />
+注意: 挂载异常处理中间件的行为必须位于所有定义的接口之下，至于理由，会在下一节《中间件》中给出解答</p>
+<pre><code class="language-js">let exhandler = (err, req, res, next)=&gt; {
+    console.error('Error:', err);
+    res.status(500).json(err);
+}
+app.use(exhandler);
+</code></pre>
+<p>我们在helloWorld接口中人为抛出一个异常试一下，可以直接throw，也可以传递给next（事实上，意外的异常发生时，会被express捕获并传递给next，然后再丢给我们的异常处理中间件）</p>
+<pre><code>app.get('/', (req, res, next)=&gt; {
+    const err = new Error();
+    err.status = 500;
+    err.message = '对不起，网站正在维护中';
+    throw err;
+    //next(err);
+    // res.send('Hello World!');
+});
+</code></pre>
+<h3 id="测试"><a class="header" href="#测试">测试</a></h3>
+<p>使用api调试工具GET 127.0.0.1:8080/，我们的程序不会崩溃，并且你将得到被封装好的错误信息，并且响应码是500。</p>
+<pre><code class="language-JSON">{
+    &quot;name&quot;: &quot;无法访问&quot;,
+    &quot;message&quot;: &quot;对不起，网站正在维护中&quot;
+}
+</code></pre>
+<h3 id="异步异常"><a class="header" href="#异步异常">异步异常</a></h3>
+<p>上面的异常是产生在串行的代码中的，那如果在异步操作中产生了异常呢？<br />
+我们弄一个异步异常的接口试一下:</p>
+<pre><code class="language-js">app.post('/', (req, res, next)=&gt; {
+    setTimeout(()=&gt;{
+        const err = new Error();
+        err.name = '无法访问';
+        err.message = '对不起，网站真的正在维护中！';
+        next(err);
+    },3000);
+});
+</code></pre>
+<p>POST 127.0.0.1:8080/，你花费了3秒时间得到我们的维护信息！<br />
+不过上面这个接口之所以能返回维护信息，是因为在同步流中，没有进行响应操作，那前端只要不超过设置的超时时间，就会一直等待，然后3秒后等来了我们的错误信息</p>
+<p>我们在同步流内先进行响应，假如我们并不在乎异步操作的结果就可以响应了:</p>
+<pre><code class="language-js">app.post('/', (req, res, next)=&gt; {
+    setTimeout(()=&gt;{
+        const err = new Error();
+        err.name = '无法访问';
+        err.message = '对不起，网站真的正在维护中！';
+        next(err);
+    },3000);
+    res.send(&quot;Bad World!&quot;);
+});
+</code></pre>
+<p>POST 127.0.0.1:8080/，这次你得到了Bad World!，因此只有当你的异常进入了未结束的同步流（用async/await语法糖，或者Promise回调等），才能被返回给请求源</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="中间件"><a class="header" href="#中间件">中间件</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="架构整合"><a class="header" href="#架构整合">架构整合</a></h1>
 <p>在第一章中，我们按功能分块学习了express后端中不同方面的技术，所有的代码基本都写在了一个文件中，在实际开发中这是不符合规范的，我们需要有一个合理的目录结构，在本章中，将结合常见的前后端架构思想，express.js特性以及借鉴其他语言的优秀框架的架构，每节介绍一种架构方式</p>
