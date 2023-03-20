@@ -75,7 +75,7 @@ app.get('/match/w*/x', function (req, res) {
 })
 
 //正则匹配
-//匹配了127.0.0.1:8080/x//useremm//，逆天玩意...
+//匹配了127.0.0.1:8080/x//useremm//
 app.get('/x/(\/useremm\/)', function (req,res) {
     console.log(req.body);
     res.send("正则可用于复杂路径的匹配");

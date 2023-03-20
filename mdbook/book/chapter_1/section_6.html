@@ -145,6 +145,133 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="路由控制"><a class="header" href="#路由控制">路由控制</a></h1>
+<h2 id="准备工作"><a class="header" href="#准备工作">准备工作</a></h2>
+<p>拷贝第一节HelloWorld项目</p>
+<h2 id="动态路由"><a class="header" href="#动态路由">动态路由</a></h2>
+<p>这个最初我们就接触到了，路径中某一段前面加冒号</p>
+<pre><code class="language-js">//路径变量-动态路由
+app.get('/:var',(req, res)=&gt;{
+    res.send(req.params.var);
+});
+</code></pre>
+<h2 id="路由匹配"><a class="header" href="#路由匹配">路由匹配</a></h2>
+<p>利用通配符 * 匹配符合的所有路由</p>
+<ul>
+<li>全通配</li>
+</ul>
+<p><strong>定义时</strong>，以 * 结尾，或者 * 之后除了斜杠没有其他字符，匹配*之后所有的路由</p>
+<pre><code class="language-js">//全部匹配，囊括了match之下的所有路由，即便前端请求路径时在后面再来几段，也会被当作一个字符串 /x/1/6 -&gt; '/x/1/6'
+//慎用，必须确保其他独立的路由不会被覆盖了
+app.get('/matchall/*',(req, res)=&gt;{
+    let what = {
+        params: req.params,
+        theVar: req.params['0']
+    }
+    res.send(what);
+});
+</code></pre>
+<p>前端发来请求时，如何有2个定义的接口都能匹配到，优先匹配先定义的</p>
+<pre><code class="language-js">//不起效
+app.get('/matchall/w/xf',(req, res)=&gt;{
+    res.send(&quot;there is w.xf&quot;);
+});
+</code></pre>
+<ul>
+<li>局部通配</li>
+</ul>
+<p>在两个字符之间(斜杠不算，除非你转义过了)使用 *，匹配这两个字符中间夹任何一段字符串的路由:<br />
+xAy,xBy,xvenapy...</p>
+<pre><code class="language-js">//xy中间随便夹
+app.get('/match/x*y', function (req, res) {
+    res.send('xy肉夹馍')
+})
+</code></pre>
+<pre><code class="language-js">//除非通配符后面有除了斜杠以外的字符，不然全部被盖
+app.get('/match/w*/x', function (req, res) {
+    res.send('除非通配符后面有除了斜杠以外的字符，不然全部被盖')
+})
+</code></pre>
+<ul>
+<li>动态字符(串)</li>
+</ul>
+<p>问号前的字符可有可无，gback,goback</p>
+<pre><code class="language-js">//问号前面这个字符可有可无
+app.get('/match/go?back',(req, res)=&gt;{
+    res.send(&quot;问号前面这个字符可有可无&quot;);
+});
+</code></pre>
+<p>问号前被括号括住的字符串可有可无，xback,xgoback</p>
+<pre><code class="language-js">app.get('/match/x(go)?back',(req, res)=&gt;{
+    res.send(&quot;问号前面这个字符串可有可无，注意被括住的字符串前面不能没有字符&quot;);
+});
+</code></pre>
+<p>加号前的字符可以重复，goback,gooback,goooback...</p>
+<pre><code class="language-js">//可匹配到多个路由时，优先匹配先定义的路由
+//一个或多个问号前字符
+app.get('/match/go+back',(req, res)=&gt;{
+    let what = {
+        match: '/match/go+back',
+        url: req.url,
+        tip: &quot;加号前面的那个字符可以无限重复&quot;
+    }
+    res.send(what);
+});
+</code></pre>
+<h2 id="正则匹配"><a class="header" href="#正则匹配">正则匹配</a></h2>
+<p>可用于复杂路由的匹配，在路由中局部正则时，记得用括号包住</p>
+<pre><code class="language-js">//正则匹配
+//匹配了127.0.0.1:8080/x//数字useremm//
+app.get('/x/(\/[0-9]useremm\/)', function (req,res) {
+    console.log(req.body);
+    res.send(&quot;正则可用于复杂路径的匹配&quot;);
+})
+</code></pre>
+<h2 id="路由重定向"><a class="header" href="#路由重定向">路由重定向</a></h2>
+<p>有时候我们希望某些情况下将路径转发到其他路径，比如404页面之类的<br />
+格式: <code>res.redirect(status, url)</code><br />
+status是干什么的？对于重定向后的路由不同的请求方法应该使用不同的status:</p>
+<ul>
+<li>GET</li>
+</ul>
+<pre><code class="language-js">//转发到 GET /1/2/3/4/5
+app.post('/redirect',(req,res)=&gt;{
+    res.redirect(301,'/1/2/3/4/5');
+});
+
+app.get('/1/2/3/4/5',(req,res)=&gt;{
+    res.send(&quot;上山打老虎&quot;);
+})
+</code></pre>
+<p>301或302都是可以的，301代表临时，302代表永久</p>
+<p>接下来我们把转发后的路由改成POST，再去访问redirect:</p>
+<pre><code class="language-js">app.post('/1/2/3/4/5',(req,res)=&gt;{
+    res.send(&quot;上山打老虎&quot;);
+})
+</code></pre>
+<p>是的，响应不到了，转发到POST路由，应当使用307或308，前者临时后者永久<br />
+<code>res.redirect(301,'/1/2/3/4/5');</code></p>
+<ul>
+<li>JSON与重定向</li>
+</ul>
+<p>开启<code>app.use(express.json)</code>，再尝试访问redirect，结果又得不到响应了，这是为什么？<br />
+开启了json解析后，请求变成了json，请求已经不是原始的请求了，变成了json对象，是没办法被转发的<br />
+因此在有需要重定向的时候，我们不应该全局json解析了，而是在需要json解析的路由上开启json解析:</p>
+<p>建个需要使用json解析的测试接口:</p>
+<pre><code class="language-js">app.put('/some/json',(req,res)=&gt;{
+    res.send(req.body);
+});
+</code></pre>
+<p>自定义一个选择性body-json的中间件，判定 PUT:/some/json 时局部开启json解析:</p>
+<pre><code class="language-js">app.use((req, res, next) =&gt; {
+    // 判断当前请求路径是否需要解析JSON请求体
+    if (req.path === '/some/json'&amp;&amp; req.method.match(&quot;PUT&quot;)) {
+      bodyParser.json()(req, res, next);
+    } else {
+      next();
+    }
+});
+</code></pre>
+<p>尝试用api调试工具访问redirect，重定向成功了，再访问/some/json，也能成功打印请求体.</p>
 <h2 id="下一章-jwt基础鉴权"><a class="header" href="#下一章-jwt基础鉴权">下一章-JWT基础鉴权</a></h2>
 
                     </main>
@@ -176,22 +303,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
