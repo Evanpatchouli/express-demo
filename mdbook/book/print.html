@@ -1109,6 +1109,80 @@ app.get('/1/2/3/4/5',(req,res)=&gt;{
 <p>尝试用api调试工具访问redirect，重定向成功了，再访问/some/json，也能成功打印请求体.</p>
 <h2 id="下一章-jwt基础鉴权"><a class="header" href="#下一章-jwt基础鉴权">下一章-JWT基础鉴权</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="jwt基础鉴权"><a class="header" href="#jwt基础鉴权">JWT基础鉴权</a></h1>
+<p>Web安全是Web应用中非常重要的一环，主要由后端和服务器承担安全保障<br />
+面对请求源，后端有着各种各样的鉴权机制: session,cookie,token,jwt,OAuth,OAuth2,api-key,signature...<br />
+本节以jwt为例，演示一个极简的token鉴权</p>
+<h2 id="准备工作-4"><a class="header" href="#准备工作-4">准备工作</a></h2>
+<ul>
+<li>拷贝第一节HelloWorld项目</li>
+<li>安装一种jwt依赖(本节使用jsonwebtoken)</li>
+</ul>
+<h2 id="实践-3"><a class="header" href="#实践-3">实践</a></h2>
+<p>接下来我们使用jsonwebtoken来实现最常见的登录鉴权，登录成功后返回一个token，之后凭借这个token去访问另外的路由</p>
+<ul>
+<li>首先引入jwt依赖</li>
+</ul>
+<pre><code class="language-js">const jwt = require('jsonwebtoken');
+</code></pre>
+<ul>
+<li>定义一个密钥</li>
+</ul>
+<p>之后我们会利用这个密钥生成token，和检验token</p>
+<pre><code class="language-js">const secret = 'mysecretkey';
+</code></pre>
+<ul>
+<li>写个登录时生成token的函数</li>
+</ul>
+<p>传入用户名和密码，检验密码，正确就生成一个token<br />
+生成token: <code>jwt.sign(标志,密钥,选项(生命周期等))</code></p>
+<pre><code class="language-js">function getToken(user) {
+    let token = null;
+    const payload = {
+      uname: user.uname,
+    };
+    if (user.uname == 'root' &amp;&amp; user.passwd == 'root') {
+        token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    }
+    return token;
+}
+</code></pre>
+<ul>
+<li>写一个访问时检验token的函数</li>
+</ul>
+<p>传入req,res,next，从请求头中取出名字为'token'的一个token，若请求头里不带token则返回请求报告没token，token校验通过了则放行</p>
+<pre><code class="language-js">function checkToken(req, res, next) {
+    const token = req.headers['token'];
+    if (!token) return res.status(401).json({ message: 'No token provided.' });
+    jwt.verify(token, secret, (err, decoded) =&gt; {
+      if (err) return res.status(500).json({ message: 'Failed to authenticate token.' });
+      req.userId = decoded.id;
+      next();
+    });
+}  
+</code></pre>
+<ul>
+<li>编写登录接口</li>
+</ul>
+<pre><code class="language-js">app.post('/login', (req, res) =&gt; {
+    let user = req.body;
+    let token = getToken(user);
+    if(token!=null) {
+        res.send(token);
+    } else {
+        res.status(401).send(&quot;wrong&quot;);
+    }    
+});
+</code></pre>
+<ul>
+<li>编写一个需要校验token的接口</li>
+</ul>
+<p>将token检验函数作为中间件挂载到 /root 路由上</p>
+<pre><code class="language-js">app.get('/root', checkToken, (req, res) =&gt; {
+    res.send('hello root user!');
+});
+</code></pre>
+<h2 id="接口测试-2"><a class="header" href="#接口测试-2">接口测试</a></h2>
+<p>尝试用api调试工具先访问 login 接口，利用正确的用户名和密码获取token，然后用得到的token去访问 root 接口</p>
 <h2 id="下一章-全局错误处理"><a class="header" href="#下一章-全局错误处理">下一章-全局错误处理</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="全局错误处理"><a class="header" href="#全局错误处理">全局错误处理</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="中间件"><a class="header" href="#中间件">中间件</a></h1>
