@@ -105,4 +105,4 @@ app.get('/get', function (req, res) {
 
 使用接口测试工具，以GET的形式访问 localhost:8080/get?id=1&name=evanp 试试吧！你将会得到这两个参数!
 
-## 下一章-请求类型
+## 下一节-请求类型

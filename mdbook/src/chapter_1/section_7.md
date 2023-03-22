@@ -156,4 +156,4 @@ app.use((req, res, next) => {
 
 尝试用api调试工具访问redirect，重定向成功了，再访问/some/json，也能成功打印请求体.
 
-## 下一章-JWT基础鉴权
+## 下一节-JWT基础鉴权

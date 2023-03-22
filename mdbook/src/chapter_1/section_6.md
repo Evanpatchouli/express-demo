@@ -307,4 +307,4 @@ app.post('/db/user/record/freely', async function (req, res) {
 本节的例子仅仅为了演示在express.js中如何运用sequelize操作数据库，关于sequelize的更多拓展和高级使用方法，请移步sequelize官方文档<https://www.sequelize.cn/>
 
 
-## 下一章-路由控制
+## 下一节-路由控制

@@ -139,4 +139,4 @@ app.get('/location/index',(req,res)=>{
 
 **res.redirect()**，路由重定向，这个比较特殊，我们放到路由控制那一节再讲
 
-## 下一章-Sql-knex增删改查
+## 下一节-Sql-knex增删改查

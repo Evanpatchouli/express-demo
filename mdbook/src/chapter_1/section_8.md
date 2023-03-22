@@ -83,4 +83,4 @@ app.get('/root', checkToken, (req, res) => {
 
 尝试用api调试工具先访问 login 接口，利用正确的用户名和密码获取token，然后用得到的token去访问 root 接口
 
-## 下一章-全局错误处理
+## 下一节-全局错误处理

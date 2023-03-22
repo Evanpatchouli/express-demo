@@ -19,5 +19,9 @@
 # 架构整合
 
 - [本章简介](./chapter_2/intro.md)
+- [express-cli](./chapter_2/section_1.md)
+- [MVC层级架构](./chapter_2/section_2.md)
+- [分布式架构](./chapter_2/section_3.md)
+- [微服务架构](./chapter_2/section_4.md)
 
 # 高级进阶

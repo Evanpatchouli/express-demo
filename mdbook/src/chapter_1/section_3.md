@@ -221,5 +221,5 @@ console.log(req.files); //写在multi-form-data分支下，方便区分
 ```
 是的，我刚刚传了一张名为 C.jpeg 的图片到服务器
 
-## 下一章-响应
+## 下一节-响应
 

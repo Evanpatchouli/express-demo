@@ -259,4 +259,4 @@ sqlite.raw("select * from user",[1]).then((resp)=>{//..})
 以上给出了使用knex实现增删改查的基本操作，这些方法并不是唯一的，在实际开发中往往要应对更复杂的场景，基础crud也是远远不够的  
 关于knex的更多拓展使用方法，请移步knex官方文档<https://knexjs.org/guide/>
 
-## 下一章-Sql-ORM增删改查
+## 下一节-Sql-ORM增删改查
