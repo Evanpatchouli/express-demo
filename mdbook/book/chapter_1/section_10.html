@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>请求类型 - 跟着例子学Express.js</title>
+        <title>中间件 - 跟着例子学Express.js</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html" class="active"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html" class="active"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,113 +144,84 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="请求类型"><a class="header" href="#请求类型">请求类型</a></h1>
-<p>本节将介绍常见的http请求方式，并站在后端的角度初步感受它们的不同点</p>
-<h2 id="各类http请求"><a class="header" href="#各类http请求">各类Http请求</a></h2>
-<ul>
-<li><strong>GET</strong><br />
-意图是<strong>获取</strong>，不会对服务器上的数据产生影响，将要携带的数据放在<strong>URL</strong>上，通常不带请求体，带了也不一定兼容</li>
-<li><strong>POST</strong><br />
-意图是<strong>提交</strong>，通常用于修改和新增服务器上的数据，偏向<strong>新增</strong>，路径定位较模糊，要携带的数据通常放在<strong>请求体</strong>内</li>
-<li><strong>PUT</strong><br />
-类似POST，偏向<strong>更新</strong>，路径定位更明确，要携带的数据通常放在<strong>请求体</strong>内<br />
-★ <strong>幂等性</strong>：连续PUT请求后，效果应当只有一次，而POST则会创建多个新资源，不过在REST风格下以及在后台有严格的检验情况下其实这些区别可以忽略<br />
-★ <strong>缓存机制</strong>：由于PUT的幂等性，不存在缓存，而POST是缓存的，比如你在表单里用POST，不设置提交后清除，刷新页面它会将之前的数据再提交一遍</li>
-<li><strong>DELETE</strong><br />
-意图是删除，从服务器上删除某些数据</li>
-<li><strong>HEAD</strong><br />
-类似GET，但争对它的响应没有body，只有响应头，常用于判断资源是否存在、链接有效性等</li>
-<li><strong>OPTIONS</strong><br />
-意图是询问当前URL允许的请求方法等，常用于跨域请求前的预检和获取服务器的安全控制信息等</li>
-<li><strong>TRACE</strong><br />
-路径追踪，回显请求，常用于测试阶段</li>
-<li><strong>PATCH</strong><br />
-PUT的超类，指定资源的局部更新</li>
-<li><strong>COPY</strong><br />
-请求将页面拷贝到另一个URL，常用于Web资源的备份</li>
-<li><strong>MOVE</strong><br />
-请求将页面移动到另一个URL，常用于Web资源的搬迁</li>
-<li><strong>LINK</strong><br />
-请求与服务器建立链接</li>
-<li><strong>UNLINK</strong><br />
-断开与服务器的链接</li>
-</ul>
-<p>其中 GET, POST 最为广泛使用，同时可以使用PUT和DELETE让我们的接口的目的更具有指向性<br />
-本书绝大部分接口都将采用类REST风格，即普遍的返回码200，数据格式为json</p>
-<h2 id="express处理不同的请求"><a class="header" href="#express处理不同的请求">express处理不同的请求</a></h2>
-<p>通过调用get,post,pu,delete...对应不同方法下的路由<br />
-由于实际受不同的开发规范和业务环境影响，在这里只以GET和POST举例</p>
-<h3 id="get请求"><a class="header" href="#get请求">get请求</a></h3>
-<pre><code class="language-js">//省略了express项目的创建
-class Item {
-    constructor(name, value) {
-      this.name = name;
-      this.value = value;
+                        <h1 id="中间件"><a class="header" href="#中间件">中间件</a></h1>
+<p>中间件，估计大家在前几节里面听的耳朵都要出茧子了吧！一直提到，一直不讲。别急，这不来了嘛</p>
+<h2 id="准备工作"><a class="header" href="#准备工作">准备工作</a></h2>
+<p>拷贝第一节Hello World项目</p>
+<h2 id="什么是中间件"><a class="header" href="#什么是中间件">什么是中间件</a></h2>
+<p>如果正在阅读本书之前的你，已经有过一些其他框架或语言的后端开发经历，那理应是知道中间件这个东西的。当然也不绝对，比如隔壁某个框架太贴心了，以至于笔者都觉得理所应当，在撰写本节时，才惊觉原来在那个框架里竟内置了这么多的中间件。</p>
+<p>由于 express.js 是一个轻量级后端框架，因此中间件的身份变得非常的突出。</p>
+<p>在 express.js 中，中间件（Middleware）是指应用中，用于<strong>额外</strong>处理 HTTP 请求和响应的函数，通常不涉及主体业务。中间件函数可以访问请求对象（request object）（req）、响应对象（response object）（res）和应用程序中处理请求-响应循环流程的<strong>下一个</strong>中间件函数（next）。
+在 express.js 应用中，可以使用 use() 方法来挂载中间件函数。在处理 HTTP 请求时，express.js 会按照添加中间件函数的顺序依次调用它们，直到响应被发送为止。如果在某个中间件函数中没有调用 next() 方法，则<strong>请求-响应</strong>循环流程会在该中间件函数队伍中提前终止。</p>
+<p>中间件的应用主要在日志，鉴权，预检，初步数据处理，异常处理等等。接下来，举几个简单的例子:</p>
+<h2 id="路由中间件"><a class="header" href="#路由中间件">路由中间件</a></h2>
+<p>是的，路由可以单独抽离出来的中间件，可以挂载在app也可以作为子路由挂载在其他路由上</p>
+<pre><code class="language-javascript">//Route coule be middleware
+const routers = express.Router();
+
+routers.get('/', function (req, res) {
+    res.send('Hello World!');
+});
+
+routers.post('/', (req,res)=&gt; {
+    res.send('Bad World!');
+    
+})
+app.use(routers)
+</code></pre>
+<h2 id="鉴权中间件"><a class="header" href="#鉴权中间件">鉴权中间件</a></h2>
+<p>鉴权中间件，可以被挂载到单个路由，一系列路由以及app全局<br />
+这是一个检查请求头token的鉴权中间件:</p>
+<pre><code class="language-javascript">//鉴权中间件，可以被挂载到单个路由，一系列路由以及全局
+let auth = (req,res,next) =&gt; {
+    if (req.headers['token']!='evanp'){
+        return res.send('Unauthorized');
     }
+    next()
 }
 
-//get接口
-app.get('/request', function (req, res) {
-    let result = [];
-    result.push(new Item(&quot;baseUrl&quot;,req.baseUrl));
-    result.push(new Item(&quot;fresh&quot;,req.fresh));   //请求是否存活
-    result.push(new Item(&quot;hostname&quot;,req.hostname)); //请求源域名
-    result.push(new Item(&quot;ip&quot;,req.ip)); //请求源IP
-    result.push(new Item(&quot;originalUrl&quot;,req.originalUrl));
-    result.push(new Item(&quot;params&quot;,req.path));   //路径参数: /x/y/z/
-    result.push(new Item(&quot;protocol&quot;,req.protocol)); //请求协议
-    result.push(new Item(&quot;query&quot;,req.query));   //查询参数
-    result.push(new Item(&quot;route&quot;,req.route));   //请求路由
-    result.push(new Item(&quot;is:Content-Type&quot;,req.is('application/json')));
+const router_root = express.Router();
 
-    res.send(result);
-});
+router_root.post('/root', auth, (req,res)=&gt; {
+    res.send('Hello root!')
+})
+app.use(router_root);
 </code></pre>
-<p>以上代码，定义了GET接口，并返回了关于请求的大部分信息</p>
-<h3 id="测试接口"><a class="header" href="#测试接口">测试接口</a></h3>
-<p>使用api调试工具，尝试用不同的携带数据方法以get形式访问该接口，比较不同的返回结果</p>
-<h3 id="post请求"><a class="header" href="#post请求">post请求</a></h3>
-<p>监听相同路径的post请求，开启json解析，一会我们调试时请求体采用最常用的json格式</p>
-<pre><code class="language-js">//启用json解析
-app.use(express.json({type: 'application/json'}));
+<h2 id="异常处理中间件"><a class="header" href="#异常处理中间件">异常处理中间件</a></h2>
+<p>异常处理中间件，全局捕捉异常，防止服务器崩溃</p>
+<pre><code class="language-javascript">//异常中间件
+const exhandler = (err,req,res,next)=&gt; {
+    return res.json({ &quot;err&quot;:{ &quot;name&quot;: err.name, &quot;msg&quot;: err.message }});
+}
+app.use(exhandler);
 
-app.post('/post', function (req, res) {
-    let result = [];
-    result.push(new Item(&quot;baseUrl&quot;,req.baseUrl));
-    result.push(new Item(&quot;fresh&quot;,req.fresh));
-    result.push(new Item(&quot;hostname&quot;,req.hostname));
-    result.push(new Item(&quot;ip&quot;,req.ip));
-    result.push(new Item(&quot;originalUrl&quot;,req.originalUrl));
-    result.push(new Item(&quot;params&quot;,req.path));
-    result.push(new Item(&quot;protocol&quot;,req.protocol));
-    result.push(new Item(&quot;query&quot;,req.query));
-    result.push(new Item(&quot;body&quot;,req.body));
-    result.push(new Item(&quot;route&quot;,req.route));
-    result.push(new Item(&quot;is:Content-Type&quot;,req.is('application/json')));
-
-    res.send(result);
-});
+//测试接口
+router_err.get('/error', auth, (req,res)=&gt; {
+    const err = new Error(&quot;error!&quot;);
+    err.name = &quot;故意err&quot;;
+    err.message = &quot;error!&quot;;
+    throw err;
+    res.status(200).json({msg: 'good!'});
+})
+app.use(router_err);
 </code></pre>
-<h3 id="测试接口-1"><a class="header" href="#测试接口-1">测试接口</a></h3>
-<p>使用api调试工具，尝试用不同的携带数据方法以post形式访问该接口，比较不同的返回结果</p>
-<h3 id="不限方法"><a class="header" href="#不限方法">不限方法</a></h3>
-<p>如果你想让某个路由能以任意方法访问:</p>
-<pre><code class="language-js">app.use('/any', function (req, res) {
-    res.send('Bad World!');
-});
-</code></pre>
-<p>尝试使用各种方法去访问 127.0.0.1:8080/any，都可以得到Bad World!</p>
-<h2 id="下一章-处理请求数据"><a class="header" href="#下一章-处理请求数据">下一章-处理请求数据</a></h2>
+<h2 id="第三方中间件"><a class="header" href="#第三方中间件">第三方中间件</a></h2>
+<p>当然了，在实际生产中，并不需要每个中间件都我们自己写，一是自己造轮子麻烦，而是自己造的轮子可用性不高，不够专业，三是优秀团队开发的中间件性能更好，隐患更小<br />
+可以更多的使用第三方团队开发的优秀的中间件，比如鉴权相关的passport.js，jsonwebtoken，sql相关的knex，sequelize等等。</p>
+<h2 id="万物皆可中间件"><a class="header" href="#万物皆可中间件">万物皆可中间件</a></h2>
+<p>上面给的几个例子，都是属于一个模块的不同部分作为中间件挂载到当前的应用，在express.js中，中间件远不止于次</p>
+<p>app也可以作为中间件挂载到app!一般是负责不同功能的app聚合到一个总的app上，比如订单模块单独一个app，用户模块单独一个app，一起挂载到作为整个完整系统的app上，这样子把整个系统按不同模块切割成独立的app，更易于维护和管理，有点伪微服务架构的意味。</p>
+<p>router也能把app作为他的子中间件，这种做法应该很少用吧，暂时不清楚有什么应用场景。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter_1/section_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter_1/section_9.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../chapter_1/section_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../chapter_2/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -260,11 +231,11 @@ app.post('/post', function (req, res) {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter_1/section_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter_1/section_9.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../chapter_1/section_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../chapter_2/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Sql-knex增删改查 - 跟着例子学Express.js</title>
+        <title>响应 - 跟着例子学Express.js</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html" class="active"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">11.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html" class="active"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,215 +144,104 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="sql增删改查"><a class="header" href="#sql增删改查">Sql增删改查</a></h1>
-<p>本节使用knex作为sql框架，以sqlite数据库为例</p>
+                        <h1 id="响应"><a class="header" href="#响应">响应</a></h1>
+<p>上一节讲完了请求，这一节我们就来讲一下响应吧！<br />
+本节作为初级内容，将罗列比较常用的响应方法以及其简单的使用形态</p>
 <h2 id="准备工作"><a class="header" href="#准备工作">准备工作</a></h2>
-<p>knex是一个运行在各自数据库Driver上的框架，因此需要安装相应的js版数据库Driver，如: PostgreSQL -&gt; pg, mysql/mariadb -&gt; mysql, sqlite -&gt; sqlite3...</p>
-<ul>
-<li>安装sqlite3依赖 <code>npm install sqlite3</code></li>
-<li>安装knex依赖 <code>npm install knex</code></li>
-<li>引入依赖</li>
-</ul>
-<pre><code class="language-js">const app = express();
-const knex = require('knex');
+<p>拷贝第一节Hello World项目</p>
+<h2 id="status"><a class="header" href="#status">status</a></h2>
+<p><strong>res.statue(status code)</strong>，这是很实用的一个方法，设置响应体的Http状态码，虽然REST-Apid的风格的是统一200，但在express.js中，有些情景下你必须设置status code为某个值</p>
+<pre><code class="language-javascript">res.status(404);
 </code></pre>
-<ul>
-<li>建议安装一款合适的数据库界面工具，笔者使用的是Beekeeper Studio.</li>
-</ul>
-<h2 id="创建项目"><a class="header" href="#创建项目">创建项目</a></h2>
-<p>拷贝第一节HelloWorld的项目</p>
-<h2 id="创建sqlite连接"><a class="header" href="#创建sqlite连接">创建sqlite连接</a></h2>
-<p>指明client为sqlite3（刚刚安装的sqlite3依赖），并指明要操作的sqlite数据库路径</p>
-<pre><code>const sqlite = knex({
-    client: 'sqlite3',
-    connection: {
-      filename: './data.db',
-    },
+<h2 id="send"><a class="header" href="#send">send</a></h2>
+<p><strong>res.send(content)</strong>，将任意类型的内容放在响应体内返回给请求源</p>
+<pre><code class="language-javascript">app.get('/', function (req, res) {
+    res.send('Hello World!');
 });
 </code></pre>
-<p>创建了一个连接实例后，会自动创建一个连接池，因此初始化数据库只会发生一次</p>
-<h3 id="连接配置"><a class="header" href="#连接配置">连接配置</a></h3>
-<p>sqlite3默认的是单连接，如果你希望连接池有更多的连接，创建时带上pool:</p>
-<pre><code class="language-js">const sqlite = knex({
-    client: 'sqlite3',
-    connection: {
-      filename: './data.db',
-    },
-    pool: { min: 0, max: 7 }
-});
+<p>也可以接在status后面:</p>
+<pre><code class="language-javascript">res.status(200).send(&lt;p&gt;hello world&lt;/p&gt;);
 </code></pre>
-<h4 id="创建连接池的回调"><a class="header" href="#创建连接池的回调">创建连接池的回调</a></h4>
-<p>用于检查连接池是否正常，通常不需要这步</p>
-<pre><code>pool: {
-    afterCreate: function (conn, done) {//...}
-}
+<h2 id="end"><a class="header" href="#end">end</a></h2>
+<p><strong>res.end()</strong>，用于快速结束不需要返回数据的场景下的响应，不过end()也可以传送数据，但性能消耗较大，不建议用res.end传数据和信息</p>
+<pre><code class="language-javascript">//END
+app.get('/end',(req,res)=&gt;{
+    res.status(404).end();
+})
 </code></pre>
-<h4 id="acquireconnectiontimeout"><a class="header" href="#acquireconnectiontimeout">acquireConnectionTimeout</a></h4>
-<p>连接超时时间</p>
-<h4 id="日志"><a class="header" href="#日志">日志</a></h4>
-<p>knex内置了打印警告、错误、弃用和调试信息的日志函数，如果你希望自定义日志操作，可以在log项里重写它们</p>
-<pre><code class="language-JS">log: {
-    warn(message) {
-    },
-    error(message) {
-    },
-    deprecate(message) {
-    },
-    debug(message) {
+<h2 id="json"><a class="header" href="#json">json</a></h2>
+<p><strong>res.json(content)</strong>，以json格式的请求体返回给请求源，可能会收到跨域保护的限制，因此往往需要我们顶上设置的一串Allow</p>
+<pre><code class="language-javascript">//json - 同源限制
+app.get('/json',(req,res)=&gt;{
+    let resp = {
+        code: 200,
+        msg: &quot;json&quot;,
+        toPrint: function(){
+            console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
+        }
     }
-}
+    res.jsonp(resp);
+})
 </code></pre>
-<h2 id="数据表"><a class="header" href="#数据表">数据表</a></h2>
-<h3 id="建表"><a class="header" href="#建表">建表</a></h3>
-<p>语法: <code>sqlite.schema.createTable(表名, table=&gt;{表结构})</code></p>
-<p>添加一个PUT接口，监听 127.0.0.1:8080/db/:tbname<br />
-根据我们想创建的表名尝试创建一个表，注意: sql执行是异步的，为了得到结果，建议使用 <strong>async/await</strong> 语法糖（当然你就是喜欢地狱回调也不是不行）</p>
-<pre><code class="language-js">app.put('/db/:tbname', async function (req, res) {
-    let resultSet = null;
-    try {
-        // Create a table
-        resultSet = await sqlite.schema
-          .createTable(req.params.tbname, table =&gt; {
-            table.increments('id');
-            table.string('uname');
-            table.string('passwd');
-          })
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
+<h2 id="jsonp"><a class="header" href="#jsonp">jsonp</a></h2>
+<p><strong>res.jsonp(content)</strong>，jsonp是开发者们自研的一种不正统的数据格式，和json基本一样，但不太会被跨域保护给拦着</p>
+<pre><code class="language-javascript">//jsonp - 更容易的解决跨域
+app.get('/jsonp',(req,res)=&gt;{
+    let resp = {
+        code: 200,
+        msg: &quot;jsonp&quot;,
+        toPrint: function(){
+            console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
+        }
+    }
+    res.jsonp(resp);
+})
 </code></pre>
-<p>瞅瞅控制台:</p>
-<pre><code class="language-bash">sqlite does not support inserting default values. Set the `useNullAsDefault` flag to hide this warning. (see docs https://knexjs.org/guide/query-builder.html#insert).
+<h2 id="sendfile"><a class="header" href="#sendfile">sendFile</a></h2>
+<p><strong>res.sendFile(path,options)</strong>，静态传输文件，不能直接使用相对路径</p>
+<pre><code class="language-js">//sendfile，传输文件
+app.get('/sendfile',(req,res)=&gt;{
+    //只能是静态路径，需要相对路径的话有很多方法，以下是其中一个
+    res.sendFile(&quot;hello.txt&quot;, {root: __dirname});
+})
 </code></pre>
-<p>嗯？sqlite不支持default？不用管他，去看数据库，反正成功创建了user表，你要是加了<code>useNullAsDefault</code>这个flag，反而会告诉你<code> not supported by node-sqlite3</code></p>
-<pre><code class="language-js">const sqlite = knex({
-    client: 'sqlite3',
-    connection: {
-      filename: './data.db',
-    },
-});
+<h2 id="download"><a class="header" href="#download">download</a></h2>
+<p><strong>res.download(path)</strong>，下载传输文件，这个可以直接使用相对路径</p>
+<pre><code class="language-js">//download，下载文件
+app.get('/download',(req,res)=&gt;{
+    //可以直接相对路径
+    res.download(&quot;./hello.txt&quot;);
+})
 </code></pre>
-<h3 id="删表"><a class="header" href="#删表">删表</a></h3>
-<p>语法: <code>sqlite.schema.deleteTable(表名)</code></p>
-<pre><code class="language-js">app.delete('/db/:tbname', async function (req, res) {
-    try {
-        // Delete a table
-        await sqlite.schema.dropTable(req.params.tbname);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-    };
-    res.json(null);
-});
+<h2 id="sendstatus"><a class="header" href="#sendstatus">sendStatus</a></h2>
+<p><strong>res.sendStatus(status code)</strong>，设置响应码，并返回信息为该状态码预设好的文本，比如res.sendStatus(404)，则响应的状态码是s404，返回的信息是'not Found'</p>
+<pre><code class="language-js">//sendstatus
+app.get('/sendstatus',(req,res)=&gt;{
+    //预先写好的httpStatus组合，改一下试试，如果你输入的status码不存在，msg将变成这个码的数字
+    res.sendStatus(404);
+})
+</code></pre>
+<h2 id="location"><a class="header" href="#location">location</a></h2>
+<p><strong>res.location(route)</strong>，REST接口之间的转发，必须设置status为300~309之间的数字，才能成功转发</p>
+<pre><code class="language-js">//location
+app.get('/location/1',(req,res)=&gt;{
+    //转发到最早的helloworld路由去
+    res.location('/').status(302).send();
+})
 
+//location/2
+app.get('/location/2',(req,res)=&gt;{
+    //转达到下面定义的这个接口
+    res.location('/location/index').status(302).send();
+})
+
+app.get('/location/index',(req,res)=&gt;{
+    res.send(&quot;welcome to learn express.js by demos&quot;);
+})
 </code></pre>
-<h2 id="表记录crud"><a class="header" href="#表记录crud">表记录crud</a></h2>
-<h3 id="增"><a class="header" href="#增">增</a></h3>
-<p>往user表里面插入一条新的记录</p>
-<pre><code class="language-js">app.use(express.json({type: 'application/json'}));
-app.put('/db/:tbname/record', async function (req, res) {
-    /*前端请求体格式:
-    {
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;iloveu&quot;
-    }
-    */
-   let resultSet = null;
-    try {
-        // Insert a record
-        resultSet = await sqlite(req.params.tbname).insert(req.body);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
-</code></pre>
-<p>尝试用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到<code>[1]</code>，这是影响的记录数，1代表成功了</p>
-<h3 id="查"><a class="header" href="#查">查</a></h3>
-<p>从user表里查询uname=我们刚刚插入的记录</p>
-<pre><code class="language-js">app.get('/db/:tbname/record', async function (req, res) {
-    //前端携带query: uname=evanp
-   let resultSet = null;
-    try {
-        // select a record where uname=xxx
-        resultSet = await sqlite(req.params.tbname).select('*').where('uname',req.query.uname);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
-</code></pre>
-<p>尝试用api调试工具GET 127.0.0.1:8080/db/user/record?uname=evanp，将会得到:</p>
-<pre><code class="language-json">[
-    {
-        &quot;id&quot;: 1,
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;iloveu&quot;
-    }
-]
-</code></pre>
-<h3 id="改"><a class="header" href="#改">改</a></h3>
-<p>接下来我们修改uname=evanp这条记录的passwd为123456</p>
-<pre><code class="language-js">app.post('/db/:tbname/record', async function (req, res) {
-    //前端携带query: uname=evanp
-    /*前端请求体格式:
-    {
-        &quot;passwd&quot;: &quot;123456&quot;
-    }
-    */
-   let resultSet = null;
-    try {
-        // select a record where uname=xxx
-        resultSet = await sqlite(req.params.tbname).update(req.body).where('uname',req.query.uname);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
-</code></pre>
-<p>尝试用api调试工具POST 127.0.0.1:8080/db/user/record?uname=evanp，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了</p>
-<h3 id="删"><a class="header" href="#删">删</a></h3>
-<p>接下来我们删除uname=evanp且passwd=123456的这条记录</p>
-<pre><code class="language-js">app.delete('/db/:tbname/record', async function (req, res) {
-    /*前端请求体格式:
-    {
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;123456&quot;
-    }
-    */
-   let resultSet = null;
-    try {
-        // select a record where uname=xxx
-        resultSet = await sqlite(req.params.tbname).del().where(req.body);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
-</code></pre>
-<p>尝试用api调试工具DELETE 127.0.0.1:8080/db/user/record，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了</p>
-<h2 id="原生sql"><a class="header" href="#原生sql">原生sql</a></h2>
-<p>当然了，如果你需要直接使用sql语句，也是可以的，调用<code>raw(sqlStr)</code>即可，既可以作为某一段sql的绑定，也可以直接当作整句sql</p>
-<p>格式: <code>knex.raw(sql, [bindings]</code></p>
-<pre><code class="language-json">sqlite.raw(&quot;select * from user&quot;,[1]).then((resp)=&gt;{//..})
-</code></pre>
-<p>在这里不做介绍</p>
-<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
-<p>以上给出了使用knex实现增删改查的基本操作，这些方法并不是唯一的，在实际开发中往往要应对更复杂的场景，基础crud也是远远不够的<br />
-关于knex的更多拓展使用方法，请移步knex官方文档<a href="https://knexjs.org/guide/">https://knexjs.org/guide/</a></p>
-<h2 id="下一章-sql-orm增删改查"><a class="header" href="#下一章-sql-orm增删改查">下一章-Sql-ORM增删改查</a></h2>
+<h2 id="redirect"><a class="header" href="#redirect">redirect</a></h2>
+<p><strong>res.redirect()</strong>，路由重定向，这个比较特殊，我们放到路由控制那一节再讲</p>
+<h2 id="下一章-sql-knex增删改查"><a class="header" href="#下一章-sql-knex增删改查">下一章-Sql-knex增删改查</a></h2>
 
                     </main>
 
@@ -383,6 +272,22 @@ app.put('/db/:tbname/record', async function (req, res) {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

@@ -1,74 +1,86 @@
-# 全局错误处理
+# JWT基础鉴权
 
-在前面几节里，我们处理异常的方法都是手动在可能引发异常的地方捕捉错误，这固然是必要的，可以有针对性得处理异常，但很多时候，有许多潜在的异常，有一句话叫永远不要相信输入的数据，你永远都不知道什么时候可能会以什么方式触发某些阴间异常从而造成系统崩溃。因此，我们需要有一位好帮手能帮助我们捕获各种错误  
+Web安全是Web应用中非常重要的一环，主要由后端和服务器承担安全保障  
+面对请求源，后端有着各种各样的鉴权机制: session,cookie,token,jwt,OAuth,OAuth2,api-key,signature...  
+本节以jwt为例，演示一个极简的token鉴权
 
-而这位好帮手就是，**异常处理中间件**
+## 准备工作
 
-## 自定义异常处理中间件
+- 拷贝第一节HelloWorld项目
+- 安装一种jwt依赖(本节使用jsonwebtoken)
 
-### 同步异常
+## 实践
 
-异常处理中间件需要传入4个参数: err,req,res和next，这样才会被express识别为异常处理中间件  
-创建一个exhandler，并挂载到服务器上:  
-注意: 挂载异常处理中间件的行为必须位于所有定义的接口之下，至于理由，会在下一节《中间件》中给出解答
+接下来我们使用jsonwebtoken来实现最常见的登录鉴权，登录成功后返回一个token，之后凭借这个token去访问另外的路由
+
+- 首先引入jwt依赖
 ```js
-let exhandler = (err, req, res, next)=> {
-    console.error('Error:', err);
-    res.status(500).json(err);
+const jwt = require('jsonwebtoken');
+```
+
+- 定义一个密钥
+
+之后我们会利用这个密钥生成token，和检验token
+```js
+const secret = 'mysecretkey';
+```
+
+- 写个登录时生成token的函数
+
+传入用户名和密码，检验密码，正确就生成一个token  
+生成token: `jwt.sign(标志,密钥,选项(生命周期等))`
+```js
+function getToken(user) {
+    let token = null;
+    const payload = {
+      uname: user.uname,
+    };
+    if (user.uname == 'root' && user.passwd == 'root') {
+        token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    }
+    return token;
 }
-app.use(exhandler);
 ```
 
-我们在helloWorld接口中人为抛出一个异常试一下，可以直接throw，也可以传递给next（事实上，意外的异常发生时，会被express捕获并传递给next，然后再丢给我们的异常处理中间件）
-```
-app.get('/', (req, res, next)=> {
-    const err = new Error();
-    err.status = 500;
-    err.message = '对不起，网站正在维护中';
-    throw err;
-    //next(err);
-    // res.send('Hello World!');
-});
-```
+- 写一个访问时检验token的函数
 
-### 测试
-
-使用api调试工具GET 127.0.0.1:8080/，我们的程序不会崩溃，并且你将得到被封装好的错误信息，并且响应码是500。
-
-```JSON
-{
-    "name": "无法访问",
-    "message": "对不起，网站正在维护中"
-}
-```
-
-### 异步异常
-
-上面的异常是产生在串行的代码中的，那如果在异步操作中产生了异常呢？  
-我们弄一个异步异常的接口试一下:  
+传入req,res,next，从请求头中取出名字为'token'的一个token，若请求头里不带token则返回请求报告没token，token校验通过了则放行
 ```js
-app.post('/', (req, res, next)=> {
-    setTimeout(()=>{
-        const err = new Error();
-        err.name = '无法访问';
-        err.message = '对不起，网站真的正在维护中！';
-        next(err);
-    },3000);
-});
+function checkToken(req, res, next) {
+    const token = req.headers['token'];
+    if (!token) return res.status(401).json({ message: 'No token provided.' });
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) return res.status(500).json({ message: 'Failed to authenticate token.' });
+      req.userId = decoded.id;
+      next();
+    });
+}  
 ```
-POST 127.0.0.1:8080/，你花费了3秒时间得到我们的维护信息！  
-不过上面这个接口之所以能返回维护信息，是因为在同步流中，没有进行响应操作，那前端只要不超过设置的超时时间，就会一直等待，然后3秒后等来了我们的错误信息
 
-我们在同步流内先进行响应，假如我们并不在乎异步操作的结果就可以响应了:
+- 编写登录接口
 ```js
-app.post('/', (req, res, next)=> {
-    setTimeout(()=>{
-        const err = new Error();
-        err.name = '无法访问';
-        err.message = '对不起，网站真的正在维护中！';
-        next(err);
-    },3000);
-    res.send("Bad World!");
+app.post('/login', (req, res) => {
+    let user = req.body;
+    let token = getToken(user);
+    if(token!=null) {
+        res.send(token);
+    } else {
+        res.status(401).send("wrong");
+    }    
 });
 ```
-POST 127.0.0.1:8080/，这次你得到了Bad World!，因此只有当你的异常进入了未结束的同步流（用async/await语法糖，或者Promise回调等），才能被返回给请求源
+
+- 编写一个需要校验token的接口
+
+将token检验函数作为中间件挂载到 /root 路由上
+```js
+app.get('/root', checkToken, (req, res) => {
+    res.send('hello root user!');
+});
+```
+
+## 接口测试
+
+尝试用api调试工具先访问 login 接口，利用正确的用户名和密码获取token，然后用得到的token去访问 root 接口
+
+## 下一章-全局错误处理

@@ -1,262 +1,142 @@
-# Sql增删改查
+# 响应
 
-本节使用knex作为sql框架，以sqlite数据库为例
+上一节讲完了请求，这一节我们就来讲一下响应吧！  
+本节作为初级内容，将罗列比较常用的响应方法以及其简单的使用形态
 
 ## 准备工作
 
-knex是一个运行在各自数据库Driver上的框架，因此需要安装相应的js版数据库Driver，如: PostgreSQL -> pg, mysql/mariadb -> mysql, sqlite -> sqlite3...
+拷贝第一节Hello World项目
 
+## status
 
-- 安装sqlite3依赖 `npm install sqlite3`
-- 安装knex依赖 `npm install knex`
-- 引入依赖
-```js
-const app = express();
-const knex = require('knex');
+**res.statue(status code)**，这是很实用的一个方法，设置响应体的Http状态码，虽然REST-Apid的风格的是统一200，但在express.js中，有些情景下你必须设置status code为某个值
+
+```javascript
+res.status(404);
 ```
-- 建议安装一款合适的数据库界面工具，笔者使用的是Beekeeper Studio.
 
-## 创建项目
+## send
 
-拷贝第一节HelloWorld的项目
+**res.send(content)**，将任意类型的内容放在响应体内返回给请求源
 
-## 创建sqlite连接
-
-指明client为sqlite3（刚刚安装的sqlite3依赖），并指明要操作的sqlite数据库路径
-
-```
-const sqlite = knex({
-    client: 'sqlite3',
-    connection: {
-      filename: './data.db',
-    },
-});
-```
-创建了一个连接实例后，会自动创建一个连接池，因此初始化数据库只会发生一次
-
-### 连接配置
-
-sqlite3默认的是单连接，如果你希望连接池有更多的连接，创建时带上pool:
-```js
-const sqlite = knex({
-    client: 'sqlite3',
-    connection: {
-      filename: './data.db',
-    },
-    pool: { min: 0, max: 7 }
+```javascript
+app.get('/', function (req, res) {
+    res.send('Hello World!');
 });
 ```
 
-#### 创建连接池的回调
-
-用于检查连接池是否正常，通常不需要这步
-```
-pool: {
-    afterCreate: function (conn, done) {//...}
-}
+也可以接在status后面:
+```javascript
+res.status(200).send(<p>hello world</p>);
 ```
 
-#### acquireConnectionTimeout
+## end
 
-连接超时时间
+**res.end()**，用于快速结束不需要返回数据的场景下的响应，不过end()也可以传送数据，但性能消耗较大，不建议用res.end传数据和信息
 
-#### 日志
-knex内置了打印警告、错误、弃用和调试信息的日志函数，如果你希望自定义日志操作，可以在log项里重写它们
-```JS
-log: {
-    warn(message) {
-    },
-    error(message) {
-    },
-    deprecate(message) {
-    },
-    debug(message) {
+```javascript
+//END
+app.get('/end',(req,res)=>{
+    res.status(404).end();
+})
+```
+
+## json
+
+**res.json(content)**，以json格式的请求体返回给请求源，可能会收到跨域保护的限制，因此往往需要我们顶上设置的一串Allow
+
+```javascript
+//json - 同源限制
+app.get('/json',(req,res)=>{
+    let resp = {
+        code: 200,
+        msg: "json",
+        toPrint: function(){
+            console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
+        }
     }
-}
+    res.jsonp(resp);
+})
 ```
 
-## 数据表
+## jsonp
 
-### 建表
+**res.jsonp(content)**，jsonp是开发者们自研的一种不正统的数据格式，和json基本一样，但不太会被跨域保护给拦着
 
-语法: `sqlite.schema.createTable(表名, table=>{表结构})`
-
-添加一个PUT接口，监听 127.0.0.1:8080/db/:tbname  
-根据我们想创建的表名尝试创建一个表，注意: sql执行是异步的，为了得到结果，建议使用 **async/await** 语法糖（当然你就是喜欢地狱回调也不是不行）
-```js
-app.put('/db/:tbname', async function (req, res) {
-    let resultSet = null;
-    try {
-        // Create a table
-        resultSet = await sqlite.schema
-          .createTable(req.params.tbname, table => {
-            table.increments('id');
-            table.string('uname');
-            table.string('passwd');
-          })
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
-```
-
-瞅瞅控制台:
-```bash
-sqlite does not support inserting default values. Set the `useNullAsDefault` flag to hide this warning. (see docs https://knexjs.org/guide/query-builder.html#insert).
-```
-嗯？sqlite不支持default？不用管他，去看数据库，反正成功创建了user表，你要是加了`useNullAsDefault`这个flag，反而会告诉你` not supported by node-sqlite3`
-```js
-const sqlite = knex({
-    client: 'sqlite3',
-    connection: {
-      filename: './data.db',
-    },
-});
-```
-
-### 删表
-
-语法: `sqlite.schema.deleteTable(表名)`
-
-```js
-app.delete('/db/:tbname', async function (req, res) {
-    try {
-        // Delete a table
-        await sqlite.schema.dropTable(req.params.tbname);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-    };
-    res.json(null);
-});
-
-```
-
-## 表记录crud
-
-### 增
-
-往user表里面插入一条新的记录
-```js
-app.use(express.json({type: 'application/json'}));
-app.put('/db/:tbname/record', async function (req, res) {
-    /*前端请求体格式:
-    {
-        "uname": "evanp",
-        "passwd": "iloveu"
+```javascript
+//jsonp - 更容易的解决跨域
+app.get('/jsonp',(req,res)=>{
+    let resp = {
+        code: 200,
+        msg: "jsonp",
+        toPrint: function(){
+            console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
+        }
     }
-    */
-   let resultSet = null;
-    try {
-        // Insert a record
-        resultSet = await sqlite(req.params.tbname).insert(req.body);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
+    res.jsonp(resp);
+})
 ```
 
-尝试用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到`[1]`，这是影响的记录数，1代表成功了
+## sendFile
 
-### 查
+**res.sendFile(path,options)**，静态传输文件，不能直接使用相对路径
 
-从user表里查询uname=我们刚刚插入的记录
 ```js
-app.get('/db/:tbname/record', async function (req, res) {
-    //前端携带query: uname=evanp
-   let resultSet = null;
-    try {
-        // select a record where uname=xxx
-        resultSet = await sqlite(req.params.tbname).select('*').where('uname',req.query.uname);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
+//sendfile，传输文件
+app.get('/sendfile',(req,res)=>{
+    //只能是静态路径，需要相对路径的话有很多方法，以下是其中一个
+    res.sendFile("hello.txt", {root: __dirname});
+})
 ```
 
-尝试用api调试工具GET 127.0.0.1:8080/db/user/record?uname=evanp，将会得到:
-```json
-[
-    {
-        "id": 1,
-        "uname": "evanp",
-        "passwd": "iloveu"
-    }
-]
-```
+## download
 
-### 改
+**res.download(path)**，下载传输文件，这个可以直接使用相对路径
 
-接下来我们修改uname=evanp这条记录的passwd为123456
 ```js
-app.post('/db/:tbname/record', async function (req, res) {
-    //前端携带query: uname=evanp
-    /*前端请求体格式:
-    {
-        "passwd": "123456"
-    }
-    */
-   let resultSet = null;
-    try {
-        // select a record where uname=xxx
-        resultSet = await sqlite(req.params.tbname).update(req.body).where('uname',req.query.uname);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
+//download，下载文件
+app.get('/download',(req,res)=>{
+    //可以直接相对路径
+    res.download("./hello.txt");
+})
 ```
-尝试用api调试工具POST 127.0.0.1:8080/db/user/record?uname=evanp，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了
 
-### 删
+## sendStatus
 
-接下来我们删除uname=evanp且passwd=123456的这条记录
+
+**res.sendStatus(status code)**，设置响应码，并返回信息为该状态码预设好的文本，比如res.sendStatus(404)，则响应的状态码是s404，返回的信息是'not Found'
 ```js
-app.delete('/db/:tbname/record', async function (req, res) {
-    /*前端请求体格式:
-    {
-        "uname": "evanp",
-        "passwd": "123456"
-    }
-    */
-   let resultSet = null;
-    try {
-        // select a record where uname=xxx
-        resultSet = await sqlite(req.params.tbname).del().where(req.body);
-        // Finally, add a catch statement
-      } catch(e) {
-        console.error(e);
-        resultSet = e;
-    };
-    res.json(resultSet);
-});
+//sendstatus
+app.get('/sendstatus',(req,res)=>{
+    //预先写好的httpStatus组合，改一下试试，如果你输入的status码不存在，msg将变成这个码的数字
+    res.sendStatus(404);
+})
 ```
-尝试用api调试工具DELETE 127.0.0.1:8080/db/user/record，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了
 
-## 原生sql
+## location
 
-当然了，如果你需要直接使用sql语句，也是可以的，调用`raw(sqlStr)`即可，既可以作为某一段sql的绑定，也可以直接当作整句sql
+**res.location(route)**，REST接口之间的转发，必须设置status为300~309之间的数字，才能成功转发
 
-格式: `knex.raw(sql, [bindings]`
-```json
-sqlite.raw("select * from user",[1]).then((resp)=>{//..})
+```js
+//location
+app.get('/location/1',(req,res)=>{
+    //转发到最早的helloworld路由去
+    res.location('/').status(302).send();
+})
+
+//location/2
+app.get('/location/2',(req,res)=>{
+    //转达到下面定义的这个接口
+    res.location('/location/index').status(302).send();
+})
+
+app.get('/location/index',(req,res)=>{
+    res.send("welcome to learn express.js by demos");
+})
 ```
-在这里不做介绍
 
-## 总结
+## redirect
 
-以上给出了使用knex实现增删改查的基本操作，这些方法并不是唯一的，在实际开发中往往要应对更复杂的场景，基础crud也是远远不够的  
-关于knex的更多拓展使用方法，请移步knex官方文档<https://knexjs.org/guide/>
+**res.redirect()**，路由重定向，这个比较特殊，我们放到路由控制那一节再讲
 
-## 下一章-Sql-ORM增删改查
+## 下一章-Sql-knex增删改查

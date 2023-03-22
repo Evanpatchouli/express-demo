@@ -1,159 +1,310 @@
-# 路由控制
+# Sql-ORM增删改查
+
+ORM框架: 对象关系映射，面对对象sql  
+本节使用sequelize作为orm-sql框架，数据库为sqlite
 
 ## 准备工作
 
-拷贝第一节HelloWorld项目
-## 动态路由
+同样的，需要安装相应的js版数据库Driver，如: PostgreSQL -> pg, mysql/mariadb -> mysql, sqlite -> sqlite3...
 
-这个最初我们就接触到了，路径中某一段前面加冒号
+- 安装sqlite3依赖 `npm install sqlite3`
+- 安装sequelize依赖 `npm install sequelize`
+- 引入依赖
 ```js
-//路径变量-动态路由
-app.get('/:var',(req, res)=>{
-    res.send(req.params.var);
-});
+const app = express();
+const { Sequelize } = require('sequelize');
+```
+- 建议安装一款合适的数据库界面工具，笔者使用的是Beekeeper Studio.
+
+## 创建项目
+
+拷贝第一节HelloWorld的项目
+
+## 创建sqlite连接
+
+指定方言为sqlite，持久化路径为本目录下的data.db
+```js
+const sqlite = new Sequelize({
+    dialect: 'sqlite',
+    storage: './data.db'
+})
 ```
 
-## 路由匹配
+## 定义表模型
 
-利用通配符 * 匹配符合的所有路由
+sequelize主打一个面对对象sql，因此我们要建立一个对应数据表的类  
+就和上一节一样，弄一张一模一样的user表吧:
 
-- 全通配
+- 引入DataTypes
+```
+const { Sequelize,DataTypes } = require('sequelize');
+```
+- 定义User对象
 
-**定义时**，以 * 结尾，或者 * 之后除了斜杠没有其他字符，匹配*之后所有的路由
+`Model.init(schema,options)`
 ```js
-//全部匹配，囊括了match之下的所有路由，即便前端请求路径时在后面再来几段，也会被当作一个字符串 /x/1/6 -> '/x/1/6'
-//慎用，必须确保其他独立的路由不会被覆盖了
-app.get('/matchall/*',(req, res)=>{
-    let what = {
-        params: req.params,
-        theVar: req.params['0']
+const User = sqlite.define('User', {
+    id: {
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true
+    },
+    // 在这里定义模型属性
+    uname: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    passwd: {
+      type: DataTypes.STRING
+      // allowNull 默认为 true
     }
-    res.send(what);
+  }, {
+    // 直接指定表名，不指定的话sequelize将默认以模型的复数形式作为表名
+    tableName: 'user'
 });
 ```
-前端发来请求时，如何有2个定义的接口都能匹配到，优先匹配先定义的
+还有另一种方法，效果是一样的，看个人喜好使用:
+
+- 额外引入Model
 ```js
-//不起效
-app.get('/matchall/w/xf',(req, res)=>{
-    res.send("there is w.xf");
-});
+const { Sequelize,DataTypes,Model } = require('sequelize');
 ```
+- 初始化User类
 
-- 局部通配
-
-在两个字符之间(斜杠不算，除非你转义过了)使用 *，匹配这两个字符中间夹任何一段字符串的路由:  
-xAy,xBy,xvenapy...
+`Model.init(schema,options)`
 ```js
-//xy中间随便夹
-app.get('/match/x*y', function (req, res) {
-    res.send('xy肉夹馍')
-})
-```
-```js
-//除非通配符后面有除了斜杠以外的字符，不然全部被盖
-app.get('/match/w*/x', function (req, res) {
-    res.send('除非通配符后面有除了斜杠以外的字符，不然全部被盖')
-})
-```
-
-- 动态字符(串)
-
-问号前的字符可有可无，gback,goback
-
-```js
-//问号前面这个字符可有可无
-app.get('/match/go?back',(req, res)=>{
-    res.send("问号前面这个字符可有可无");
-});
-```
-
-问号前被括号括住的字符串可有可无，xback,xgoback
-```js
-app.get('/match/x(go)?back',(req, res)=>{
-    res.send("问号前面这个字符串可有可无，注意被括住的字符串前面不能没有字符");
-});
-```
-
-加号前的字符可以重复，goback,gooback,goooback...
-```js
-//可匹配到多个路由时，优先匹配先定义的路由
-//一个或多个问号前字符
-app.get('/match/go+back',(req, res)=>{
-    let what = {
-        match: '/match/go+back',
-        url: req.url,
-        tip: "加号前面的那个字符可以无限重复"
+User继承Model类
+class User extends Model {};
+User.init(
+    {
+        id: {
+            primaryKey: true,
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            autoIncrement: true
+        },
+        // 在这里定义模型属性
+        uname: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        passwd: {
+            type: DataTypes.STRING，
+            defaultValue: '123456', //默认值
+            //allowNull 默认为 true
+        }
+    }, 
+    {
+        // 这是其他模型参数
+        sqlite, // 我们需要传递连接实例
+        modelName: 'User1', // 我们需要选择模型名称,
+        // 直接指定表名
+        tableName: 'user',
     }
-    res.send(what);
+);
+```
+
+## 模型同步
+
+`Model.sync`: 底层执行的是 create table if not exist
+- 如果数据库中不存在对应的表，将根据模型直接创建表；若存在，不操作  
+`Model.sync({force: true})`: 底层是先 drop if 然后 create
+- 如果表已存在，将删除再根据模型创建表  
+`Model.sync({alter: true})`: 
+- 如果表已存在，将修改表结构使之与模型匹配
+
+花里胡哨的，总之就是保证数据库中有和该模型对应的表
+
+## 创建user表
+
+我们使用`User.sync()`创建一张user表
+
+```js
+app.put('/db/user', async function (req, res) {
+    let what = await User.sync();
+    res.json(what);
 });
 ```
 
-## 正则匹配
+使用api调试工具PUT 127.0.0.1:8080/db/user，将会得到1，注意只要能成功映射到到数据表都是1
 
-可用于复杂路由的匹配，在路由中局部正则时，记得用括号包住
+用Beekeeper查看我们的user表，你会发现和我们定义的模型有点不一样：多了2个字段——createdAt和updatedAt，即创建时间和修改时间  
+sequelize会自动管理这两个字段，注意当你使用了其他的sql工具修改表，这两个字段不会自动更新
+
+如果你不想要这两个值，或者想换个名字，可以在定义模型时往options添加这些设置:
 ```js
-//正则匹配
-//匹配了127.0.0.1:8080/x//数字useremm//
-app.get('/x/(\/[0-9]useremm\/)', function (req,res) {
-    console.log(req.body);
-    res.send("正则可用于复杂路径的匹配");
-})
+// 禁止createdAt和updatedAt
+timestamps: false,
+// 只禁止createdAt
+createdAt: false,
+// 给updatedAt换个名字
+updatedAt: 'updateTime'
 ```
 
-## 路由重定向
+## 删除user表
 
-有时候我们希望某些情况下将路径转发到其他路径，比如404页面之类的  
-格式: `res.redirect(status, url)`  
-status是干什么的？对于重定向后的路由不同的请求方法应该使用不同的status:
-
-- GET
+drop()方法，底层是 drop if，既可以作用于模型，也可作用于数据库:
 ```js
-//转发到 GET /1/2/3/4/5
-app.post('/redirect',(req,res)=>{
-    res.redirect(301,'/1/2/3/4/5');
-});
-
-app.get('/1/2/3/4/5',(req,res)=>{
-    res.send("上山打老虎");
-})
+sqlite.drop();  //这将删除当前data.db下所有的表
 ```
 
-301或302都是可以的，301代表临时，302代表永久
+我们使用`User.drop()`来删除user表
 
-接下来我们把转发后的路由改成POST，再去访问redirect:
 ```js
-app.post('/1/2/3/4/5',(req,res)=>{
-    res.send("上山打老虎");
-})
-```
-是的，响应不到了，转发到POST路由，应当使用307或308，前者临时后者永久  
-`res.redirect(301,'/1/2/3/4/5');`
-
-- JSON与重定向
-
-开启`app.use(express.json)`，再尝试访问redirect，结果又得不到响应了，这是为什么？  
-开启了json解析后，请求变成了json，请求已经不是原始的请求了，变成了json对象，是没办法被转发的  
-因此在有需要重定向的时候，我们不应该全局json解析了，而是在需要json解析的路由上开启json解析:
-
-建个需要使用json解析的测试接口:
-```js
-app.put('/some/json',(req,res)=>{
-    res.send(req.body);
+app.delete('/db/user', async function (req, res) {
+    let what = await User.drop();
+    res.json(what);
 });
 ```
 
-自定义一个选择性body-json的中间件，判定 PUT:/some/json 时局部开启json解析:
+使用api调试工具PUT 127.0.0.1:8080/db/user，将会得到1，注意即使表已经没了，也是1
+
+## 数据表crud
+
+### 增
+
+在操作表记录前，我们先通过模型(`Model.build`)创建一个实例，然后调用`save()`将这个实例插入到表中  
+当然，如果你从前端拿来的数据不需要进行处理和转化就能拿来用，也可以直接用`Model.create`插入记录
+
 ```js
-app.use((req, res, next) => {
-    // 判断当前请求路径是否需要解析JSON请求体
-    if (req.path === '/some/json'&& req.method.match("PUT")) {
-      bodyParser.json()(req, res, next);
-    } else {
-      next();
+app.use(express.json({type: 'application/json'}));
+app.put('/db/user/record', async function (req, res) {
+    /**前端请求体
+    {
+        "uname": "evanp",
+        "passwd": "iloveu"
+    }
+    */
+    try {
+        let user = User.build(req.body);
+        let what = await user.save();
+        // let what = await User.create(req.body);
+        res.json(what);
+    }catch(e){
+        res.json(e);
     }
 });
 ```
 
-尝试用api调试工具访问redirect，重定向成功了，再访问/some/json，也能成功打印请求体.
 
-## 下一章-JWT基础鉴权
+使用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到:
+```json
+{
+    "id": 1,
+    "uname": "evanp",
+    "passwd": "iloveu",
+    "updatedAt": "2023-03-19T08:03:37.964Z",
+    "createdAt": "2023-03-19T08:03:37.964Z"
+}
+
+```
+是的，添加记录成功后它会顺便把整条记录查出来作为返回结果
+
+Ok，那么现在user表里已经有了id=1的一条记录了，让我们试一下创建相同id的记录会怎么样...  
+服务器直接挂了，我们可不希望这样，这意味着有任何不妥的sql都可能导致服务器崩溃，那怎么办呢？
+
+有的朋友可能记起来了，在上一节中，使用了try-catch语法糖包裹sql操作，这是一种不错的方法
+
+### 查
+
+sequelize模型内置了一些方法使得我们可以基于模型直接查询
+
+- findAll 查找全部，底层是`select * from ...`
+- findOne 查找一个，底层是`select * from ... LIMIT 1`
+- findByPk 根据主键查找
+- findAndCountAll 查找并返回符合的总条数，常用于分页
+- findOrCreate 找不到就创建
+
+这些方法都可以添加options参数设置WHERE,LIMIT等限制条件  
+我们使用findOne来查询evanp和用户名和密码都对的上的一条记录:
+
+```js
+//我为了方便直接url传参了，实际上为了隐私，至少应该放在请求体内
+app.get('/db/user/record', async function (req, res) {
+    let evanp = await User.findOne({where: req.query});
+    res.json(evanp);
+});
+```
+
+如果你只需要查询其中某些字段，就在options中设置attributes:
+```js
+User.findAll({
+    attributes: ['id','uname']
+});
+```
+如果想给字段取别名，就比如像这样给id取名uid:
+```js
+User.findAll({
+    attributes: [['id','uid'],'uname']
+});
+```
+
+## 改
+
+`Model.update(修改项,限制)`
+```js
+app.post('/db/user/record', async function (req, res) {
+    /*请求体
+    {
+        "set":{
+            "passwd": "123456"
+        },
+        "where": {
+            "uname": "evanp",
+            "passwd": "iloveu"
+        }
+    }
+    */
+    let what = await User.update(req.body.set,{where: req.body.where})
+    res.json(what);
+});
+```
+
+使用api工具进行调试，修改成功将返回1，修改失败将返回0(找不到/改不了)
+
+## 删
+
+`Model.destroy(限制)`
+```js
+app.delete('/db/user/record', async function (req, res) {
+    /*请求体
+    {
+        "uname": "evanp",
+        "passwd": "123456"
+    }
+    */
+    let what = await User.destroy({where: req.body})
+    res.json(what);
+});
+```
+
+使用api工具进行调试，删除成功将返回1，删除失败将返回0(找不到/删不了)
+
+
+## 原生Sql
+
+当然了，如果你需要直接使用sql语句，也是可以的，`连接实例.query(sqlStr)`即可  
+通常，返回结果包含2个值，一个是结果数组，一个是相关信息
+```js
+app.post('/db/user/record/freely', async function (req, res) {
+    /*json请求体
+    {
+        "sql": "xxx"
+    }
+    */
+    let what = null;
+    try {
+        what = await sqlite.query(req.body.sql);
+    } catch (e) {
+        what = e;
+    }
+    res.json(what);
+});
+```
+执行insert前要注意，如果这张表是经过sequelize同步的，也许会有那两个时间字段的，别忘了
+
+本节的例子仅仅为了演示在express.js中如何运用sequelize操作数据库，关于sequelize的更多拓展和高级使用方法，请移步sequelize官方文档<https://www.sequelize.cn/>
+
+
+## 下一章-路由控制

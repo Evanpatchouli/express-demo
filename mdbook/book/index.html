@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">11.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -150,7 +150,7 @@
 <h4 id="源码"><a class="header" href="#源码">源码</a></h4>
 <p>仓库有着每一节教程中的完整源码，在阅读本书时，请务必配合源码食用，动手是最好的老师</p>
 <h4 id="进度"><a class="header" href="#进度">进度</a></h4>
-<p>当前本书进度40%，敬请期待</p>
+<p>当前本书进度45%，敬请期待</p>
 <h4 id="合作"><a class="header" href="#合作">合作</a></h4>
 <p>如本书或者源码有任何的纰漏或者错误，欢迎指正，谢谢！</p>
 
@@ -177,6 +177,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

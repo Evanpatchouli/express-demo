@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">11.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,7 +151,7 @@
 <h4 id="源码"><a class="header" href="#源码">源码</a></h4>
 <p>仓库有着每一节教程中的完整源码，在阅读本书时，请务必配合源码食用，动手是最好的老师</p>
 <h4 id="进度"><a class="header" href="#进度">进度</a></h4>
-<p>当前本书进度40%，敬请期待</p>
+<p>当前本书进度45%，敬请期待</p>
 <h4 id="合作"><a class="header" href="#合作">合作</a></h4>
 <p>如本书或者源码有任何的纰漏或者错误，欢迎指正，谢谢！</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="模块化学习"><a class="header" href="#模块化学习">模块化学习</a></h1>
@@ -515,10 +515,108 @@ const uploads = multer();
 ]
 </code></pre>
 <p>是的，我刚刚传了一张名为 C.jpeg 的图片到服务器</p>
-<h2 id="下一章-sql增删改查"><a class="header" href="#下一章-sql增删改查">下一章-Sql增删改查</a></h2>
+<h2 id="下一章-响应"><a class="header" href="#下一章-响应">下一章-响应</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="响应"><a class="header" href="#响应">响应</a></h1>
+<p>上一节讲完了请求，这一节我们就来讲一下响应吧！<br />
+本节作为初级内容，将罗列比较常用的响应方法以及其简单的使用形态</p>
+<h2 id="准备工作-1"><a class="header" href="#准备工作-1">准备工作</a></h2>
+<p>拷贝第一节Hello World项目</p>
+<h2 id="status"><a class="header" href="#status">status</a></h2>
+<p><strong>res.statue(status code)</strong>，这是很实用的一个方法，设置响应体的Http状态码，虽然REST-Apid的风格的是统一200，但在express.js中，有些情景下你必须设置status code为某个值</p>
+<pre><code class="language-javascript">res.status(404);
+</code></pre>
+<h2 id="send"><a class="header" href="#send">send</a></h2>
+<p><strong>res.send(content)</strong>，将任意类型的内容放在响应体内返回给请求源</p>
+<pre><code class="language-javascript">app.get('/', function (req, res) {
+    res.send('Hello World!');
+});
+</code></pre>
+<p>也可以接在status后面:</p>
+<pre><code class="language-javascript">res.status(200).send(&lt;p&gt;hello world&lt;/p&gt;);
+</code></pre>
+<h2 id="end"><a class="header" href="#end">end</a></h2>
+<p><strong>res.end()</strong>，用于快速结束不需要返回数据的场景下的响应，不过end()也可以传送数据，但性能消耗较大，不建议用res.end传数据和信息</p>
+<pre><code class="language-javascript">//END
+app.get('/end',(req,res)=&gt;{
+    res.status(404).end();
+})
+</code></pre>
+<h2 id="json"><a class="header" href="#json">json</a></h2>
+<p><strong>res.json(content)</strong>，以json格式的请求体返回给请求源，可能会收到跨域保护的限制，因此往往需要我们顶上设置的一串Allow</p>
+<pre><code class="language-javascript">//json - 同源限制
+app.get('/json',(req,res)=&gt;{
+    let resp = {
+        code: 200,
+        msg: &quot;json&quot;,
+        toPrint: function(){
+            console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
+        }
+    }
+    res.jsonp(resp);
+})
+</code></pre>
+<h2 id="jsonp"><a class="header" href="#jsonp">jsonp</a></h2>
+<p><strong>res.jsonp(content)</strong>，jsonp是开发者们自研的一种不正统的数据格式，和json基本一样，但不太会被跨域保护给拦着</p>
+<pre><code class="language-javascript">//jsonp - 更容易的解决跨域
+app.get('/jsonp',(req,res)=&gt;{
+    let resp = {
+        code: 200,
+        msg: &quot;jsonp&quot;,
+        toPrint: function(){
+            console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
+        }
+    }
+    res.jsonp(resp);
+})
+</code></pre>
+<h2 id="sendfile"><a class="header" href="#sendfile">sendFile</a></h2>
+<p><strong>res.sendFile(path,options)</strong>，静态传输文件，不能直接使用相对路径</p>
+<pre><code class="language-js">//sendfile，传输文件
+app.get('/sendfile',(req,res)=&gt;{
+    //只能是静态路径，需要相对路径的话有很多方法，以下是其中一个
+    res.sendFile(&quot;hello.txt&quot;, {root: __dirname});
+})
+</code></pre>
+<h2 id="download"><a class="header" href="#download">download</a></h2>
+<p><strong>res.download(path)</strong>，下载传输文件，这个可以直接使用相对路径</p>
+<pre><code class="language-js">//download，下载文件
+app.get('/download',(req,res)=&gt;{
+    //可以直接相对路径
+    res.download(&quot;./hello.txt&quot;);
+})
+</code></pre>
+<h2 id="sendstatus"><a class="header" href="#sendstatus">sendStatus</a></h2>
+<p><strong>res.sendStatus(status code)</strong>，设置响应码，并返回信息为该状态码预设好的文本，比如res.sendStatus(404)，则响应的状态码是s404，返回的信息是'not Found'</p>
+<pre><code class="language-js">//sendstatus
+app.get('/sendstatus',(req,res)=&gt;{
+    //预先写好的httpStatus组合，改一下试试，如果你输入的status码不存在，msg将变成这个码的数字
+    res.sendStatus(404);
+})
+</code></pre>
+<h2 id="location"><a class="header" href="#location">location</a></h2>
+<p><strong>res.location(route)</strong>，REST接口之间的转发，必须设置status为300~309之间的数字，才能成功转发</p>
+<pre><code class="language-js">//location
+app.get('/location/1',(req,res)=&gt;{
+    //转发到最早的helloworld路由去
+    res.location('/').status(302).send();
+})
+
+//location/2
+app.get('/location/2',(req,res)=&gt;{
+    //转达到下面定义的这个接口
+    res.location('/location/index').status(302).send();
+})
+
+app.get('/location/index',(req,res)=&gt;{
+    res.send(&quot;welcome to learn express.js by demos&quot;);
+})
+</code></pre>
+<h2 id="redirect"><a class="header" href="#redirect">redirect</a></h2>
+<p><strong>res.redirect()</strong>，路由重定向，这个比较特殊，我们放到路由控制那一节再讲</p>
+<h2 id="下一章-sql-knex增删改查"><a class="header" href="#下一章-sql-knex增删改查">下一章-Sql-knex增删改查</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sql增删改查"><a class="header" href="#sql增删改查">Sql增删改查</a></h1>
 <p>本节使用knex作为sql框架，以sqlite数据库为例</p>
-<h2 id="准备工作-1"><a class="header" href="#准备工作-1">准备工作</a></h2>
+<h2 id="准备工作-2"><a class="header" href="#准备工作-2">准备工作</a></h2>
 <p>knex是一个运行在各自数据库Driver上的框架，因此需要安装相应的js版数据库Driver，如: PostgreSQL -&gt; pg, mysql/mariadb -&gt; mysql, sqlite -&gt; sqlite3...</p>
 <ul>
 <li>安装sqlite3依赖 <code>npm install sqlite3</code></li>
@@ -728,7 +826,7 @@ app.put('/db/:tbname/record', async function (req, res) {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sql-orm增删改查"><a class="header" href="#sql-orm增删改查">Sql-ORM增删改查</a></h1>
 <p>ORM框架: 对象关系映射，面对对象sql<br />
 本节使用sequelize作为orm-sql框架，数据库为sqlite</p>
-<h2 id="准备工作-2"><a class="header" href="#准备工作-2">准备工作</a></h2>
+<h2 id="准备工作-3"><a class="header" href="#准备工作-3">准备工作</a></h2>
 <p>同样的，需要安装相应的js版数据库Driver，如: PostgreSQL -&gt; pg, mysql/mariadb -&gt; mysql, sqlite -&gt; sqlite3...</p>
 <ul>
 <li>安装sqlite3依赖 <code>npm install sqlite3</code></li>
@@ -980,7 +1078,7 @@ app.get('/db/user/record', async function (req, res) {
 <p>本节的例子仅仅为了演示在express.js中如何运用sequelize操作数据库，关于sequelize的更多拓展和高级使用方法，请移步sequelize官方文档<a href="https://www.sequelize.cn/">https://www.sequelize.cn/</a></p>
 <h2 id="下一章-路由控制"><a class="header" href="#下一章-路由控制">下一章-路由控制</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="路由控制"><a class="header" href="#路由控制">路由控制</a></h1>
-<h2 id="准备工作-3"><a class="header" href="#准备工作-3">准备工作</a></h2>
+<h2 id="准备工作-4"><a class="header" href="#准备工作-4">准备工作</a></h2>
 <p>拷贝第一节HelloWorld项目</p>
 <h2 id="动态路由"><a class="header" href="#动态路由">动态路由</a></h2>
 <p>这个最初我们就接触到了，路径中某一段前面加冒号</p>
@@ -1112,7 +1210,7 @@ app.get('/1/2/3/4/5',(req,res)=&gt;{
 <p>Web安全是Web应用中非常重要的一环，主要由后端和服务器承担安全保障<br />
 面对请求源，后端有着各种各样的鉴权机制: session,cookie,token,jwt,OAuth,OAuth2,api-key,signature...<br />
 本节以jwt为例，演示一个极简的token鉴权</p>
-<h2 id="准备工作-4"><a class="header" href="#准备工作-4">准备工作</a></h2>
+<h2 id="准备工作-5"><a class="header" href="#准备工作-5">准备工作</a></h2>
 <ul>
 <li>拷贝第一节HelloWorld项目</li>
 <li>安装一种jwt依赖(本节使用jsonwebtoken)</li>
@@ -1241,7 +1339,75 @@ app.use(exhandler);
 });
 </code></pre>
 <p>POST 127.0.0.1:8080/，这次你得到了Bad World!，因此只有当你的异常进入了未结束的同步流（用async/await语法糖，或者Promise回调等），才能被返回给请求源</p>
+<h2 id="下一章-中间件"><a class="header" href="#下一章-中间件">下一章-中间件</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="中间件"><a class="header" href="#中间件">中间件</a></h1>
+<p>中间件，估计大家在前几节里面听的耳朵都要出茧子了吧！一直提到，一直不讲。别急，这不来了嘛</p>
+<h2 id="准备工作-6"><a class="header" href="#准备工作-6">准备工作</a></h2>
+<p>拷贝第一节Hello World项目</p>
+<h2 id="什么是中间件"><a class="header" href="#什么是中间件">什么是中间件</a></h2>
+<p>如果正在阅读本书之前的你，已经有过一些其他框架或语言的后端开发经历，那理应是知道中间件这个东西的。当然也不绝对，比如隔壁某个框架太贴心了，以至于笔者都觉得理所应当，在撰写本节时，才惊觉原来在那个框架里竟内置了这么多的中间件。</p>
+<p>由于 express.js 是一个轻量级后端框架，因此中间件的身份变得非常的突出。</p>
+<p>在 express.js 中，中间件（Middleware）是指应用中，用于<strong>额外</strong>处理 HTTP 请求和响应的函数，通常不涉及主体业务。中间件函数可以访问请求对象（request object）（req）、响应对象（response object）（res）和应用程序中处理请求-响应循环流程的<strong>下一个</strong>中间件函数（next）。
+在 express.js 应用中，可以使用 use() 方法来挂载中间件函数。在处理 HTTP 请求时，express.js 会按照添加中间件函数的顺序依次调用它们，直到响应被发送为止。如果在某个中间件函数中没有调用 next() 方法，则<strong>请求-响应</strong>循环流程会在该中间件函数队伍中提前终止。</p>
+<p>中间件的应用主要在日志，鉴权，预检，初步数据处理，异常处理等等。接下来，举几个简单的例子:</p>
+<h2 id="路由中间件"><a class="header" href="#路由中间件">路由中间件</a></h2>
+<p>是的，路由可以单独抽离出来的中间件，可以挂载在app也可以作为子路由挂载在其他路由上</p>
+<pre><code class="language-javascript">//Route coule be middleware
+const routers = express.Router();
+
+routers.get('/', function (req, res) {
+    res.send('Hello World!');
+});
+
+routers.post('/', (req,res)=&gt; {
+    res.send('Bad World!');
+    
+})
+app.use(routers)
+</code></pre>
+<h2 id="鉴权中间件"><a class="header" href="#鉴权中间件">鉴权中间件</a></h2>
+<p>鉴权中间件，可以被挂载到单个路由，一系列路由以及app全局<br />
+这是一个检查请求头token的鉴权中间件:</p>
+<pre><code class="language-javascript">//鉴权中间件，可以被挂载到单个路由，一系列路由以及全局
+let auth = (req,res,next) =&gt; {
+    if (req.headers['token']!='evanp'){
+        return res.send('Unauthorized');
+    }
+    next()
+}
+
+const router_root = express.Router();
+
+router_root.post('/root', auth, (req,res)=&gt; {
+    res.send('Hello root!')
+})
+app.use(router_root);
+</code></pre>
+<h2 id="异常处理中间件"><a class="header" href="#异常处理中间件">异常处理中间件</a></h2>
+<p>异常处理中间件，全局捕捉异常，防止服务器崩溃</p>
+<pre><code class="language-javascript">//异常中间件
+const exhandler = (err,req,res,next)=&gt; {
+    return res.json({ &quot;err&quot;:{ &quot;name&quot;: err.name, &quot;msg&quot;: err.message }});
+}
+app.use(exhandler);
+
+//测试接口
+router_err.get('/error', auth, (req,res)=&gt; {
+    const err = new Error(&quot;error!&quot;);
+    err.name = &quot;故意err&quot;;
+    err.message = &quot;error!&quot;;
+    throw err;
+    res.status(200).json({msg: 'good!'});
+})
+app.use(router_err);
+</code></pre>
+<h2 id="第三方中间件"><a class="header" href="#第三方中间件">第三方中间件</a></h2>
+<p>当然了，在实际生产中，并不需要每个中间件都我们自己写，一是自己造轮子麻烦，而是自己造的轮子可用性不高，不够专业，三是优秀团队开发的中间件性能更好，隐患更小<br />
+可以更多的使用第三方团队开发的优秀的中间件，比如鉴权相关的passport.js，jsonwebtoken，sql相关的knex，sequelize等等。</p>
+<h2 id="万物皆可中间件"><a class="header" href="#万物皆可中间件">万物皆可中间件</a></h2>
+<p>上面给的几个例子，都是属于一个模块的不同部分作为中间件挂载到当前的应用，在express.js中，中间件远不止于次</p>
+<p>app也可以作为中间件挂载到app!一般是负责不同功能的app聚合到一个总的app上，比如订单模块单独一个app，用户模块单独一个app，一起挂载到作为整个完整系统的app上，这样子把整个系统按不同模块切割成独立的app，更易于维护和管理，有点伪微服务架构的意味。</p>
+<p>router也能把app作为他的子中间件，这种做法应该很少用吧，暂时不清楚有什么应用场景。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="架构整合"><a class="header" href="#架构整合">架构整合</a></h1>
 <p>在第一章中，我们按功能分块学习了express后端中不同方面的技术，所有的代码基本都写在了一个文件中，在实际开发中这是不符合规范的，我们需要有一个合理的目录结构，在本章中，将结合常见的前后端架构思想，express.js特性以及借鉴其他语言的优秀框架的架构，每节介绍一种架构方式</p>
 
@@ -1262,6 +1428,22 @@ app.use(exhandler);
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

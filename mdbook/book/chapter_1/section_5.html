@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Sql-ORM增删改查 - 跟着例子学Express.js</title>
+        <title>Sql-knex增删改查 - 跟着例子学Express.js</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html" class="active"><strong aria-hidden="true">6.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">11.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html" class="active"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,18 +144,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="sql-orm增删改查"><a class="header" href="#sql-orm增删改查">Sql-ORM增删改查</a></h1>
-<p>ORM框架: 对象关系映射，面对对象sql<br />
-本节使用sequelize作为orm-sql框架，数据库为sqlite</p>
+                        <h1 id="sql增删改查"><a class="header" href="#sql增删改查">Sql增删改查</a></h1>
+<p>本节使用knex作为sql框架，以sqlite数据库为例</p>
 <h2 id="准备工作"><a class="header" href="#准备工作">准备工作</a></h2>
-<p>同样的，需要安装相应的js版数据库Driver，如: PostgreSQL -&gt; pg, mysql/mariadb -&gt; mysql, sqlite -&gt; sqlite3...</p>
+<p>knex是一个运行在各自数据库Driver上的框架，因此需要安装相应的js版数据库Driver，如: PostgreSQL -&gt; pg, mysql/mariadb -&gt; mysql, sqlite -&gt; sqlite3...</p>
 <ul>
 <li>安装sqlite3依赖 <code>npm install sqlite3</code></li>
-<li>安装sequelize依赖 <code>npm install sequelize</code></li>
+<li>安装knex依赖 <code>npm install knex</code></li>
 <li>引入依赖</li>
 </ul>
 <pre><code class="language-js">const app = express();
-const { Sequelize } = require('sequelize');
+const knex = require('knex');
 </code></pre>
 <ul>
 <li>建议安装一款合适的数据库界面工具，笔者使用的是Beekeeper Studio.</li>
@@ -163,241 +162,197 @@ const { Sequelize } = require('sequelize');
 <h2 id="创建项目"><a class="header" href="#创建项目">创建项目</a></h2>
 <p>拷贝第一节HelloWorld的项目</p>
 <h2 id="创建sqlite连接"><a class="header" href="#创建sqlite连接">创建sqlite连接</a></h2>
-<p>指定方言为sqlite，持久化路径为本目录下的data.db</p>
-<pre><code class="language-js">const sqlite = new Sequelize({
-    dialect: 'sqlite',
-    storage: './data.db'
-})
-</code></pre>
-<h2 id="定义表模型"><a class="header" href="#定义表模型">定义表模型</a></h2>
-<p>sequelize主打一个面对对象sql，因此我们要建立一个对应数据表的类<br />
-就和上一节一样，弄一张一模一样的user表吧:</p>
-<ul>
-<li>引入DataTypes</li>
-</ul>
-<pre><code>const { Sequelize,DataTypes } = require('sequelize');
-</code></pre>
-<ul>
-<li>定义User对象</li>
-</ul>
-<p><code>Model.init(schema,options)</code></p>
-<pre><code class="language-js">const User = sqlite.define('User', {
-    id: {
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true
+<p>指明client为sqlite3（刚刚安装的sqlite3依赖），并指明要操作的sqlite数据库路径</p>
+<pre><code>const sqlite = knex({
+    client: 'sqlite3',
+    connection: {
+      filename: './data.db',
     },
-    // 在这里定义模型属性
-    uname: {
-      type: DataTypes.STRING,
-      allowNull: true
+});
+</code></pre>
+<p>创建了一个连接实例后，会自动创建一个连接池，因此初始化数据库只会发生一次</p>
+<h3 id="连接配置"><a class="header" href="#连接配置">连接配置</a></h3>
+<p>sqlite3默认的是单连接，如果你希望连接池有更多的连接，创建时带上pool:</p>
+<pre><code class="language-js">const sqlite = knex({
+    client: 'sqlite3',
+    connection: {
+      filename: './data.db',
     },
-    passwd: {
-      type: DataTypes.STRING
-      // allowNull 默认为 true
+    pool: { min: 0, max: 7 }
+});
+</code></pre>
+<h4 id="创建连接池的回调"><a class="header" href="#创建连接池的回调">创建连接池的回调</a></h4>
+<p>用于检查连接池是否正常，通常不需要这步</p>
+<pre><code>pool: {
+    afterCreate: function (conn, done) {//...}
+}
+</code></pre>
+<h4 id="acquireconnectiontimeout"><a class="header" href="#acquireconnectiontimeout">acquireConnectionTimeout</a></h4>
+<p>连接超时时间</p>
+<h4 id="日志"><a class="header" href="#日志">日志</a></h4>
+<p>knex内置了打印警告、错误、弃用和调试信息的日志函数，如果你希望自定义日志操作，可以在log项里重写它们</p>
+<pre><code class="language-JS">log: {
+    warn(message) {
+    },
+    error(message) {
+    },
+    deprecate(message) {
+    },
+    debug(message) {
     }
-  }, {
-    // 直接指定表名，不指定的话sequelize将默认以模型的复数形式作为表名
-    tableName: 'user'
+}
+</code></pre>
+<h2 id="数据表"><a class="header" href="#数据表">数据表</a></h2>
+<h3 id="建表"><a class="header" href="#建表">建表</a></h3>
+<p>语法: <code>sqlite.schema.createTable(表名, table=&gt;{表结构})</code></p>
+<p>添加一个PUT接口，监听 127.0.0.1:8080/db/:tbname<br />
+根据我们想创建的表名尝试创建一个表，注意: sql执行是异步的，为了得到结果，建议使用 <strong>async/await</strong> 语法糖（当然你就是喜欢地狱回调也不是不行）</p>
+<pre><code class="language-js">app.put('/db/:tbname', async function (req, res) {
+    let resultSet = null;
+    try {
+        // Create a table
+        resultSet = await sqlite.schema
+          .createTable(req.params.tbname, table =&gt; {
+            table.increments('id');
+            table.string('uname');
+            table.string('passwd');
+          })
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
 });
 </code></pre>
-<p>还有另一种方法，效果是一样的，看个人喜好使用:</p>
-<ul>
-<li>额外引入Model</li>
-</ul>
-<pre><code class="language-js">const { Sequelize,DataTypes,Model } = require('sequelize');
+<p>瞅瞅控制台:</p>
+<pre><code class="language-bash">sqlite does not support inserting default values. Set the `useNullAsDefault` flag to hide this warning. (see docs https://knexjs.org/guide/query-builder.html#insert).
 </code></pre>
-<ul>
-<li>初始化User类</li>
-</ul>
-<p><code>Model.init(schema,options)</code></p>
-<pre><code class="language-js">User继承Model类
-class User extends Model {};
-User.init(
-    {
-        id: {
-            primaryKey: true,
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            autoIncrement: true
-        },
-        // 在这里定义模型属性
-        uname: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        passwd: {
-            type: DataTypes.STRING，
-            defaultValue: '123456', //默认值
-            //allowNull 默认为 true
-        }
-    }, 
-    {
-        // 这是其他模型参数
-        sqlite, // 我们需要传递连接实例
-        modelName: 'User1', // 我们需要选择模型名称,
-        // 直接指定表名
-        tableName: 'user',
-    }
-);
-</code></pre>
-<h2 id="模型同步"><a class="header" href="#模型同步">模型同步</a></h2>
-<p><code>Model.sync</code>: 底层执行的是 create table if not exist</p>
-<ul>
-<li>如果数据库中不存在对应的表，将根据模型直接创建表；若存在，不操作<br />
-<code>Model.sync({force: true})</code>: 底层是先 drop if 然后 create</li>
-<li>如果表已存在，将删除再根据模型创建表<br />
-<code>Model.sync({alter: true})</code>: </li>
-<li>如果表已存在，将修改表结构使之与模型匹配</li>
-</ul>
-<p>花里胡哨的，总之就是保证数据库中有和该模型对应的表</p>
-<h2 id="创建user表"><a class="header" href="#创建user表">创建user表</a></h2>
-<p>我们使用<code>User.sync()</code>创建一张user表</p>
-<pre><code class="language-js">app.put('/db/user', async function (req, res) {
-    let what = await User.sync();
-    res.json(what);
+<p>嗯？sqlite不支持default？不用管他，去看数据库，反正成功创建了user表，你要是加了<code>useNullAsDefault</code>这个flag，反而会告诉你<code> not supported by node-sqlite3</code></p>
+<pre><code class="language-js">const sqlite = knex({
+    client: 'sqlite3',
+    connection: {
+      filename: './data.db',
+    },
 });
 </code></pre>
-<p>使用api调试工具PUT 127.0.0.1:8080/db/user，将会得到1，注意只要能成功映射到到数据表都是1</p>
-<p>用Beekeeper查看我们的user表，你会发现和我们定义的模型有点不一样：多了2个字段——createdAt和updatedAt，即创建时间和修改时间<br />
-sequelize会自动管理这两个字段，注意当你使用了其他的sql工具修改表，这两个字段不会自动更新</p>
-<p>如果你不想要这两个值，或者想换个名字，可以在定义模型时往options添加这些设置:</p>
-<pre><code class="language-js">// 禁止createdAt和updatedAt
-timestamps: false,
-// 只禁止createdAt
-createdAt: false,
-// 给updatedAt换个名字
-updatedAt: 'updateTime'
-</code></pre>
-<h2 id="删除user表"><a class="header" href="#删除user表">删除user表</a></h2>
-<p>drop()方法，底层是 drop if，既可以作用于模型，也可作用于数据库:</p>
-<pre><code class="language-js">sqlite.drop();  //这将删除当前data.db下所有的表
-</code></pre>
-<p>我们使用<code>User.drop()</code>来删除user表</p>
-<pre><code class="language-js">app.delete('/db/user', async function (req, res) {
-    let what = await User.drop();
-    res.json(what);
+<h3 id="删表"><a class="header" href="#删表">删表</a></h3>
+<p>语法: <code>sqlite.schema.deleteTable(表名)</code></p>
+<pre><code class="language-js">app.delete('/db/:tbname', async function (req, res) {
+    try {
+        // Delete a table
+        await sqlite.schema.dropTable(req.params.tbname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+    };
+    res.json(null);
 });
+
 </code></pre>
-<p>使用api调试工具PUT 127.0.0.1:8080/db/user，将会得到1，注意即使表已经没了，也是1</p>
-<h2 id="数据表crud"><a class="header" href="#数据表crud">数据表crud</a></h2>
+<h2 id="表记录crud"><a class="header" href="#表记录crud">表记录crud</a></h2>
 <h3 id="增"><a class="header" href="#增">增</a></h3>
-<p>在操作表记录前，我们先通过模型(<code>Model.build</code>)创建一个实例，然后调用<code>save()</code>将这个实例插入到表中<br />
-当然，如果你从前端拿来的数据不需要进行处理和转化就能拿来用，也可以直接用<code>Model.create</code>插入记录</p>
+<p>往user表里面插入一条新的记录</p>
 <pre><code class="language-js">app.use(express.json({type: 'application/json'}));
-app.put('/db/user/record', async function (req, res) {
-    /**前端请求体
+app.put('/db/:tbname/record', async function (req, res) {
+    /*前端请求体格式:
     {
         &quot;uname&quot;: &quot;evanp&quot;,
         &quot;passwd&quot;: &quot;iloveu&quot;
     }
     */
+   let resultSet = null;
     try {
-        let user = User.build(req.body);
-        let what = await user.save();
-        // let what = await User.create(req.body);
-        res.json(what);
-    }catch(e){
-        res.json(e);
-    }
+        // Insert a record
+        resultSet = await sqlite(req.params.tbname).insert(req.body);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
 });
 </code></pre>
-<p>使用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到:</p>
-<pre><code class="language-json">{
-    &quot;id&quot;: 1,
-    &quot;uname&quot;: &quot;evanp&quot;,
-    &quot;passwd&quot;: &quot;iloveu&quot;,
-    &quot;updatedAt&quot;: &quot;2023-03-19T08:03:37.964Z&quot;,
-    &quot;createdAt&quot;: &quot;2023-03-19T08:03:37.964Z&quot;
-}
-
-</code></pre>
-<p>是的，添加记录成功后它会顺便把整条记录查出来作为返回结果</p>
-<p>Ok，那么现在user表里已经有了id=1的一条记录了，让我们试一下创建相同id的记录会怎么样...<br />
-服务器直接挂了，我们可不希望这样，这意味着有任何不妥的sql都可能导致服务器崩溃，那怎么办呢？</p>
-<p>有的朋友可能记起来了，在上一节中，使用了try-catch语法糖包裹sql操作，这是一种不错的方法</p>
+<p>尝试用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到<code>[1]</code>，这是影响的记录数，1代表成功了</p>
 <h3 id="查"><a class="header" href="#查">查</a></h3>
-<p>sequelize模型内置了一些方法使得我们可以基于模型直接查询</p>
-<ul>
-<li>findAll 查找全部，底层是<code>select * from ...</code></li>
-<li>findOne 查找一个，底层是<code>select * from ... LIMIT 1</code></li>
-<li>findByPk 根据主键查找</li>
-<li>findAndCountAll 查找并返回符合的总条数，常用于分页</li>
-<li>findOrCreate 找不到就创建</li>
-</ul>
-<p>这些方法都可以添加options参数设置WHERE,LIMIT等限制条件<br />
-我们使用findOne来查询evanp和用户名和密码都对的上的一条记录:</p>
-<pre><code class="language-js">//我为了方便直接url传参了，实际上为了隐私，至少应该放在请求体内
-app.get('/db/user/record', async function (req, res) {
-    let evanp = await User.findOne({where: req.query});
-    res.json(evanp);
+<p>从user表里查询uname=我们刚刚插入的记录</p>
+<pre><code class="language-js">app.get('/db/:tbname/record', async function (req, res) {
+    //前端携带query: uname=evanp
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).select('*').where('uname',req.query.uname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
 });
 </code></pre>
-<p>如果你只需要查询其中某些字段，就在options中设置attributes:</p>
-<pre><code class="language-js">User.findAll({
-    attributes: ['id','uname']
-});
-</code></pre>
-<p>如果想给字段取别名，就比如像这样给id取名uid:</p>
-<pre><code class="language-js">User.findAll({
-    attributes: [['id','uid'],'uname']
-});
-</code></pre>
-<h2 id="改"><a class="header" href="#改">改</a></h2>
-<p><code>Model.update(修改项,限制)</code></p>
-<pre><code class="language-js">app.post('/db/user/record', async function (req, res) {
-    /*请求体
+<p>尝试用api调试工具GET 127.0.0.1:8080/db/user/record?uname=evanp，将会得到:</p>
+<pre><code class="language-json">[
     {
-        &quot;set&quot;:{
-            &quot;passwd&quot;: &quot;123456&quot;
-        },
-        &quot;where&quot;: {
-            &quot;uname&quot;: &quot;evanp&quot;,
-            &quot;passwd&quot;: &quot;iloveu&quot;
-        }
+        &quot;id&quot;: 1,
+        &quot;uname&quot;: &quot;evanp&quot;,
+        &quot;passwd&quot;: &quot;iloveu&quot;
+    }
+]
+</code></pre>
+<h3 id="改"><a class="header" href="#改">改</a></h3>
+<p>接下来我们修改uname=evanp这条记录的passwd为123456</p>
+<pre><code class="language-js">app.post('/db/:tbname/record', async function (req, res) {
+    //前端携带query: uname=evanp
+    /*前端请求体格式:
+    {
+        &quot;passwd&quot;: &quot;123456&quot;
     }
     */
-    let what = await User.update(req.body.set,{where: req.body.where})
-    res.json(what);
+   let resultSet = null;
+    try {
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).update(req.body).where('uname',req.query.uname);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
 });
 </code></pre>
-<p>使用api工具进行调试，修改成功将返回1，修改失败将返回0(找不到/改不了)</p>
-<h2 id="删"><a class="header" href="#删">删</a></h2>
-<p><code>Model.destroy(限制)</code></p>
-<pre><code class="language-js">app.delete('/db/user/record', async function (req, res) {
-    /*请求体
+<p>尝试用api调试工具POST 127.0.0.1:8080/db/user/record?uname=evanp，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了</p>
+<h3 id="删"><a class="header" href="#删">删</a></h3>
+<p>接下来我们删除uname=evanp且passwd=123456的这条记录</p>
+<pre><code class="language-js">app.delete('/db/:tbname/record', async function (req, res) {
+    /*前端请求体格式:
     {
         &quot;uname&quot;: &quot;evanp&quot;,
         &quot;passwd&quot;: &quot;123456&quot;
     }
     */
-    let what = await User.destroy({where: req.body})
-    res.json(what);
-});
-</code></pre>
-<p>使用api工具进行调试，删除成功将返回1，删除失败将返回0(找不到/删不了)</p>
-<h2 id="原生sql"><a class="header" href="#原生sql">原生Sql</a></h2>
-<p>当然了，如果你需要直接使用sql语句，也是可以的，<code>连接实例.query(sqlStr)</code>即可<br />
-通常，返回结果包含2个值，一个是结果数组，一个是相关信息</p>
-<pre><code class="language-js">app.post('/db/user/record/freely', async function (req, res) {
-    /*json请求体
-    {
-        &quot;sql&quot;: &quot;xxx&quot;
-    }
-    */
-    let what = null;
+   let resultSet = null;
     try {
-        what = await sqlite.query(req.body.sql);
-    } catch (e) {
-        what = e;
-    }
-    res.json(what);
+        // select a record where uname=xxx
+        resultSet = await sqlite(req.params.tbname).del().where(req.body);
+        // Finally, add a catch statement
+      } catch(e) {
+        console.error(e);
+        resultSet = e;
+    };
+    res.json(resultSet);
 });
 </code></pre>
-<p>执行insert前要注意，如果这张表是经过sequelize同步的，也许会有那两个时间字段的，别忘了</p>
-<p>本节的例子仅仅为了演示在express.js中如何运用sequelize操作数据库，关于sequelize的更多拓展和高级使用方法，请移步sequelize官方文档<a href="https://www.sequelize.cn/">https://www.sequelize.cn/</a></p>
-<h2 id="下一章-路由控制"><a class="header" href="#下一章-路由控制">下一章-路由控制</a></h2>
+<p>尝试用api调试工具DELETE 127.0.0.1:8080/db/user/record，并携带相应请求体，将会得到: [1]，这代表影响记录1条，成功了</p>
+<h2 id="原生sql"><a class="header" href="#原生sql">原生sql</a></h2>
+<p>当然了，如果你需要直接使用sql语句，也是可以的，调用<code>raw(sqlStr)</code>即可，既可以作为某一段sql的绑定，也可以直接当作整句sql</p>
+<p>格式: <code>knex.raw(sql, [bindings]</code></p>
+<pre><code class="language-json">sqlite.raw(&quot;select * from user&quot;,[1]).then((resp)=&gt;{//..})
+</code></pre>
+<p>在这里不做介绍</p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>以上给出了使用knex实现增删改查的基本操作，这些方法并不是唯一的，在实际开发中往往要应对更复杂的场景，基础crud也是远远不够的<br />
+关于knex的更多拓展使用方法，请移步knex官方文档<a href="https://knexjs.org/guide/">https://knexjs.org/guide/</a></p>
+<h2 id="下一章-sql-orm增删改查"><a class="header" href="#下一章-sql-orm增删改查">下一章-Sql-ORM增删改查</a></h2>
 
                     </main>
 
@@ -428,6 +383,22 @@ app.get('/db/user/record', async function (req, res) {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
