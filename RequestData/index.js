@@ -63,12 +63,14 @@ app.post('/request/data/body/:kind', uploads.any(), function (req, res) {
     res.send(result);
 });
 
-function checkQuery(req,res) {
+function checkQuery(req,res,next) {
     if (req.query.id == undefined ||
         req.query.id == null ||
         req.query.name == undefined ||
         req.query.name == null){
         res.send({"msg": "query不齐全"});
+    } else {
+        next();
     }
 }
 
