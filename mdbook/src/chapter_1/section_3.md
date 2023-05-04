@@ -94,12 +94,14 @@ app.post('/request/data/query/info',checkQuery, (req, res)=> {
 
 定义一个检查query的函数，判断是否有id和name，是的话继续，不是的话直接返回错误信息
 ```js
-function checkQuery(req,res) {
+function checkQuery(req,res,next) {
     if (req.query.id == undefined ||
         req.query.id == null ||
         req.query.name == undefined ||
         req.query.name == null){
         res.send({"msg": "query不齐全"});
+    } else {
+        next();
     }
 }
 ```

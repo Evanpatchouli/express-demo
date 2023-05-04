@@ -25,3 +25,6 @@
 - [微服务架构](./chapter_2/section_4.md)
 
 # 高级进阶
+
+- [本章简介](./chapter_3/intro.md)
+- [全局变量](./chapter_3/section_1.md)
