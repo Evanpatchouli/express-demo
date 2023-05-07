@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>全局变量 - 跟着例子学Express.js</title>
+        <title>全局变量与配置文件 - 跟着例子学Express.js</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_1.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_2.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_3.html"><strong aria-hidden="true">15.</strong> 分布式架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_4.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">17.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/section_1.html" class="active"><strong aria-hidden="true">18.</strong> 全局变量</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_1.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_2.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_3.html"><strong aria-hidden="true">15.</strong> 分布式架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_4.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">17.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/section_1.html" class="active"><strong aria-hidden="true">18.</strong> 全局变量与配置文件</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,8 +144,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="全局变量"><a class="header" href="#全局变量">全局变量</a></h1>
-<p>在 express 中使用全局变量有多种方案，我们一起看看有哪些常用的方案</p>
+                        <h1 id="全局变量与配置文件"><a class="header" href="#全局变量与配置文件">全局变量与配置文件</a></h1>
+<p>通常我们会将一些项目的配置信息写在一个文件内，然后读入内存并使用。在 express 中使用全局变量有多种方案，我们一起看看有哪些常用的方案</p>
 <h2 id="准备工作"><a class="header" href="#准备工作">准备工作</a></h2>
 <p>拷贝第一节的HelloWorld项目</p>
 <p>准备一个Resp.js模块：</p>
@@ -165,6 +165,11 @@
 global.config = {
     appname: &quot;GlobalVar&quot;
 }
+/** 更简洁的写法，隐变量，首次被执行到后，会自动挂载到全局
+config = {
+    appname: &quot;GlobalVar&quot;
+}
+*/
 //创建app应用...
 </code></pre>
 <p>这样我们就可以在其它任何地方调用config，比如新建一个router.js挂载到express应用上去</p>
@@ -287,6 +292,61 @@ app.use('/process.env',subapp2);
 <ul>
 <li>没有代码提示，不心安</li>
 </ul>
+<h2 id="json"><a class="header" href="#json">json</a></h2>
+<p>以上的方案都是将配置信息写在js文件中的，对于一个正规的项目来说多少有点儿戏，毕竟写在js中的变量是很容易就能被改变的。绝大多数时候，配置信息是需要变化也不允许变化的，我们只需要静态的信息即可。在Js项目中，经常用json文件作为静态配置文件。</p>
+<p>新建一个<strong>config.json</strong>文件：</p>
+<pre><code class="language-json">{
+	&quot;appname&quot;: &quot;GlobalVar&quot;
+}
+</code></pre>
+<p>在我们的router中新加一条测试一下，不管你在哪里require，在首次被require之后，修改json文件内容将不会再产生影响</p>
+<pre><code class="language-JS">routes.get('/json', (req, res, next)=&gt;{
+    let configJson = require('./config.json');
+    res.send(Resp.Ok(&quot;json静态配置文件&quot;, {&quot;appname&quot;:configJson.appname}));
+});
+</code></pre>
+<p>json文件不支持注释，如果想要注释，要么曲线救国(加与被备注键相关的键值对)，要么使用<strong>Json5</strong>规范</p>
+<pre><code class="language-shell">npm install json5
+</code></pre>
+<p>新建一个<strong>config.json5</strong>文件：</p>
+<pre><code class="language-json5">{
+    &quot;appname&quot;: &quot;GlobalVar&quot;  //应用名
+}
+</code></pre>
+<p>接着在项目的入口文件中引入register，会挂载到全局：</p>
+<pre><code class="language-js">require('json5/lib/register');
+</code></pre>
+<p>之后require就可以解析<code>json5</code>文件了：</p>
+<pre><code class="language-js">routes.get('/json5', (req, res, next)=&gt;{
+    let configJson5 = require('./config.json5');
+    res.send(Resp.Ok(&quot;json5静态配置文件&quot;, {&quot;appname&quot;:configJson5.appname}));
+});
+</code></pre>
+<h2 id="yaml"><a class="header" href="#yaml">yaml</a></h2>
+<p>相比<code>.json</code>文件，<code>.yaml</code>(或<code>.yml</code>)文件是更加现在的配置文件，json文件有着严格的格式要求，yaml(yml)书写起来则更加自然<br />
+新建一个<strong>config.yaml</strong>文件：</p>
+<pre><code class="language-yaml"># 应用名
+appname: GlobalVar  # 应用名
+</code></pre>
+<p>在nodeJs中读取yaml需要借助<strong>fs</strong>和<strong>js-yaml</strong>：</p>
+<pre><code class="language-shell">npm install fs
+npm install js-yaml
+</code></pre>
+<p>把fs挂载到全局即可(之前的global.js)，一般情况下也不会取fs这样的局部变量名，如果需要频繁的操作文件，挂载到全局后会方便很多：</p>
+<pre><code class="language-js">global.fs = require('fs');
+</code></pre>
+<p>在router.js中引入<code>js-yaml</code>并新建一个测试路由：</p>
+<pre><code class="language-js">const yaml = require('js-yaml');
+
+routes.get('/yaml', (req, res, next)=&gt;{
+    /*Object */
+    let configYaml = yaml.load(fs.readFileSync('./config.yaml'));
+    res.send(Resp.Ok(&quot;yaml动态配置文件&quot;, {&quot;appname&quot;:configYaml.appname}));
+});
+</code></pre>
+<p>由于是通过fs读取yaml文件的，因此在改变yaml文件中的内容后，访问路由的结果也会变</p>
+<hr />
+<p>本文总共介绍了6种方案，在项目具体采用哪种并没有绝对的说法，因地制宜即可。</p>
 
                     </main>
 

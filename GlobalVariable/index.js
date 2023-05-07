@@ -1,4 +1,5 @@
 require('./global');
+require('json5/lib/register');
 const express = require('express');
 const evchart = require('js-text-chart').evchart;
 const app = express();

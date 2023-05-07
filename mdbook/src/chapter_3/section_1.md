@@ -1,6 +1,6 @@
-# 全局变量
+# 全局变量与配置文件
 
-在 express 中使用全局变量有多种方案，我们一起看看有哪些常用的方案
+通常我们会将一些项目的配置信息写在一个文件内，然后读入内存并使用。在 express 中使用全局变量有多种方案，我们一起看看有哪些常用的方案
 
 ## 准备工作
 
@@ -27,6 +27,11 @@ module.exports = {
 global.config = {
     appname: "GlobalVar"
 }
+/** 更简洁的写法，隐变量，首次被执行到后，会自动挂载到全局
+config = {
+    appname: "GlobalVar"
+}
+*/
 //创建app应用...
 ```
 这样我们就可以在其它任何地方调用config，比如新建一个router.js挂载到express应用上去
@@ -162,3 +167,77 @@ app.use('/process.env',subapp2);
 
 **缺点：**
 - 没有代码提示，不心安
+
+## json
+
+以上的方案都是将配置信息写在js文件中的，对于一个正规的项目来说多少有点儿戏，毕竟写在js中的变量是很容易就能被改变的。绝大多数时候，配置信息是需要变化也不允许变化的，我们只需要静态的信息即可。在Js项目中，经常用json文件作为静态配置文件。
+
+新建一个**config.json**文件：
+```json
+{
+	"appname": "GlobalVar"
+}
+```
+
+在我们的router中新加一条测试一下，不管你在哪里require，在首次被require之后，修改json文件内容将不会再产生影响
+```JS
+routes.get('/json', (req, res, next)=>{
+    let configJson = require('./config.json');
+    res.send(Resp.Ok("json静态配置文件", {"appname":configJson.appname}));
+});
+```
+json文件不支持注释，如果想要注释，要么曲线救国(加与被备注键相关的键值对)，要么使用**Json5**规范
+```shell
+npm install json5
+```
+新建一个**config.json5**文件：
+```json5
+{
+    "appname": "GlobalVar"  //应用名
+}
+```
+接着在项目的入口文件中引入register，会挂载到全局：
+```js
+require('json5/lib/register');
+```
+之后require就可以解析`json5`文件了：
+```js
+routes.get('/json5', (req, res, next)=>{
+    let configJson5 = require('./config.json5');
+    res.send(Resp.Ok("json5静态配置文件", {"appname":configJson5.appname}));
+});
+```
+
+## yaml
+
+相比`.json`文件，`.yaml`(或`.yml`)文件是更加现在的配置文件，json文件有着严格的格式要求，yaml(yml)书写起来则更加自然  
+新建一个**config.yaml**文件：
+```yaml
+# 应用名
+appname: GlobalVar  # 应用名
+```
+
+在nodeJs中读取yaml需要借助**fs**和**js-yaml**：
+```shell
+npm install fs
+npm install js-yaml
+```
+把fs挂载到全局即可(之前的global.js)，一般情况下也不会取fs这样的局部变量名，如果需要频繁的操作文件，挂载到全局后会方便很多：
+```js
+global.fs = require('fs');
+```
+在router.js中引入`js-yaml`并新建一个测试路由：
+```js
+const yaml = require('js-yaml');
+
+routes.get('/yaml', (req, res, next)=>{
+    /*Object */
+    let configYaml = yaml.load(fs.readFileSync('./config.yaml'));
+    res.send(Resp.Ok("yaml动态配置文件", {"appname":configYaml.appname}));
+});
+```
+由于是通过fs读取yaml文件的，因此在改变yaml文件中的内容后，访问路由的结果也会变
+
+---
+
+本文总共介绍了6种方案，在项目具体采用哪种并没有绝对的说法，因地制宜即可。
