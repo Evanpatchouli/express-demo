@@ -1,0 +1,486 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>数据库初始化 - 跟着例子学Express.js</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_1.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_2.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_3.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_4.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_5.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_6.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_7.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_8.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_9.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/section_10.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_1.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_2.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_3.html"><strong aria-hidden="true">15.</strong> 分布式架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/section_4.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">17.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/section_1.html"><strong aria-hidden="true">18.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/section_2.html" class="active"><strong aria-hidden="true">19.</strong> 数据库初始化</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">跟着例子学Express.js</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="数据库初始化"><a class="header" href="#数据库初始化">数据库初始化</a></h1>
+<p>        在软件开发阶段和测试阶段，为了方便调试，我们通常会进行一系列的数据库初始化操作，比如重置数据表，插入记录等等，或者在部署阶段进行数据初始化的操作</p>
+<p>        根据前面章节介绍过的 <code>knex.js</code> 和 <code>sequelize.js</code>，我们可以利用它们提供的方法进行DDL，本节就数据库表重置的初始化行为做一点探讨，表结果为<code>User{id: num, name: string, age: num}</code>，数据库采用sqlite</p>
+<h2 id="knex-ddl"><a class="header" href="#knex-ddl">Knex DDL</a></h2>
+<p>以下是利用 <code>knex.schema</code> 的一个简单示例:<br />
+<strong>knex.js</strong></p>
+<pre><code class="language-js">const knex = require('knex');
+const fs = require('fs');
+
+const sqlClient = knex({
+    client: 'sqlite3',
+    connection: {
+        filename: `${__root}/db/data.db`,
+        acquireConnectionTimeout: 1000
+    },
+    useNullAsDefault: true
+});
+
+module.exports = sqlClient;
+</code></pre>
+<p><strong>init.js</strong></p>
+<pre><code class="language-js">global.__root = __dirname;
+
+const knex = require('./knex.js');
+
+const drop = knex.schema.dropTableIfExists('user');
+const create = knex.schema.createTable('user', (user)=&gt;{
+    user.increments('id').notNullable().primary();
+    user.text('name').notNullable();
+    user.integer('age').notNullable()
+});
+const promises = [drop,create];
+Promise.all(promises)
+.then(res=&gt;{
+    console.log('Database inits successfully!')
+}).catch(err=&gt;{
+    console.error(err);
+})
+</code></pre>
+<h2 id="sequelize-ddl"><a class="header" href="#sequelize-ddl">Sequelize DDL</a></h2>
+<p>以下是利用 <code>Sequelize.Model</code> 的一个简单示例:<br />
+<strong>sequelize.js</strong></p>
+<pre><code class="language-js">const { Sequelize,DataTypes,Model } = require('sequelize');
+const fs = require('fs');
+
+const sqlClient = new Sequelize({
+    dialect: 'sqlite',
+    storage: `${__root}/db/data.db`
+})
+
+const User = sqlClient.define('User', {
+    id: {
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    age: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+}, {
+    tableName: 'user',
+    timestamps: false,
+});
+
+module.exports = {
+    sqlz: sqlClient,
+    User
+}
+</code></pre>
+<p><strong>init.js</strong></p>
+<pre><code class="language-js">global.__root = __dirname;
+
+const { User } = require('./sequelize');
+
+// User.drop();User.sync();
+User.sync({ force: true })  //这个相当于前两个的结合体
+    .then(res=&gt;{
+        console.log('Database inits successfully!');
+    }).catch(err=&gt;{
+    console.error(err);
+})
+</code></pre>
+<h2 id="sql文件"><a class="header" href="#sql文件">SQL文件</a></h2>
+<p>        Springboot作为Web后端最流行的框架之一，想必各位都接触过或者听说过，在Springboot中，可以在配置文件中设置sql脚本的路径，在项目启动时执行sql脚本来完成初始化。
+        这是一种非常好的方法，因为有时候我们项目场景下的数据库表结构与关系可能非常复杂，而且不同语言，不同框架的实现有些区别，用代码去完成初始化操作将是一件非常麻烦的事，既然SQL是关系型数据库通用的语言，那我们就可以通过SQL脚本来定义数据库表的结构和关系，可以手写SQL脚本，也可以借助如Navicat之类的工具设计表然后转储sql脚本，然后交给我们的程序去执行，或者手动执行。</p>
+<p>Node的sql框架千千万，我在几个主流框架中似乎都没看到有提供执行sql文件的特性，其实没那么复杂，不从构造完美的框架角度，仅以为项目服务的角度考虑来说是这样的，接下来我们就来简单实现一下通过sql脚本去初始化数据库。</p>
+<p>有两条路：</p>
+<ol>
+<li>运行环境先安装sqlite3客户端，node读取sql脚本内容，node通过<code>exec</code>去指定目录下，打开sqlite3命令行连接sqlite数据库，同时把sql内容传递过去，在sqlite3中执行sql脚本完成数据库初始化操作</li>
+<li>Node安装sqlite3依赖，通过sql框架连接sqlite数据库，node读取sql脚本内容，对内容进行规范化处理只剩下纯净的sql语句后，交给sql框架以sql语句的形式去运行</li>
+</ol>
+<p>Springboot采用的就是第2种方法，那我们也在Node中实现一下吧<br />
+实现准备好sql脚本 <strong>schemal.sql</strong>：</p>
+<pre><code class="language-sql">-- 先删除user表
+DROP TABLE IF EXISTS `user`;
+-- 定义表结构，并创建user表
+CREATE TABLE `user` (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  --自增主键
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL
+);
+
+</code></pre>
+<h3 id="knex"><a class="header" href="#knex">Knex</a></h3>
+<p>先用Knex作为sql框架做个示范。获取到项目根目录路径后，建立数据库连接：
+<strong>knex.js</strong></p>
+<pre><code class="language-js">const knex = require('knex');
+const fs = require('fs');
+
+const sqlClient = knex({
+    client: 'sqlite3',
+    connection: {
+        filename: `${__root}/db/data.db`,
+        acquireConnectionTimeout: 1000
+    },
+    useNullAsDefault: true
+});
+
+module.exports = sqlClient;
+</code></pre>
+<p>接下来，为客户端实现执行sql文件的方法：</p>
+<ol>
+<li>定义<code>runSql</code>方法的传参和返回<br />
+我这里传入sql文件的路径，返回sql语句执行的promise链</li>
+<li>内部实现，首先通过<code>fs</code>模块读取sql脚本内容并转为字符串</li>
+<li>把内容中的注释去掉</li>
+<li>去掉内容首尾的空格</li>
+<li>去掉<code>\r</code></li>
+<li>去掉<code>\n</code>（我为了打印sql语段时更加美观，省去了这一步，不影响执行结果）</li>
+<li>把内容按照<code>;</code>号分割成一个个独立的sql语句字串</li>
+<li>过滤掉空字串(由每2个sql语句间的空格形成)</li>
+</ol>
+<pre><code class="language-js">sqlClient.runSql = (path)=&gt;{
+    const script = fs.readFileSync(path).toString();
+    console.log(&quot;Going to run a sql file:&quot;);
+    console.log(script);
+    /**
+     * 拆成一句句sql来执行是因为，knex执行一串语句时，会把它们都算进一个事务内
+     * 利用正则忽略注释
+     * 去首尾空格
+     * 按冒号分句
+     * 校验字串是否为sql语句
+     * @type {string[]}
+     */
+    const sqls = script.replace(/\/\*[\s\S]*?\*\/|(--|\#)[^\r\n]*/gm, '').trim().replaceAll('\r','').split(';').filter(str=&gt;{
+        return str.trim() ? true : false;
+    });
+    console.log(&quot;sqls&quot;);
+    console.log(sqls);
+    console.log(&quot;start run:&quot;);
+    const promises = sqls.map(sql=&gt;{
+        sql += ';';  // knex会自动补上冒号，加不加无所谓其实
+        console.log(&quot;Going to run a sql:&quot;);
+        console.log(sql);
+        return sqlClient.raw(sql);
+    })
+    return promises;
+}
+</code></pre>
+<p>到这里，我们就得到了纯净的一条条sql语句，接下来把sql语句丢给<code>knex</code>即可：
+<strong>init.js</strong></p>
+<pre><code class="language-js">global.__root = __dirname;
+
+const knex = require('./knex.js')
+
+const promises = knex.runSql(`${__root}/db/schema.sql`);
+Promise.all(promises)
+    .then(res=&gt;{
+        console.log(&quot;Database inits successfully!&quot;)
+    }).catch(err=&gt;{
+    console.error(err);
+})
+</code></pre>
+<p><strong>输出结果：</strong></p>
+<pre><code class="language-shell">D:\Workstation\gitee-localRepo\express-demo\DatabaseInit&gt;node index.js
+Going to run a sql file:
+-- 先删除user表
+DROP TABLE IF EXISTS `user`;
+-- 定义表结构，并创建user表
+CREATE TABLE `user` (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  --自增主键
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL
+);
+
+sqls
+[
+  'DROP TABLE IF EXISTS `user`',
+  '\n' +
+    '\n' +
+    'CREATE TABLE `user` (\n' +
+    '    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  \n' +
+    '    name TEXT NOT NULL,\n' +
+    '    age INTEGER NOT NULL\n' +
+    ')'
+]
+start run:
+Going to run a sql:
+DROP TABLE IF EXISTS `user`;
+Going to run a sql:
+
+
+CREATE TABLE `user` (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL
+);
+Server is ready on http://:::8080
+Database inits successfully!
+</code></pre>
+<p>很好，我们可以很清晰的看到sql的执行过程</p>
+<h3 id="sequelize"><a class="header" href="#sequelize">Sequelize</a></h3>
+<p>        如果你把<code>knex</code>这套照搬过去，把<code>knex.raw</code>换成<code>sequelize.query</code>，你也许会尴尬的发现，不太对劲，它先创建了user表，接着又把它给删了，还大言不惭地打印了成功信息（我的环境下是这样，不清楚别人会不会，但既然发生了就说明存在一定的问题）。尝试反复执行knex示例和seuelize示例，前者永远正确，后者永远错误，而且sequelize似乎更慢一点，产生这样的区别，可能是它们执行sql语句的实现机制不太一样，花费精力去看它源码没有必要，既然在这个场景下我们这两个步骤有着明确的先后顺序，那我们就通过async/await让它们完全的顺序执行即可：</p>
+<pre><code class="language-js">sqlClient.runSql = async (path)=&gt; {
+    const script = fs.readFileSync(path).toString();
+    console.log(&quot;Going to run a sql file:&quot;);
+    console.log(script);
+    /**
+     * 拆成一句句sql来执行是因为，knex执行一串语句时，会把它们都算进一个事务内
+     * 忽略注释
+     * 去首尾空格
+     * 按冒号分句
+     * 校验字串是否为sql语句
+     * @type {string[]}
+     */
+    const sqls = script.replace(/\/\*[\s\S]*?\*\/|(--|\#)[^\r\n]*/gm, '').trim().replaceAll('\r','').split(';').filter(str=&gt;{
+        return str.trim() ? true : false;
+    });
+    console.log(&quot;sqls&quot;);
+    console.log(sqls);
+    console.log(&quot;start run:&quot;);
+    for (let sql of sqls) {
+        const res = await sqlClient.query(`${sql};`);
+    }
+}
+</code></pre>
+<p><strong>输出结果：</strong></p>
+<pre><code class="language-shell">D:\Workstation\gitee-localRepo\express-demo\DatabaseInit&gt;node index.js
+Going to run a sql file:
+-- 先删除user表
+DROP TABLE IF EXISTS `user`;
+-- 定义表结构，并创建user表
+CREATE TABLE `user` (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  --自增主键
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL
+);
+
+sqls
+[
+  'DROP TABLE IF EXISTS `user`',
+  '\n' +
+    '\n' +
+    'CREATE TABLE `user` (\n' +
+    '    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  \n' +
+    '    name TEXT NOT NULL,\n' +
+    '    age INTEGER NOT NULL\n' +
+    ')'
+]
+start run:
+Server is ready on http://:::8080
+Executing (default): DROP TABLE IF EXISTS `user`;
+Executing (default): CREATE TABLE `user` (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL
+);
+Database inits successfully!
+</code></pre>
+<p>Ok！现在Sequelize也按照我们的意愿完成了重置user表的初始化工作</p>
+<hr />
+<p>如果初始化过程中涉及严格的先后顺序，务必做好同步流甚至回滚机制。此外，在实际项目中，为了项目的代码规范性，应当将数据库路径，初始化脚本路径都写在配置文件中，而不是像本节为了方便直接写在需要调用的js文件中。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter_3/section_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter_3/section_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

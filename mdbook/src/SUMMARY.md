@@ -28,3 +28,4 @@
 
 - [本章简介](./chapter_3/intro.md)
 - [全局变量与配置文件](./chapter_3/section_1.md)
+- [数据库初始化](./chapter_3/section_2.md)
