@@ -19,7 +19,7 @@ app.get('/get', function (req, res) {
     res.send(requestParams);
 });
 
-const server = app.listen(8080, () => {
+const server = app.listen(8090, () => {
     let host = server.address().address;
     let port = server.address().port;
 

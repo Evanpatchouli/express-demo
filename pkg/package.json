@@ -19,6 +19,8 @@
   },
   "scripts": {
     "test": "curl -X GET http://localhost:8080/toConfig",
+    "start:dev": "node src/index.js",
+    "start": "node lib/index.js",
     "pkg": "pkg . -t node16-win-x64 --out-path=dist/",
     "babel": "npx babel src --out-dir=lib"
   },
