@@ -38,9 +38,9 @@
 - [全局变量与配置文件](./chapter_3/全局变量与配置文件.md)
 - [数据库初始化](./chapter_3/数据库初始化.md)
 - [express-validator](./chapter_3/express-validator.md)
-- [集成redis](./chapter_3/集成redis.md)
-- [集成rabbitmq](./chapter_3/集成rabbitmq.md)
-- [集成websocket](./chapter_3/集成websocket.md)
+- [集成Redis](./chapter_3/集成redis.md)
+- [集成RabbitMQ](./chapter_3/集成rabbitmq.md)
+- [集成Websocket](./chapter_3/集成websocket.md)
 - [集成SocketIO](./chapter_3/集成SocketIO.md)
 - [全面鉴权](./chapter_3/全面鉴权.md)
 - [软件测试](./chapter_3/软件测试.md)
@@ -50,4 +50,4 @@
 
 ---
 
--[后记](./后记.md)
+[后记](./后记.md)

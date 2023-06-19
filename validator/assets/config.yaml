@@ -1,0 +1,8 @@
+app:
+  name: validator
+  host: 127.0.0.1
+  port: 8080
+assets: default
+
+log4js:
+  level: INFO

@@ -1,7 +1,7 @@
 const express = require('express');
+require('express-async-errors');
 const evchart = require('js-text-chart').evchart;
 const app = express();
-// import 'express-async-errors'
 
 app.all("*", function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -16,24 +16,24 @@ app.get('/', (req, res, next)=> {
     err.name = '无法访问';
     err.message = '对不起，网站正在维护中';
     // next(err);
-    throw err
-    // res.send('Hello World!');
+    throw err;
 });
 
-app.post('/', (req, res, next)=> {
-    setTimeout(()=>{
-        const err = new Error();
-        err.name = '无法访问';
-        err.message = '对不起，网站真的正在维护中！';
-        next(err);
-    },3000);
-    res.send("Bad World!");//尝试隐藏
+app.post('/', async (req, res, next)=> {
+    res.send(await error()).end();
 });
+
+function error() {
+    let err = new Error('网站维护');
+    err.message = "自定义的错误";
+    return Promise.reject(err);
+}
 
 let exhandler = (err, req, res, next)=> {
-    console.error('Error:', err);
+    console.error('Error:', err.message);
     res.status(500).json(err);
 }
+
 
 app.use(exhandler);
 
