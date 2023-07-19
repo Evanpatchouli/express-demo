@@ -1,0 +1,168 @@
+- const express_demo = 'https://jun-laner.gitee.io/express-demo'
+
+doctype html
+html 
+  head 
+    title= title
+    //- link(rel='stylesheet', href='css/index.css') //- 如果要href引入，必须在express中设置为静态资源
+    style
+      include css/index.css
+  body
+    div(class="container")
+      h1= message
+      a(href= express_demo, target= '_blank') Go to express-demo
+    div(class="container2")
+      h2= 'Use pug template in express'
+      -
+        const tips = [
+          {
+            title:'Notice:', desc:"in pug you must Align your label in right columns!!!"
+          },
+          { title:'Doctype', desc:'define the doc type', style:'pug', example: ['doctype html']},
+          { title:'Variables', desc:'defines variables in pug', style:'pug', example:['- const hello_msg="Welcome to express pug!"']},
+          { title:'Codes into lines', desc:'sometimes codes in one line is awful if our js codes is much long'},
+          { title:'wrong example', 
+            style:'pug',
+            example:[
+              '- const list = [',
+              '    "a",',
+              '    "b",',
+              '  ]'
+            ]
+          },
+          { title:'right example',
+            style:'pug',
+            example:[
+              '- ',
+              '  const list = [',
+              '    "a",',
+              '    "b",',
+              '  ]'
+            ]
+          },
+          { title:'Attribute', desc:'assign attributes to labels', style:'pug', example: ['a(href= express_demo, target= "_blank") Go to express-demo']},
+          { title:'Iterator', desc:'Sometime you need to render a list',
+            example: [
+              '- const apps = [{ name: "qq" },{ name: "wechat" },{ name: "ins" }]',
+              'each app in list',
+              '  p #{app.name}'
+            ]
+          },
+          { title:'If branches', desc:'conditional if branches',
+            style:'pug',
+            example: ['if hello_msg', 'span hello_msg exists!']
+          },
+          { title:'Case branches', desc:'conditional cases branches',
+            style:'pug',
+            example: [
+              '- const day = 1;',
+              'case day',
+              '  when 1',
+              '    span Monday',
+              '  default',
+              '    span Unknown']
+          },
+          {
+            title:'Include', desc:'you can include a pug or a segment, such as this you can import css',
+            style:'pug',
+            example: [
+              "html", 
+              "  head",
+              "    title= title",
+              "    style",
+              "      include css/index.css"
+            ]
+          },
+          {
+            title:'Style', desc:'way to write direct css style in pug',
+            style:'pug',
+            example: [
+              "style.", 
+              "  h1{",
+              "    color: green;",
+              "  }"
+            ]
+          },
+          {
+            title:'Of course,', desc:'link with the css file can be OK too',
+            style:'pug',
+            example: [
+              "html", 
+              "  head",
+              "    title= title",
+              "    link(rel='stylesheet', href='css/index.css')"
+            ]
+          },
+          {
+            title:'Markdown', desc:"if you want to render a markdown you can do like this:"
+          },
+          {
+            title:'First step:', desc:"install markdown-it",
+            style:'shell',
+            example: ['npm install --save jstransformer-markdown-it']
+          },
+          {
+            title:'Second step:', desc:"write markdown in you pug",
+            style:'pug',
+            example: [
+              ":markdown-it(linkify langPrefix='highlight-')",
+              '  # Markdown',
+              '  use markdown in pug file',
+              '  ## example',
+              '  ```js',
+              '  const pug = "pug";',
+              '  ```'
+            ]
+          }
+        ]
+      each tip in tips
+        p(class="p")
+          if tip.title
+            div(class="text-box")
+              span(class="tip-title") #{tip.title}
+              span #{tip.desc}
+          if tip.example
+            div(class="code-box")
+              code
+                pre ```#{tip.style}
+                each line in tip.example
+                  pre #{line}
+                pre ```
+      div(class="md")
+        :markdown-it(linkify langPrefix='highlight-js')
+          # Markdown
+          use markdown in pug file
+          ## example
+          ```js
+          const pug = "pug";
+          ```
+          # Thanks For Reading this Article
+
+style.
+  .container2 {
+    text-align: center;
+    margin: auto;
+    width: fit-content;
+    min-width: 400px;
+    max-width: 800px;
+  }
+  .tip-title {
+    font-weight: bolder;
+  }
+  span {
+    margin-right: 12px;
+  }
+  .code-box, .text-box, .md {
+    text-align: left;
+  }
+  .text-box {
+    margin-bottom: 4px;
+  }
+  .code-box {
+    background: #3e4444;
+    color: #fff;
+    padding: 1px 0 1px 16px;
+  }
+  code {
+    display: block;
+  }

@@ -1,0 +1,12 @@
+[33msqlite does not support inserting default values. Set the `useNullAsDefault` flag to hide this warning. (see docs https://knexjs.org/guide/query-builder.html#insert).[39m
+        _                        _                         
+       | |                      | |                        
+ _ __  | | __  __ _  ______   __| |  ___  _ __ ___    ___  
+| '_ \ | |/ / / _` ||______| / _` | / _ \| '_ ` _ \  / _ \ 
+| |_) ||   < | (_| |        | (_| ||  __/| | | | | || (_) |
+| .__/ |_|\_\ \__, |         \__,_| \___||_| |_| |_| \___/ 
+| |            __/ |                                       
+|_|           |___/                                        
+
+
+Server is ready on http://127.0.0.1:8080

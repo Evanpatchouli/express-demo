@@ -1,0 +1,9 @@
+app:
+  name: pug
+  host: 127.0.0.1
+  port: 8080
+assets: default
+public: default
+
+log4js:
+  level: INFO
