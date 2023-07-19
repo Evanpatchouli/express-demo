@@ -2,6 +2,9 @@ const Resp = require('../model/resp');
 const logger = require('../utils/logger');
 
 module.exports = {
+  /**
+   * @type {import('express').ErrorRequestHandler}
+   */
   excatcher: (err, req, res, next) => {
     if (err) {
       const {code,msg,symbol,data,back} = err.message;
@@ -23,6 +26,9 @@ module.exports = {
     }
   },
 
+  /**
+   * @type {import('express').ErrorRequestHandler}
+   */
   exlogger: (err,req,res,next)=>{
     if (logger.level.level <= 10000) {
       logger.error(err);
