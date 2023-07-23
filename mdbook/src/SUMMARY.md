@@ -26,7 +26,7 @@
 - [本章简介](./chapter_2/intro.md)
 - [express-cli](./chapter_2/express-cli.md)
 - [MVC层级架构](./chapter_2/MVC层级架构.md)
-- [分布式架构](./chapter_2/分布式架构.md)
+- [分布式结构](./chapter_2/分布式结构.md)
 - [微服务架构](./chapter_2/微服务架构.md)
 - [evp-express-cli](./chapter_2/evp-express-cli.md)
 
@@ -36,6 +36,7 @@
 
 - [本章简介](./chapter_3/intro.md)
 - [全局变量与配置文件](./chapter_3/全局变量与配置文件.md)
+- [错误分类和日志分级](./chapter_3/错误分类和日志分级.md)
 - [数据库初始化](./chapter_3/数据库初始化.md)
 - [页面渲染](./chapter_3/页面渲染.md)
 - [express-validator](./chapter_3/express-validator.md)
@@ -51,5 +52,13 @@
 - [pm2进程管理](./chapter_3/pm2进程管理.md)
 
 ---
+
+# 最佳实践
+
+- [代码规范](./chapter_4/代码规范.md)
+- [高性能](./chapter_4/高性能.md)
+- [安全性](./chapter_4/安全性.md)
+- [健康检查](./chapter_4/健康检查.md)
+
 
 [后记](./后记.md)

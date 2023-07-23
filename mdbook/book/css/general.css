@@ -89,7 +89,6 @@ h6:target::before {
 }
 
 .content {
-    
     overflow-y: auto;
     padding: 0 5px 50px 5px;
 }

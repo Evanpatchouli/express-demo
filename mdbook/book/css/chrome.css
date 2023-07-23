@@ -33,7 +33,6 @@ a > .hljs {
     margin: auto calc(0px - var(--page-padding));
 }
 #menu-bar {
-    
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -358,7 +357,6 @@ ul#searchresults span.teaser em {
 /* Sidebar */
 
 .sidebar {
-    
     position: fixed;
     left: 0;
     top: 0;

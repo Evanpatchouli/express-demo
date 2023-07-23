@@ -1,0 +1,21 @@
+app:
+  name: evp-express-cli
+  host: 127.0.0.1
+  port: 8080
+assets: default
+public: default
+
+log4js:
+  level: INFO
+
+database:
+  client: mysql2
+  host: localhost
+  port: 3306
+  user: root
+  password: root
+  database: example
+  init:
+    mode: always  # always, never
+    schema: ${assets}/schema.sql
+    data: ${assets}/data.sql

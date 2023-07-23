@@ -171,3 +171,5 @@ module.exports = router;
 
 本文仅演示了 Zod.js 最基础的用法，还有`z.optional`可选，`z.nullish`可空，`z.refine`自定义逻辑等api，更详细更高阶的用法可以查看 **Zod官方手册**：<https://zod.dev/README_ZH>
 
+## 下一节-集成Redis
+

@@ -124,4 +124,4 @@ express-validator的用法远远不止于此，详见官方文档<https://expres
 
 ---
 
-## 下一节-集成Redis
+## 下一节-使用zod检验
