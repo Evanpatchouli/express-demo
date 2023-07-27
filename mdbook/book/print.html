@@ -3123,15 +3123,156 @@ app.post('/', async(req,res,next)=&gt;{
 <p>关于amqplib.js的详细用法请见官方文档: <a href="http://npmjs.com/package/amqplib">http://npmjs.com/package/amqplib</a></p>
 <h2 id="下一节-集成websocket"><a class="header" href="#下一节-集成websocket">下一节-集成Websocket</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="集成websocket"><a class="header" href="#集成websocket">集成websocket</a></h1>
+<p>本节我们介绍在如何在 express 中集成 websocket。</p>
+<p>WebSocket 服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种。</p>
+<h2 id="准备工作-13"><a class="header" href="#准备工作-13">准备工作</a></h2>
+<ul>
+<li>创建一个 express.js 项目（本文基于evp-express-cli）</li>
+<li><strong>安装ws.js:</strong>（本教程使用更通用的ws.js，有兴趣的同学可以去了解express-ws.js）</li>
+</ul>
+<pre><code class="language-console">npm i ws
+</code></pre>
+<h2 id="创建代理-2"><a class="header" href="#创建代理-2">创建代理</a></h2>
+<p>正常的项目都是分层的，为了避免循环依赖，本文采用代理类构造单例的方式来创建websocket服务器。</p>
+<p><strong>wsProxy.js:</strong><br />
+在构造器内创建websocket服务器，并监听个别事件，最后把服务器赋给server成员变量。再定义一个静态的获取实例方法，调用时实例若为空，就构建实例:</p>
+<pre><code class="language-js">const {WebSocketServer} = require('ws');
+
+class WebsocketProxy {
+  /**@type {WebsocketProxy} */
+  static INSTANCE;
+  server;
+  constructor() {
+    const _server = new WebSocketServer({
+      server: require('./server')
+    })
+
+    this.server = _server;
+    
+    _server.on(&quot;listening&quot;, () =&gt; {
+      console.log(`websocket server is listening.`);
+      
+    })
+
+    _server.on(&quot;connection&quot;, (ws) =&gt; {
+      console.log(`websocket client connection`);
+      ws.send(`Hello, I'm WebSocket server.`);
+      ws.on(&quot;message&quot;, (message) =&gt; {
+        ws.send(`${message}`);
+      })
+    })
+  }
+
+  static instance() {
+    if(!WebsocketProxy.INSTANCE) {
+      WebsocketProxy.INSTANCE = new WebsocketProxy();
+    }
+    return WebsocketProxy.INSTANCE;
+  }
+}
+
+function init() {
+  return WebsocketProxy.instance();
+}
+
+module.exports = {
+  init
+};
+</code></pre>
+<p>最后把服务器导出来:</p>
+<pre><code class="language-js">async function init() {
+  return RedisProxy.instance();
+}
+
+module.exports = {
+  init,
+  instance: RedisProxy.instance(),
+};
+</code></pre>
+<p>然后在任意其它地方调用 wsProxy.instance 即可获取单例，在从单例中获取server即可主动操作websocket.</p>
+<pre><code class="language-js">const WsProxy = require('../utils/wsProxy');
+const wsProxy = WsProxy.instance;
+const wsServer = wsProxy.server;
+</code></pre>
+<p>你可以自己手动配置一遍，也可以使用evp-express-cli作为手脚架创建项目并选择websocket模板。</p>
+<p>关于 ws.js 的详细用法请见官方文档: <a href="https://www.npmjs.com/package/ws">https://www.npmjs.com/package/ws</a></p>
 <h2 id="下一节-集成socketio"><a class="header" href="#下一节-集成socketio">下一节-集成SocketIO</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="集成socketio"><a class="header" href="#集成socketio">集成SocketIO</a></h1>
+<p>本节我们介绍在如何在 express 中集成 Socket.IO</p>
+<p>Socket.IO 算是 WebSocket 的一个超集，进行了一些封装和拓展。</p>
+<h2 id="准备工作-14"><a class="header" href="#准备工作-14">准备工作</a></h2>
+<ul>
+<li>创建一个 express.js 项目（本文基于evp-express-cli）</li>
+<li><strong>安装socket.io.js:</strong></li>
+</ul>
+<pre><code class="language-console">npm i socket.io
+</code></pre>
+<h2 id="创建代理-3"><a class="header" href="#创建代理-3">创建代理</a></h2>
+<p>正常的项目都是分层的，为了避免循环依赖，本文采用代理类构造单例的方式来创建websocket服务器。</p>
+<p><strong>wsProxy.js:</strong><br />
+在构造器内创建socket.io服务器，并监听个别事件，最后把服务器赋给server成员变量。再定义一个静态的获取实例方法，调用时实例若为空，就构建实例:</p>
+<pre><code class="language-js">const { Server } = require('socket.io');
+const server = require('./server');
+const logger = require('./logger');
+
+class SocketIoProxy {
+  /**
+   * @type {Server}
+   */
+  _instance = null;
+  constructor() {
+    this.server = new Server(server);
+    logger.info('SocketIo server created!');
+    this.server.on('connection', (socket) =&gt; {
+      socket.on('message', (data) =&gt; {
+        logger.info(`client: ${JSON.stringify(data)}`);
+        socket.emit('message', data);
+      });
+    });
+  }
+
+  static instance(){
+    if(!this._instance){
+      this._instance = new SocketIoProxy();
+    }
+    return this._instance;
+  }
+}
+
+async function init() {
+  return SocketIoProxy.instance();
+}
+
+module.exports = {
+  init,
+  instance: SocketIoProxy.instance()
+}
+
+</code></pre>
+<p>最后把服务器导出来:</p>
+<pre><code class="language-js">async function init() {
+  return RedisProxy.instance();
+}
+
+module.exports = {
+  init,
+  instance: RedisProxy.instance(),
+};
+</code></pre>
+<p>然后在任意其它地方调用 socketioProxy.instance 即可获取单例，在从单例中获取server即可主动操作socketio.</p>
+<pre><code class="language-js">const SocketioProxy = require('../utils/socketioProxy');
+const socketioProxy = SocketioProxy.instance;
+const socketioServer = socketioProxy.server;
+</code></pre>
+<p>你可以自己手动配置一遍，也可以使用evp-express-cli作为手脚架创建项目并选择socketio模板。</p>
+<p>关于 socket.io 的详细用法请见官方文档: <a href="https://socket.io/zh-CN/">https://socket.io/zh-CN/</a></p>
 <h2 id="下一节-全面鉴权"><a class="header" href="#下一节-全面鉴权">下一节-全面鉴权</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="全面鉴权"><a class="header" href="#全面鉴权">全面鉴权</a></h1>
 <h2 id="下一节-软件测试"><a class="header" href="#下一节-软件测试">下一节-软件测试</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="软件测试"><a class="header" href="#软件测试">软件测试</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="软件构建"><a class="header" href="#软件构建">软件构建</a></h1>
 <p>运行node项目，一般都是直接运行源码，不过这样子部署的时候不太方便，需要拷贝整个文件夹，如果是需要交付给客户的，并且客户不需要源码，客户不懂编程知识的话，你丢给他一堆源码让该怎么让他运行呢？Java可以打包成 jar/war, C/C++可以打包为 exe，Node也迫切需要一种可靠的构建技术。前端的朋友们可能都熟悉webpack,rolliup或者是Vite，不过它们都只是将项目合并为单个js文件，运行仍旧依赖外部的js-runtime，在本节，我们将介绍一个构建Node项目为可执行程序的工具 —— <strong>pkg</strong></p>
-<h2 id="准备工作-13"><a class="header" href="#准备工作-13">准备工作</a></h2>
+<h2 id="准备工作-15"><a class="header" href="#准备工作-15">准备工作</a></h2>
 <p>创建如下项目目录：</p>
 <pre><code class="language-TEXT">│  package.json
 │  readme.md
