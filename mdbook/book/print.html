@@ -3268,11 +3268,169 @@ const socketioServer = socketioProxy.server;
 <p>关于 socket.io 的详细用法请见官方文档: <a href="https://socket.io/zh-CN/">https://socket.io/zh-CN/</a></p>
 <h2 id="下一节-全面鉴权"><a class="header" href="#下一节-全面鉴权">下一节-全面鉴权</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="全面鉴权"><a class="header" href="#全面鉴权">全面鉴权</a></h1>
+<p>这一节我们来介绍一下 <strong>Passport.js</strong>，这是一个强大的 NodeJS 的认证中间件</p>
+<p>Passport.js 提供了多种认证方式，账号密码、OpenID、ApiKey、JWT、OAuth、三方登录等等。</p>
+<p>使用 Passport.js 认证要配置三个部分：</p>
+<ol>
+<li>认证策略</li>
+<li>中间件</li>
+<li>会话</li>
+</ol>
+<p>接下来我们以 账号密码 认证为例，来演示一下 Passport.js 的使用</p>
+<h2 id="准备工作-15"><a class="header" href="#准备工作-15">准备工作</a></h2>
+<p>新建一个基础的 evp-express 项目</p>
+<h2 id="安装依赖"><a class="header" href="#安装依赖">安装依赖</a></h2>
+<ol>
+<li>安装 passport.js</li>
+</ol>
+<pre><code class="language-shell">npm install passport
+</code></pre>
+<ol start="2">
+<li>安装 local 策略</li>
+</ol>
+<pre><code class="language-shell">npm install passport-local
+</code></pre>
+<h2 id="创建页面"><a class="header" href="#创建页面">创建页面</a></h2>
+<p>在 public 目录下面创建 <code>index.html</code>, <code>fail.html</code>, <code>home.html</code> 3个页面：</p>
+<p><strong>index.html:</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
+    &lt;input name=&quot;username&quot; placeholder=&quot;username...&quot; /&gt;
+    &lt;input name=&quot;password&quot; placeholder=&quot;password...&quot; /&gt;
+    &lt;button type=&quot;submit&quot;&gt;Login&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>fail.html</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Fail&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Fail&lt;/h1&gt;
+  &lt;a title=&quot;gologin&quot; href=&quot;/views&quot;&gt;Go login&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>home.html</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, Home!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="设置静态目录"><a class="header" href="#设置静态目录">设置静态目录</a></h2>
+<p><strong>app.js:</strong></p>
+<pre><code class="language-js">const config = require('./config.js').get();
+//...
+app.use('/views', express.static(config.public, { extensions: ['html'] }));
+</code></pre>
+<p>这个 extensions 选项用于允许访问静态页面不带 html 后缀。</p>
+<h2 id="开启session"><a class="header" href="#开启session">开启Session</a></h2>
+<p><strong>app.js:</strong></p>
+<pre><code class="language-javascript">//...
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true
+}));
+</code></pre>
+<h2 id="初始化passport"><a class="header" href="#初始化passport">初始化passport</a></h2>
+<p><strong>app.js:</strong></p>
+<pre><code class="language-javascript">const passport = require('passport');
+
+//...
+app.use(passport.initialize());
+app.use(passport.session());
+</code></pre>
+<h2 id="设置认证"><a class="header" href="#设置认证">设置认证</a></h2>
+<p>步骤：</p>
+<ol>
+<li>使用策略，规定认证过程，done是回调函数，可以接收三个参数：</li>
+<li>异常</li>
+<li>在会话中保存的用户信息，填 false 代表认证失败</li>
+<li>其余数据，比如传递信息</li>
+<li>序列化用户信息</li>
+<li>反序列化用户信息
+<strong>app.js:</strong></li>
+</ol>
+<pre><code class="language-javascript">const LocalStrategy = require('passport-local').Strategy;
+
+//...
+passport.use(new LocalStrategy(
+  function verify(username, password, done) {
+    if (username == 'root' &amp;&amp; password == 'root') {
+      return done(null, { username, password});
+    }
+    return done(null, false, {message: &quot;None&quot;});
+  }
+))
+
+passport.serializeUser((user, cb) =&gt;{
+  process.nextTick(()=&gt;{
+    cb(null, {username: user.username, password: user.password})
+  })
+})
+
+passport.deserializeUser((user, cb) =&gt; {
+  process.nextTick(()=&gt;{
+    return cb(null, user);
+  });
+});
+</code></pre>
+<h2 id="编写登录接口"><a class="header" href="#编写登录接口">编写登录接口</a></h2>
+<p><strong>router/index.js:</strong></p>
+<pre><code class="language-javascript">const { Json, Form, Multi, FromPlus } = require('../midwares/bodyParser');
+
+//...
+router.post('/login', FromPlus, passport.authenticate('local', {
+  failureRedirect: '/views/fail',
+  failureFlash: false
+}), (req, res, next) =&gt; {
+  res.redirect('/views/home');
+});
+</code></pre>
+<p>前端页面在表单中填写登录信息，先按照表单格式解析一下，然后再加入 passport 的认证中间件，指定策略为 <code>local</code>, 并指定认证失败跳转到 <code>fail.html</code>，成功则重定向到 <code>homte.html</code>，这个可以和失败重定向一样，作为 <code>successRedirect</code> 选项写到上面。</p>
+<h2 id="保护接口"><a class="header" href="#保护接口">保护接口</a></h2>
+<p>编写一个判断时候登录的中间件函数：</p>
+<pre><code class="language-js">function isLogined(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/views/');
+}
+</code></pre>
+<p>对 <code>/</code> 路由进行登录保护：</p>
+<pre><code class="language-js">router.get('/', isLogined, (req, res, next) =&gt; {
+  logger.info('Hello World!');
+  res.json(Resp.ok('Hello World!', 1, null));
+});
+</code></pre>
+<h2 id="测试-2"><a class="header" href="#测试-2">测试</a></h2>
+<p>此时运行项目，在浏览器中访问<a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>，会被重定向到登录界面，登录成功后在地址栏可以正常访问到这个被保护的路由，登录失败则会被重定向到 fail 页面。</p>
+<p>Passport.js 的更多用法请自行探索，详见官方文档：<a href="https://www.passportjs.org/docs/">https://www.passportjs.org/docs/</a></p>
 <h2 id="下一节-软件测试"><a class="header" href="#下一节-软件测试">下一节-软件测试</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="软件测试"><a class="header" href="#软件测试">软件测试</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="软件构建"><a class="header" href="#软件构建">软件构建</a></h1>
 <p>运行node项目，一般都是直接运行源码，不过这样子部署的时候不太方便，需要拷贝整个文件夹，如果是需要交付给客户的，并且客户不需要源码，客户不懂编程知识的话，你丢给他一堆源码让该怎么让他运行呢？Java可以打包成 jar/war, C/C++可以打包为 exe，Node也迫切需要一种可靠的构建技术。前端的朋友们可能都熟悉webpack,rolliup或者是Vite，不过它们都只是将项目合并为单个js文件，运行仍旧依赖外部的js-runtime，在本节，我们将介绍一个构建Node项目为可执行程序的工具 —— <strong>pkg</strong></p>
-<h2 id="准备工作-15"><a class="header" href="#准备工作-15">准备工作</a></h2>
+<h2 id="准备工作-16"><a class="header" href="#准备工作-16">准备工作</a></h2>
 <p>创建如下项目目录：</p>
 <pre><code class="language-TEXT">│  package.json
 │  readme.md
