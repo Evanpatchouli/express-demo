@@ -145,6 +145,132 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="软件测试"><a class="header" href="#软件测试">软件测试</a></h1>
+<p>本节介绍如何在 express.js 使用 Jest 进行单元测试</p>
+<h2 id="准备工作"><a class="header" href="#准备工作">准备工作</a></h2>
+<ol>
+<li>准备一个基础的 express 项目，本文基于 evp-express-cli</li>
+<li>安装 Jest</li>
+</ol>
+<pre><code class="language-shell">npm install jest --save-dev
+</code></pre>
+<ol start="3">
+<li>生成 Jest 配置</li>
+</ol>
+<pre><code class="language-shell">npx jest --init
+</code></pre>
+<h2 id="编写测试"><a class="header" href="#编写测试">编写测试</a></h2>
+<p>创建测试文件，以 <code>.test.js</code> 后缀命名，Jest 在运行期间会自动查找并执行符合 <code>*.test.js</code> 命名的文件，为规范起见，新建一个 <code>test</code> 目录，存放所有的测试文件。</p>
+<h3 id="编写第一个测试"><a class="header" href="#编写第一个测试">编写第一个测试</a></h3>
+<ol>
+<li>先准备一个要被测试的函数 <code>sum(a, b)</code>，写在 <code>src/uitls/index.js</code> 中：</li>
+</ol>
+<pre><code class="language-javascript">module.exports = {
+  /**
+   * Return the result of the sum of a and b.
+   * @function
+   * @param {number} a 
+   * @param {number} b 
+   * @returns {number}
+   */
+  sum: (a, b) =&gt; {
+    return a + b;
+  }
+}
+</code></pre>
+<ol start="2">
+<li>在 <code>test</code> 目录下创建 <code>sum.test.js</code>，引入 <code>sum</code> 并编写测试代码：</li>
+</ol>
+<pre><code class="language-javascript">const { sum } = require('../src/utils');
+
+describe('test demo', () =&gt; {
+  test('sum test', () =&gt; {
+    expect(sum(1, 2)).toBe(3);
+  })
+})
+</code></pre>
+<p><code>toBe()</code> 可以简单得判断相等，类似于 <code>assertEqual</code>，Jest 的具体语法本文不做介绍，自行查阅，其它测试框架如 mocha.js 的语法也是类似的。
+3. 执行测试</p>
+<pre><code class="language-shell">npx jest
+</code></pre>
+<p>得到结果：</p>
+<pre><code class="language-shell"> PASS  test/sum.test.js
+  test demo
+    √ sum test (2 ms)
+
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+----------|---------|----------|---------|---------|-------------------
+All files |     100 |      100 |     100 |     100 | 
+ index.js |     100 |      100 |     100 |     100 | 
+----------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.58 s, estimated 1 s
+</code></pre>
+<h2 id="对路由进行测试"><a class="header" href="#对路由进行测试">对路由进行测试</a></h2>
+<p>现在我们尝试对路由进行测试，先安装 <code>supertest</code>：</p>
+<pre><code class="language-shell">npm install supertest --save-dev
+</code></pre>
+<p>在 <code>test</code> 目录创建 <code>router.test.js</code>，引入 express app 和 supertest：</p>
+<pre><code class="language-javascript">const request = require('supertest');
+const app = require('../src/app');
+</code></pre>
+<p>接着争对 <code>src/router/index.js</code> 中定义的 <code>/</code> 路由进行测试：</p>
+<pre><code class="language-javascript">describe('router test', () =&gt; {
+  it('GET /', () =&gt; {
+    request(app).get('/')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then(res =&gt; {
+      expect(res.body).toStrictEqual({
+        ok: true, 
+        msg: 'Hello World!', 
+        data: null, 
+        symbol: 1, 
+        type: 'Ok' 
+      });
+    }).catch(err =&gt; console.error(err));
+  })
+})
+</code></pre>
+<p><code>toStrictEqual</code> 用于判断对象的严格相等；对路由测试需要用到 supertest 传入 app，然后对其 <code>/</code> 路由发起 <code>GET</code> 请求，因为请求过程是异步的，所以对响应结果的测试写在 <code>then</code> 回调中，当然你也可以把测试函数写成 <code>async-await</code> 语法糖；这个路由不需要传递任何数据，如果你需要携带数据，可以使用 <code>send</code> (x-www-form-urlencoded), <code>set</code> (请求头), <code>field</code> (multipart-form)等，具体用法请自行查阅 supertest 文档。</p>
+<p>接下来执行测试：</p>
+<pre><code class="language-shell">npx jest
+</code></pre>
+<p>得到结果：</p>
+<pre><code class="language-shell"> PASS  test/sum.test.js   
+ PASS  test/router.test.js
+---------------|---------|----------|---------|---------|------------------------------
+File           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+---------------|---------|----------|---------|---------|------------------------------
+All files      |   62.93 |       60 |      30 |   62.93 |                              
+ src           |   71.76 |    66.66 |     100 |   71.76 |                              
+  app.js       |     100 |      100 |     100 |     100 |                              
+  config.js    |   66.66 |    66.66 |     100 |   66.66 | 36-59                        
+ src/midwares  |   30.18 |      100 |       0 |   30.18 | 
+  exhandler.js |   30.18 |      100 |       0 |   30.18 | 7-12,16-22,26-43,47-52      
+ src/model     |      50 |        0 |       0 |      50 | 
+  resp.js      |      50 |        0 |       0 |      50 | 4-10,19-25,29-31,35-37,41-43
+ src/router    |   83.33 |      100 |     100 |   83.33 | 
+  index.js     |   83.33 |      100 |     100 |   83.33 | 8-9
+ src/utils     |     100 |      100 |     100 |     100 | 
+  index.js     |     100 |      100 |     100 |     100 | 
+  logger.js    |     100 |      100 |     100 |     100 | 
+---------------|---------|----------|---------|---------|------------------------------
+
+Test Suites: 2 passed, 2 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        2.054 s
+Ran all test suites.
+[2023-08-06 18:43:20] INFO Hello World!
+</code></pre>
+<p>如果你只想执行 <code>router.test.js</code>，则在后边指定要执行的测试文件即可：</p>
+<pre><code class="language-shell">npx jest test/router.test.js
+</code></pre>
+<hr />
+<h2 id="下一节-软件构建"><a class="header" href="#下一节-软件构建">下一节-软件构建</a></h2>
 
                     </main>
 

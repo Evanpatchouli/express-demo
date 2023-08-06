@@ -1,0 +1,26 @@
+# Build environment
+FROM node:16 AS builder
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN npm install
+
+ADD src src
+
+RUN npm run build:linux
+
+# lightly runtime environment
+FROM debian
+
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
+
+COPY --from=builder /app/dist/starfolder-service /app/
+
+WORKDIR /app
+
+EXPOSE 8080
+CMD ["./DockerDeploy"]
