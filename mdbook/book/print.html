@@ -3949,6 +3949,99 @@ CMD [&quot;./DockerDeploy&quot;]
 <hr />
 <h2 id="下一节-pm2进程管理"><a class="header" href="#下一节-pm2进程管理">下一节-pm2进程管理</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pm2进程管理"><a class="header" href="#pm2进程管理">pm2进程管理</a></h1>
+<p>本节我们将介绍如何使用 pm2 运行和监管我们的 express 项目</p>
+<h2 id="准备工作-19"><a class="header" href="#准备工作-19">准备工作</a></h2>
+<ul>
+<li>一个 express 项目</li>
+<li>全局安装 pm2 </li>
+</ul>
+<pre><code class="language-shell">npm install -g pm2
+</code></pre>
+<h2 id="pm2使用介绍"><a class="header" href="#pm2使用介绍">pm2使用介绍</a></h2>
+<h3 id="启动应用"><a class="header" href="#启动应用">启动应用</a></h3>
+<p>你可以用纯命令去运行一个node项目，假设原本运行项目使用 <code>node src/index.js</code>可以跑起来一个项目，则：</p>
+<pre><code class="language-shell">pm2 start -name &quot;pm2-node-app&quot; node -- src/index
+</code></pre>
+<p>当然你还可以通过将部分信息写到配置文件中，文件可以是 js, json 等，js格式的可以通过以下命令生成：</p>
+<pre><code class="language-shell">pm2 init
+</code></pre>
+<p>这将得到一个名为 &quot;ecosystem.config.js&quot; 的文件，内容如下：</p>
+<pre><code class="language-js">module.exports = {
+  apps : [{
+    script: 'index.js',
+    watch: '.'
+  }, {
+    script: './service-worker/',
+    watch: ['./service-worker']
+  }],
+
+  deploy : {
+    production : {
+      user : 'SSH_USERNAME',
+      host : 'SSH_HOSTMACHINE',
+      ref  : 'origin/master',
+      repo : 'GIT_REPOSITORY',
+      path : 'DESTINATION_PATH',
+      'pre-deploy-local': '',
+      'post-deploy' : 'npm install &amp;&amp; pm2 reload ecosystem.config.js --env production',
+      'pre-setup': ''
+    }
+  }
+};
+</code></pre>
+<p>deploy那部分是构建，在本节我们仅将 pm2 用于项目的运行管理，无需关注构建。重点是 apps 列表，每一个元素分别对应一个应用的配置信息，包括启动时运行的脚本命令（script），文件变动监控（watch）等</p>
+<h3 id="热重载"><a class="header" href="#热重载">热重载</a></h3>
+<p>假设我们的源码入口位于 &quot;src\index.js&quot;，我们需要开发时热重启项目（仅src内文件变动）：</p>
+<pre><code class="language-js">module.exports = {
+  apps : [{
+    script: 'src/index.js',
+    watch: ['src']
+  }]
+};
+</code></pre>
+<p>pm2根据这个文件去运行应用时可以直接这样：</p>
+<pre><code class="language-shell">pm2 start  // 与ecosystem.config.js同目录
+</code></pre>
+<p>如果你使用其它的配置文件，如 json，配置的格式也是类似的，则需要向pm2指明该配置文件名，如：</p>
+<pre><code class="language-shell">pm2 start app.json
+</code></pre>
+<h3 id="管理应用"><a class="header" href="#管理应用">管理应用</a></h3>
+<ul>
+<li><code>pm2 stop &lt;id|name|namespace|all|json|stdin&gt;</code>：停止指定的应用</li>
+<li><code>pm2 restart &lt;id|name|namespace|all|json|stdin&gt;</code>：重启指定的应用</li>
+<li><code>pm2 reload &lt;id|name|namespace|all|json|stdin&gt;</code>：即刻重载web应用</li>
+<li><code>pm2 delete &lt;id|name|namespace|all|json|stdin&gt;</code>：删除指定的应用</li>
+</ul>
+<h3 id="应用监控"><a class="header" href="#应用监控">应用监控</a></h3>
+<ul>
+<li><code>pm2 ls</code>：终端中查看所有应用状况</li>
+<li><code>pm2 monit</code>：打开终端的监控面板</li>
+<li><code>pm2 plus</code>：在浏览器中的Dashboard，使用 <code>pm2 plus</code> 可能会报错，可以直接访问网址<a href="https://app.pm2.io/">https://app.pm2.io/</a></li>
+</ul>
+<h3 id="查看日志"><a class="header" href="#查看日志">查看日志</a></h3>
+<ul>
+<li><code>pm2 log</code>：查看所有应用日志</li>
+<li><code>pm2 log &lt;id|name|namespace|all|json|stdin&gt;</code>：查看指定日志</li>
+</ul>
+<h3 id="应用集群"><a class="header" href="#应用集群">应用集群</a></h3>
+<p>你可以将一系列应用划分到一个命名空间内作为一个集群，通过指定namespace，进行全体的重启等操作。
+以 ecosystem.config.js 为例，这一组应用包含了2个 node 应用：</p>
+<pre><code class="language-js">module.exports = {
+  apps : [{
+    name: 'express-app1',
+    script: './app1/src/index.js',
+    watch: './app1/src',
+    namespace: 'express-demo'
+  }, {
+    name: 'express-app2',
+    script: './app2/src/index.js',
+    watch: './app2/src',
+    namespace: 'express-demo'
+  }]
+};
+</code></pre>
+<p>关于 pm2 更多的使用技巧，还请诸君自行探索</p>
+<hr />
 <h2 id="下一章节-最佳实践"><a class="header" href="#下一章节-最佳实践">下一章节-最佳实践</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="代码规范"><a class="header" href="#代码规范">代码规范</a></h1>
 <h2 id="下一节-高性能"><a class="header" href="#下一节-高性能">下一节-高性能</a></h2>
