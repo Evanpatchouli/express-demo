@@ -4044,6 +4044,60 @@ CMD [&quot;./DockerDeploy&quot;]
 <hr />
 <h2 id="下一章节-最佳实践"><a class="header" href="#下一章节-最佳实践">下一章节-最佳实践</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="代码规范"><a class="header" href="#代码规范">代码规范</a></h1>
+<p>编程规范，对于一个优秀的项目是不可或缺的，有了良好的代码规范，有益于项目的维护与拓展。</p>
+<h2 id="命名规范"><a class="header" href="#命名规范">命名规范</a></h2>
+<p>命名的第一要义是明了，要让阅读者看到命名就能大概猜测出其意义或用处。<br />
+以用户身份（userRole）为例，不可过度简略为 &quot;ur&quot;，本身这个单词也不算长，拼全 &quot;userRole&quot; 即可，或者 &quot;uRole&quot;，因为字母 &quot;u&quot; 通常代表用户，这是约定俗成的。</p>
+<p>命名规范可以跟据被命名的目标再细分：</p>
+<p><strong>变量命名</strong>：<br />
+可变变量通常用 <code>let</code> 声明，命名时可以采取首字母小写的驼峰（userRole）或者小写蛇形命名法（user_role）；常量变量通常用 <code>const</code> 声明，命名时通常采用全大写（USERROLE）或者大写蛇形命名法（USER_ROLE）</p>
+<p><strong>函数命名</strong>：
+独立的函数或者作为成员变量的方法，命名通常采取首字母小写的驼峰（checkUserRole）小写蛇形命名法（check_user_role）</p>
+<p><strong>类命名</strong>：<br />
+类、接口或者一系列函数和变量的聚合引入的命令通常采用大写驼峰命令法（User），对其内部私有的量或者方法，由于 js 和 ts 都不存在真正意义上的 private，所以在私有量或方法前加上 <code>_</code> 短下划线即可，意指这是私有的。此外，在声明类或对象拥有的属性和方法时，要避免冗余的前缀，比如：</p>
+<pre><code class="language-js">class User {
+  userLogin() {
+  	//...
+  }
+}
+</code></pre>
+<p>以上代码的 &quot;userLogin&quot; 就是典型的前缀冗余。</p>
+<p><strong>文件命名</strong>：<br />
+文件命名通常采用小写驼峰命名（strUtil.js）或者小写点隔式命名（str.util.js），小写蛇形命名法也不是不行，但在 js 项目中较为罕见。</p>
+<h2 id="排版规范"><a class="header" href="#排版规范">排版规范</a></h2>
+<p>一个统一且整洁的排版也是相当重要的，比如：</p>
+<ol>
+<li>统一的 4空格 或者 2 空格缩进，符号后 1 空格缩进</li>
+</ol>
+<pre><code class="language-js">const sayHi = () =&gt; {
+  console.log('Hi, Express Learner!');
+}
+</code></pre>
+<ol start="2">
+<li>同行内逗号分隔后的 1空格缩进</li>
+<li>单文件内不同性质或不同阶段的代码用单空行相隔</li>
+<li>引入依赖或其它文件通常写在文件顶部</li>
+<li>函数多参数下放</li>
+</ol>
+<pre><code class="language-typescript">function add_10_nums(
+  a1: number, b1: number,
+  a2: number, b2: number,
+  a3: number, b2: number,
+  a4: number, b2: number,
+  a5: number, b2: number)
+{
+  return //...
+}
+</code></pre>
+<ol start="6">
+<li>多行对齐</li>
+</ol>
+<p>等等...</p>
+<h2 id="注释规范"><a class="header" href="#注释规范">注释规范</a></h2>
+<p>合适的注释有助于自己和他人快速理解并维护一段代码，写注释不必事事具细，比如在意义很明显的 <code>login()</code> 函数上加 <code>// 登录函数</code> 这么一句代码，只需要在比较复杂或者仅靠命名和表面的调用关系即可推断出作用的代码上进行适当的注释即可。此外，现在的主流 IDE 对注释都支持 markdown，可以适当地利用 markdown 语法进行注释增强。</p>
+<p>切记注释是给人看的，别把注释格式写的难以阅读，比如长篇大论且挤在一行上。</p>
+<p>此外通过注释的 JsDoc 可以对函数的参数、返回，对象的属性等进行类型标注和解释，合理的运用 JsDoc 注释，将使得我们在不使用 TypeScript 的情况下也能获得良好的代码提示。</p>
+<hr />
 <h2 id="下一节-高性能"><a class="header" href="#下一节-高性能">下一节-高性能</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="高性能"><a class="header" href="#高性能">高性能</a></h1>
 <h2 id="下一节-安全性"><a class="header" href="#下一节-安全性">下一节-安全性</a></h2>
@@ -4069,22 +4123,6 @@ CMD [&quot;./DockerDeploy&quot;]
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
