@@ -4100,6 +4100,37 @@ CMD [&quot;./DockerDeploy&quot;]
 <hr />
 <h2 id="下一节-高性能"><a class="header" href="#下一节-高性能">下一节-高性能</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="高性能"><a class="header" href="#高性能">高性能</a></h1>
+<p>在生产环境下，真实的访问流量远超测试与开发环境，而且往往是不稳定的访问。以下是有助于提高你的 Express 应用性能的一些建议。</p>
+<h2 id="设置生产环境"><a class="header" href="#设置生产环境">设置生产环境</a></h2>
+<p>NODE_ENV 环境变量指定运行应用程序的环境（通常是开发或者生产环境）。为了改进性能，最简单的方法是将 NODE_ENV 设置为 &quot;production&quot;：</p>
+<pre><code class="language-shell">env NODE_ENV=production
+</code></pre>
+<p>将 NODE_ENV 设置为“production”会使 Express：</p>
+<ul>
+<li>高速缓存视图模板。</li>
+<li>高速缓存从 CSS 扩展生成的 CSS 文件。</li>
+<li>生成简短的错误消息。</li>
+</ul>
+<p>测试表明仅仅这样做就可以使应用程序性能提高 3 倍多！</p>
+<h2 id="多使用异步函数"><a class="header" href="#多使用异步函数">多使用异步函数</a></h2>
+<p>同步函数和方法会阻止执行进程的运行，直至其返回。每一次同步函数的执行可能只会阻塞几毫秒，但当大量的请求同时发生时，这些同步函数的阻塞将直接累加，这是非常可怕的（不行你可以试试）。</p>
+<h2 id="压缩响应体"><a class="header" href="#压缩响应体">压缩响应体</a></h2>
+<p>通过 Gzip 压缩，有助于显著降低响应主体的大小，从而提高 Web 应用程序的速度。可使用压缩中间件进行 Express 应用程序中的 gzip 压缩。例如：</p>
+<pre><code class="language-js">const compression = require('compression');
+const express = require('express');
+const app = express();
+app.use(compression());
+</code></pre>
+<p>对于生产环境中的大流量网站，实施压缩的最佳位置是在反向代理层级。在此情况下，不需要使用压缩中间件。有关在 Nginx 中启用 gzip 压缩的详细信息，请参阅 Nginx 文档中的 ngx_http_gzip_module 模块。</p>
+<h2 id="使用负载均衡"><a class="header" href="#使用负载均衡">使用负载均衡</a></h2>
+<p>无论应用程序如何优化，单个实例都只能处理有限的负载和流量。扩展应用程序的一种方法是运行此应用程序的多个实例，并通过负载均衡器分配流量。设置负载均衡器可以提高应用程序的性能和速度，并使可扩展性远超单个实例可以达到的水平。</p>
+<p>负载均衡器通常是逆向代理，用于编排进出多个应用程序实例和服务器的流量。可以使用 Nginx 或 HAProxy 轻松地为应用程序设置负载均衡器。</p>
+<p>其实 pm2 也自带负载均衡作用。</p>
+<h2 id="高速缓存"><a class="header" href="#高速缓存">高速缓存</a></h2>
+<p>提高生产环境性能的另一种策略是对请求的结果进行高速缓存，以便应用程序不需要为满足同一请求而重复执行操作。</p>
+<p>可以把热点数据以及通用信息放在 redis 之类的缓存数据库中，将有助于性能的提升。</p>
+<h2 id="高可用自动重启"><a class="header" href="#高可用自动重启">高可用自动重启</a></h2>
+<p>尽管有诸多措施，难免有时候流量势不可挡而导致服务崩溃，这时候自动重启的机制就显得尤为重要，可以使用 pm2 之类的进程管理器来实现这个机制。</p>
 <h2 id="下一节-安全性"><a class="header" href="#下一节-安全性">下一节-安全性</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="安全性"><a class="header" href="#安全性">安全性</a></h1>
 <h2 id="下一节-健康检查"><a class="header" href="#下一节-健康检查">下一节-健康检查</a></h2>
