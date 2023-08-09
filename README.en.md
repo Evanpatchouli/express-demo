@@ -1,36 +1,19 @@
 # express-demo
 
-#### Description
-express-demo
+Read this book online： <https://jun-laner.gitee.io/express-demo/>
 
-#### Software Architecture
-Software architecture description
+The reason for writing this was that one of my friends was willing to learn node as web backend and I had not used node lang. Therefore, I decided to combed it and tried to make an easy-going tutorial, hoping it useful to everyone and myself.
 
-#### Installation
+express-demo，Follow the example to learn express, first learn express.js according to different functions, from routing, interface, database, authentication, etc. piece by piece for independent basic learning, and so on have a more complete foundation, according to a certain architectural idea to form a complete express.js backend, and finally introduce some advanced skills that may be used.
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### Source Code
 
-#### Instructions
+The warehouse has the complete source code in each tutorial, when reading this book, please be sure to eat with the source code, hands-on is the best teacher!
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### Progress
 
-#### Contribution
+The current progress of this book is 100, and it took 4 months to complete the book(2023/04 - 2023/08)
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+#### Cooperation
 
-
-#### Gitee Feature
-
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+If there are any flaws or errors in this book or the source code, welcome to correct, thank you!
