@@ -4181,7 +4181,7 @@ app.use(Session({
 }));
 </code></pre>
 <h2 id="争对暴力攻击的端点保护"><a class="header" href="#争对暴力攻击的端点保护">争对暴力攻击的端点保护</a></h2>
-<p>如争对同一用户或同一IP的s短期内大量失败行为进行监测，进行适当的用户封禁和IP封禁。</p>
+<p>如争对同一用户或同一IP的短期内大量失败行为进行监测，进行适当的用户封禁和IP封禁。</p>
 <p><strong>rate-limiter-flexible</strong> 提供了相关的技术支持，<a href="https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#login-endpoint-protection">文档详见此处</a></p>
 <h2 id="确保依赖安全"><a class="header" href="#确保依赖安全">确保依赖安全</a></h2>
 <p>您正在使用的 npm 包也许存在安全漏洞，你可以使用 <code>npm audit</code> 来分析依赖树，并通过 <code>npm audit fix</code> 进行简单的修复，如果你想要更精细的控制依赖安全，可以尝试一下 snyk.js：</p>
@@ -4212,6 +4212,159 @@ app.use(Session({
 </ul>
 <h2 id="下一节-健康检查"><a class="header" href="#下一节-健康检查">下一节-健康检查</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="健康检查"><a class="header" href="#健康检查">健康检查</a></h1>
+<p>许多时候，我们需要对应用进行监控，来获取他的详细状态，这节介绍几个在 express 中进行健康检查的方案。</p>
+<h2 id="亲自手写"><a class="header" href="#亲自手写">亲自手写</a></h2>
+<p>亲自创建一些路由，根据情况返回应用的相关信息，不过自己写比较麻烦，除非有特别的需求，一般我们就用第三方的解决方案。</p>
+<h2 id="express-actuator"><a class="header" href="#express-actuator">express-actuator</a></h2>
+<p><strong>express-actuator.js</strong> 是一个现成的用于 express 的健康检查中间件：</p>
+<pre><code class="language-shell">npm install express-acutator --save
+</code></pre>
+<p><strong>配置express-actuator：</strong><br />
+在你的主应用中引入 actuator 即可：</p>
+<pre><code class="language-javascript">const actuator = require('express-actuator');
+
+const app = express();
+
+app.use(actuator({
+  basePath: '/actuator',
+  infoGitMode: 'simple',
+  // infoBuildOptions: null, // extra information you want to expose in the build object. Requires an object.
+  // infoDateFormat: null, // by default, git.commit.time will show as is defined in git.properties. If infoDateFormat is defined, moment will format git.commit.time. See https://momentjs.com/docs/#/displaying/format/.
+  customEndpoints: [] // array of custom endpoints
+}));
+</code></pre>
+<p>其中有一些配置选项：</p>
+<ul>
+<li><strong>basePath：</strong> actuator的基路由，如果不设置，则其所有路由（&quot;/info&quot;, &quot;health&quot;, &quot;metrics&quot;）将挂载在 app 的路由上</li>
+<li><strong>infoGitMode：</strong> 暴露的Git信息, 'simple' 或者 'full'</li>
+<li><strong>infoBuildOptions：</strong> 额外暴露的信息</li>
+<li><strong>infoDateFormat：</strong> Git提交信息的时间格式</li>
+<li><strong>customEndpoints：</strong> 自定义端点（初始仅提供了&quot;/info&quot;, &quot;health&quot;, &quot;metrics&quot;）</li>
+</ul>
+<p><strong>访问端点：</strong></p>
+<ul>
+<li>&quot;/info&quot;：会包含你的项目信息（从 package.json 读取）和Git信息，如：</li>
+</ul>
+<pre><code class="language-json">{
+    &quot;build&quot;: {
+        &quot;description&quot;: &quot;This is my new app&quot;,
+        &quot;name&quot;: &quot;MyApp&quot;,
+        &quot;version&quot;: &quot;1.0.0&quot;
+    },
+    &quot;git&quot;: {
+        &quot;branch&quot;: &quot;master&quot;,
+        &quot;commit&quot;: {
+            &quot;id&quot;: &quot;329a314&quot;,
+            &quot;time&quot;: &quot;2016-11-18 08:16:39-0500&quot;
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>&quot;/metrics&quot;：express 应用的健康详情，如：</li>
+</ul>
+<pre><code class="language-json">{
+    &quot;mem&quot;: {
+        &quot;rss&quot;: 39350272,
+        &quot;heapTotal&quot;: 11038720,
+        &quot;heapUsed&quot;: 8889952,
+        &quot;external&quot;: 892742,
+        &quot;arrayBuffers&quot;: 32982
+    },
+    &quot;uptime&quot;: 58.3234052
+}
+</code></pre>
+<ul>
+<li>&quot;/health&quot;：当下的健康状况，如：</li>
+</ul>
+<pre><code class="language-json">{
+    &quot;status&quot;: &quot;UP&quot;
+}
+</code></pre>
+<h2 id="lightship"><a class="header" href="#lightship">lightship</a></h2>
+<p><strong>lightship.js</strong> 也是一个不错的健康检查工具，并且可以与 Kubernetes 集成：</p>
+<pre><code class="language-shell">npm install lightship --save
+</code></pre>
+<p>不过与 express-actuator 不同的是，express-actuator是挂载在 express 应用上的中间件，而 lightship 是自己单独开辟一个 http 服务器（即额外占用一个端口）：</p>
+<pre><code class="language-javascript">async function start() {
+  const config = require('./config').get();
+  const init = require('./init');
+  await init();
+  const express = require('express');
+  const jsTextChart = require('js-text-chart');
+  const logger = require('./utils/logger');
+  const server = require('./utils/server');
+  const Lightship = await import('lightship');
+  const createLightship = Lightship.createLightship;
+  
+  const app = require('./app');
+  const lightship = await createLightship({
+    detectKubernetes: false,
+    port: 8081,
+    // gracefulShutdownTimeout, // 优雅停机时间
+    // gracefulShutdownTimeout, // 优雅停机延迟
+    // shutdownHandlerTimeout, // 停机Handler时间
+    // signals, // An a array of [signal events]{@link https://nodejs.org/api/process.html#process_signal_events}. Default: [SIGTERM].
+    // terminate // Default: `() =&gt; { process.exit(1) };`
+  });
+  
+  server.on('request', app);
+  server.listen(config.app.port, config.app.host, async() =&gt; {
+    let host = server.address().address;
+    let port = server.address().port;
+  
+    let str = config.app.name;
+    let mode = [ &quot;close&quot;, &quot;far&quot;, undefined ];
+    let chart = jsTextChart.convert(str, mode[0]);
+    console.log(chart);
+  
+    console.log(&quot;Server is ready on http://%s:%s&quot;, host, port);
+
+    lightship.registerShutdownHandler(() =&gt; {
+      lightship.shutdown();
+      server.close();
+    })
+    
+    lightship.signalReady();
+  });
+}
+
+start();
+</code></pre>
+<p>其中有一些配置选项：</p>
+<ul>
+<li><strong>detectKubernetes</strong> 是否探查 Kubernates</li>
+<li><strong>port</strong> lightship服务器端口</li>
+<li><strong>gracefulShutdownTimeout</strong> 优雅停机前时间</li>
+<li><strong>gracefulShutdownTimeout</strong> 优雅停机延迟时间</li>
+<li><strong>shutdownHandlerTimeout</strong> 停机Handler前时间</li>
+<li><strong>signals</strong> 标记</li>
+<li><strong>terminate</strong> 用于shutdown停机的函数</li>
+</ul>
+<p><strong>访问端点：</strong></p>
+<ul>
+<li>&quot;/health&quot;： 健康状况，有如下几种返回：
+<ul>
+<li>200 status code, message &quot;SERVER_IS_READY&quot; 服务器就绪</li>
+<li>500 status code, message &quot;SERVER_IS_NOT_READY&quot; 服务器正在初始化</li>
+<li>500 status code, message &quot;SERVER_IS_SHUTTING_DOWN&quot; 服务器挂了</li>
+</ul>
+</li>
+<li>&quot;/live&quot;： 还活着吗，有如下几种返回：
+<ul>
+<li>200 status code, message &quot;SERVER_IS_NOT_SHUTTING_DOWN&quot;.</li>
+<li>500 status code, message &quot;SERVER_IS_SHUTTING_DOWN&quot;.</li>
+</ul>
+</li>
+<li>&quot;/ready&quot;： 是否就绪，有如下几种返回：
+<ul>
+<li>200 status code, message &quot;SERVER_IS_READY&quot;.</li>
+<li>500 status code, message &quot;SERVER_IS_NOT_READY&quot;.</li>
+</ul>
+</li>
+</ul>
+<h2 id="kubernates"><a class="header" href="#kubernates">Kubernates</a></h2>
+<p>Kubernates 提供了两个健康检查服务：liveness 和 readiness，你可以将 express 部署到 Kubernates 容器中。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="后记"><a class="header" href="#后记">后记</a></h1>
 
                     </main>

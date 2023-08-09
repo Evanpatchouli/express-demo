@@ -193,7 +193,7 @@ app.use(Session({
 }));
 </code></pre>
 <h2 id="争对暴力攻击的端点保护"><a class="header" href="#争对暴力攻击的端点保护">争对暴力攻击的端点保护</a></h2>
-<p>如争对同一用户或同一IP的s短期内大量失败行为进行监测，进行适当的用户封禁和IP封禁。</p>
+<p>如争对同一用户或同一IP的短期内大量失败行为进行监测，进行适当的用户封禁和IP封禁。</p>
 <p><strong>rate-limiter-flexible</strong> 提供了相关的技术支持，<a href="https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#login-endpoint-protection">文档详见此处</a></p>
 <h2 id="确保依赖安全"><a class="header" href="#确保依赖安全">确保依赖安全</a></h2>
 <p>您正在使用的 npm 包也许存在安全漏洞，你可以使用 <code>npm audit</code> 来分析依赖树，并通过 <code>npm audit fix</code> 进行简单的修复，如果你想要更精细的控制依赖安全，可以尝试一下 snyk.js：</p>
