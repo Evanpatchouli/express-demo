@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -31,7 +31,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -61,42 +61,71 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html" class="active"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html" class="active"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -168,50 +197,50 @@ app.use(actuator({
 </code></pre>
 <p>其中有一些配置选项：</p>
 <ul>
-<li><strong>basePath：</strong> actuator的基路由，如果不设置，则其所有路由（&quot;/info&quot;, &quot;health&quot;, &quot;metrics&quot;）将挂载在 app 的路由上</li>
+<li><strong>basePath：</strong> actuator的基路由，如果不设置，则其所有路由（"/info", "health", "metrics"）将挂载在 app 的路由上</li>
 <li><strong>infoGitMode：</strong> 暴露的Git信息, 'simple' 或者 'full'</li>
 <li><strong>infoBuildOptions：</strong> 额外暴露的信息</li>
 <li><strong>infoDateFormat：</strong> Git提交信息的时间格式</li>
-<li><strong>customEndpoints：</strong> 自定义端点（初始仅提供了&quot;/info&quot;, &quot;health&quot;, &quot;metrics&quot;）</li>
+<li><strong>customEndpoints：</strong> 自定义端点（初始仅提供了"/info", "health", "metrics"）</li>
 </ul>
 <p><strong>访问端点：</strong></p>
 <ul>
-<li>&quot;/info&quot;：会包含你的项目信息（从 package.json 读取）和Git信息，如：</li>
+<li>"/info"：会包含你的项目信息（从 package.json 读取）和Git信息，如：</li>
 </ul>
 <pre><code class="language-json">{
-    &quot;build&quot;: {
-        &quot;description&quot;: &quot;This is my new app&quot;,
-        &quot;name&quot;: &quot;MyApp&quot;,
-        &quot;version&quot;: &quot;1.0.0&quot;
+    "build": {
+        "description": "This is my new app",
+        "name": "MyApp",
+        "version": "1.0.0"
     },
-    &quot;git&quot;: {
-        &quot;branch&quot;: &quot;master&quot;,
-        &quot;commit&quot;: {
-            &quot;id&quot;: &quot;329a314&quot;,
-            &quot;time&quot;: &quot;2016-11-18 08:16:39-0500&quot;
+    "git": {
+        "branch": "master",
+        "commit": {
+            "id": "329a314",
+            "time": "2016-11-18 08:16:39-0500"
         }
     }
 }
 </code></pre>
 <ul>
-<li>&quot;/metrics&quot;：express 应用的健康详情，如：</li>
+<li>"/metrics"：express 应用的健康详情，如：</li>
 </ul>
 <pre><code class="language-json">{
-    &quot;mem&quot;: {
-        &quot;rss&quot;: 39350272,
-        &quot;heapTotal&quot;: 11038720,
-        &quot;heapUsed&quot;: 8889952,
-        &quot;external&quot;: 892742,
-        &quot;arrayBuffers&quot;: 32982
+    "mem": {
+        "rss": 39350272,
+        "heapTotal": 11038720,
+        "heapUsed": 8889952,
+        "external": 892742,
+        "arrayBuffers": 32982
     },
-    &quot;uptime&quot;: 58.3234052
+    "uptime": 58.3234052
 }
 </code></pre>
 <ul>
-<li>&quot;/health&quot;：当下的健康状况，如：</li>
+<li>"/health"：当下的健康状况，如：</li>
 </ul>
 <pre><code class="language-json">{
-    &quot;status&quot;: &quot;UP&quot;
+    "status": "UP"
 }
 </code></pre>
 <h2 id="lightship"><a class="header" href="#lightship">lightship</a></h2>
@@ -247,11 +276,11 @@ app.use(actuator({
     let port = server.address().port;
   
     let str = config.app.name;
-    let mode = [ &quot;close&quot;, &quot;far&quot;, undefined ];
+    let mode = [ "close", "far", undefined ];
     let chart = jsTextChart.convert(str, mode[0]);
     console.log(chart);
   
-    console.log(&quot;Server is ready on http://%s:%s&quot;, host, port);
+    console.log("Server is ready on http://%s:%s", host, port);
 
     lightship.registerShutdownHandler(() =&gt; {
       lightship.shutdown();
@@ -276,23 +305,23 @@ start();
 </ul>
 <p><strong>访问端点：</strong></p>
 <ul>
-<li>&quot;/health&quot;： 健康状况，有如下几种返回：
+<li>"/health"： 健康状况，有如下几种返回：
 <ul>
-<li>200 status code, message &quot;SERVER_IS_READY&quot; 服务器就绪</li>
-<li>500 status code, message &quot;SERVER_IS_NOT_READY&quot; 服务器正在初始化</li>
-<li>500 status code, message &quot;SERVER_IS_SHUTTING_DOWN&quot; 服务器挂了</li>
+<li>200 status code, message "SERVER_IS_READY" 服务器就绪</li>
+<li>500 status code, message "SERVER_IS_NOT_READY" 服务器正在初始化</li>
+<li>500 status code, message "SERVER_IS_SHUTTING_DOWN" 服务器挂了</li>
 </ul>
 </li>
-<li>&quot;/live&quot;： 还活着吗，有如下几种返回：
+<li>"/live"： 还活着吗，有如下几种返回：
 <ul>
-<li>200 status code, message &quot;SERVER_IS_NOT_SHUTTING_DOWN&quot;.</li>
-<li>500 status code, message &quot;SERVER_IS_SHUTTING_DOWN&quot;.</li>
+<li>200 status code, message "SERVER_IS_NOT_SHUTTING_DOWN".</li>
+<li>500 status code, message "SERVER_IS_SHUTTING_DOWN".</li>
 </ul>
 </li>
-<li>&quot;/ready&quot;： 是否就绪，有如下几种返回：
+<li>"/ready"： 是否就绪，有如下几种返回：
 <ul>
-<li>200 status code, message &quot;SERVER_IS_READY&quot;.</li>
-<li>500 status code, message &quot;SERVER_IS_NOT_READY&quot;.</li>
+<li>200 status code, message "SERVER_IS_READY".</li>
+<li>500 status code, message "SERVER_IS_NOT_READY".</li>
 </ul>
 </li>
 </ul>
@@ -307,7 +336,7 @@ start();
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../后记.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../后记.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -321,7 +350,7 @@ start();
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../后记.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../后记.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

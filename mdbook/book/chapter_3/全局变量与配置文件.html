@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -31,7 +31,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -61,42 +61,71 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html" class="active"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html" class="active"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -153,7 +182,7 @@
     Ok: (...args)=&gt;{
         return {
             code: 200,
-            msg: args[0]?args[0]:&quot;Ok&quot;,
+            msg: args[0]?args[0]:"Ok",
             data: args[1]?args[1]:null
         }
     }
@@ -163,11 +192,11 @@
 <p>在<strong>global</strong>对象中挂载我们需要全局共享的量，比如我们想要挂载一个全局的config作为整个express应用的配置，就在项目的唯一入口文件（如: index.js, app.js等）的最顶上（优先于任何模块）设置一次：</p>
 <pre><code class="language-js">// index.js
 global.config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 /** 更简洁的写法，隐变量，首次被执行到后，会自动挂载到全局
 config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 */
 //创建app应用...
@@ -176,7 +205,7 @@ config = {
 <pre><code class="language-js">// router.js
 const routes = require('express').Router();
 routes.get('/global', (req, res, next)=&gt;{
-    res.send(Resp.Ok(&quot;global中的全局变量&quot;, {&quot;appname&quot;:config.appname}));
+    res.send(Resp.Ok("global中的全局变量", {"appname":config.appname}));
 });
 
 module.exports = routes;
@@ -187,7 +216,7 @@ app.use(routes);
 <p>如果我们有很多需要全局共享的配置，挤在index.js的上方多少有点不雅观，那我们可以把它们写在一个文件里，然后在index.js最顶上引入一下</p>
 <pre><code class="language-js">// global.js
 global.config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 
 // index.js
@@ -195,7 +224,7 @@ require('./global');
 </code></pre>
 <p>**注意：**由于global中的变量是可以直接以变量名<code>xxx</code>调用的，无需<code>global.xxx</code>，如果变量名设置的比较普通，就比如上面的<code>config</code>，甚至更简单的<code>a</code>之类的，很可能跟其它模块中定义的临时变量冲突，造成变量污染，因此在global上挂载变量时取名一定要特殊点，比如：之前的<code>config</code>替换为<code>__config</code></p>
 <pre><code class="language-js">global.__config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 </code></pre>
 <p><strong>优点：</strong></p>
@@ -212,7 +241,7 @@ require('./global');
 比如：我们自建一个config.js</p>
 <pre><code class="language-js">// config.js
 module.exports = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 </code></pre>
 <p>在router.js中引入config.js</p>
@@ -220,7 +249,7 @@ module.exports = {
 const CONFIG = require('./config');
 
 routes.get('/module', (req, res, next)=&gt;{
-    res.send(Resp.Ok(&quot;config模块当作全局变量&quot;, {&quot;appname&quot;:CONFIG.appname}));
+    res.send(Resp.Ok("config模块当作全局变量", {"appname":CONFIG.appname}));
 });
 </code></pre>
 <p><strong>优点：</strong></p>
@@ -235,12 +264,12 @@ routes.get('/module', (req, res, next)=&gt;{
 <h2 id="appset"><a class="header" href="#appset">app.set</a></h2>
 <p>在 express 的应用设置表中设置应用内的全局变量：</p>
 <pre><code class="language-js">// index.js
-app.set(&quot;appname&quot;, &quot;GlobalVar&quot;);
+app.set("appname", "GlobalVar");
 </code></pre>
 <p>在其它地方调用app，如挂载在app上的router：</p>
 <pre><code class="language-js">// router.js
 routes.get('/app', (req, res, next)=&gt;{
-    res.send(Resp.Ok(&quot;app中的'全局'变量&quot;, {&quot;appname&quot;:req.app.get(&quot;appname&quot;)}));
+    res.send(Resp.Ok("app中的'全局'变量", {"appname":req.app.get("appname")}));
 });
 </code></pre>
 <p>在挂载在app下的子应用中，调用父app中的设置，当某字段在子应用中没有设置时，会继承父应用中的字段</p>
@@ -248,10 +277,10 @@ routes.get('/app', (req, res, next)=&gt;{
 const app = require('express')();
 const Resp = require('./Resp');
 //当子应用没有设置时，会继承父应用中设置的字段
-// app.set('appname', &quot;subapp&quot;);
+// app.set('appname', "subapp");
 app.all('/', (req, res, next) =&gt; {
-    res.send(Resp.Ok(&quot;子应用获取父应用中的全局变量&quot;, {
-        appname: req.app.get(&quot;appname&quot;)
+    res.send(Resp.Ok("子应用获取父应用中的全局变量", {
+        appname: req.app.get("appname")
     }));
 })
 
@@ -268,7 +297,7 @@ app.use('/subapp',subapp);
 <h2 id="processenv"><a class="header" href="#processenv">process.env</a></h2>
 <p>在进程的环境变量中挂载全局变量：</p>
 <pre><code class="language-js">//index.js
-process.env.appname = &quot;GlobalVar&quot;;
+process.env.appname = "GlobalVar";
 </code></pre>
 <p>在其它地方调用<code>process.env.appname</code>：</p>
 <pre><code class="language-js">// subapp2.js
@@ -277,7 +306,7 @@ const Resp = require('./Resp');
 
 app.all('/', (req, res, next) =&gt; {
     // console.log(app.settings.env);
-    res.send(Resp.Ok(&quot;在process.env上挂载全局变量&quot;, {
+    res.send(Resp.Ok("在process.env上挂载全局变量", {
         appname: process.env.appname
     }));
 })
@@ -296,13 +325,13 @@ app.use('/process.env',subapp2);
 <p>以上的方案都是将配置信息写在js文件中的，对于一个正规的项目来说多少有点儿戏，毕竟写在js中的变量是很容易就能被改变的。绝大多数时候，配置信息是需要变化也不允许变化的，我们只需要静态的信息即可。在Js项目中，经常用json文件作为静态配置文件。</p>
 <p>新建一个<strong>config.json</strong>文件：</p>
 <pre><code class="language-json">{
-	&quot;appname&quot;: &quot;GlobalVar&quot;
+	"appname": "GlobalVar"
 }
 </code></pre>
 <p>在我们的router中新加一条测试一下，不管你在哪里require，在首次被require之后，修改json文件内容将不会再产生影响</p>
 <pre><code class="language-JS">routes.get('/json', (req, res, next)=&gt;{
     let configJson = require('./config.json');
-    res.send(Resp.Ok(&quot;json静态配置文件&quot;, {&quot;appname&quot;:configJson.appname}));
+    res.send(Resp.Ok("json静态配置文件", {"appname":configJson.appname}));
 });
 </code></pre>
 <p>json文件不支持注释，如果想要注释，要么曲线救国(加与被备注键相关的键值对)，要么使用<strong>Json5</strong>规范</p>
@@ -310,7 +339,7 @@ app.use('/process.env',subapp2);
 </code></pre>
 <p>新建一个<strong>config.json5</strong>文件：</p>
 <pre><code class="language-json5">{
-    &quot;appname&quot;: &quot;GlobalVar&quot;  //应用名
+    "appname": "GlobalVar"  //应用名
 }
 </code></pre>
 <p>接着在项目的入口文件中引入register，会挂载到全局：</p>
@@ -319,7 +348,7 @@ app.use('/process.env',subapp2);
 <p>之后require就可以解析<code>json5</code>文件了：</p>
 <pre><code class="language-js">routes.get('/json5', (req, res, next)=&gt;{
     let configJson5 = require('./config.json5');
-    res.send(Resp.Ok(&quot;json5静态配置文件&quot;, {&quot;appname&quot;:configJson5.appname}));
+    res.send(Resp.Ok("json5静态配置文件", {"appname":configJson5.appname}));
 });
 </code></pre>
 <h2 id="yaml"><a class="header" href="#yaml">yaml</a></h2>
@@ -341,7 +370,7 @@ npm install js-yaml
 routes.get('/yaml', (req, res, next)=&gt;{
     /*Object */
     let configYaml = yaml.load(fs.readFileSync('./config.yaml'));
-    res.send(Resp.Ok(&quot;yaml动态配置文件&quot;, {&quot;appname&quot;:configYaml.appname}));
+    res.send(Resp.Ok("yaml动态配置文件", {"appname":configYaml.appname}));
 });
 </code></pre>
 <p>由于是通过fs读取yaml文件的，因此在改变yaml文件中的内容后，访问路由的结果也会变</p>
@@ -357,7 +386,7 @@ routes.get('/yaml', (req, res, next)=&gt;{
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../chapter_3/错误分类和日志分级.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter_3/错误分类和日志分级.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -371,7 +400,7 @@ routes.get('/yaml', (req, res, next)=&gt;{
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../chapter_3/错误分类和日志分级.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter_3/错误分类和日志分级.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

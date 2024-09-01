@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>跟着例子学Express.js</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -32,7 +32,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -62,42 +62,71 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><a href="后记.html">后记</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="后记.html">后记</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -204,34 +233,34 @@ const evchart = require('js-text-chart').evchart;
 <li>添加服务器运行后的回调函数</li>
 </ol>
 <p>是指在服务器成功运行后的一系列操作，常用于输出信息和初始化等，我在这里打印该项目的基本信息<br />
-我使用的是内联箭头函数 &quot;()=&gt;{//...}&quot;，也可以替换为普通的&quot;function {//...}&quot;</p>
+我使用的是内联箭头函数 "()=&gt;{//...}"，也可以替换为普通的"function {//...}"</p>
 <pre><code class="language-js">const server = app.listen(8080, () =&gt; {
     let host = server.address().address;
     let port = server.address().port;
 
-    let str = &quot;EXPRESS-DEMO&quot;;
-    let mode = [ &quot;close&quot;, &quot;far&quot;, undefined ];
+    let str = "EXPRESS-DEMO";
+    let mode = [ "close", "far", undefined ];
     let chart = evchart.convert(str, mode[0]);
     console.log(chart);
 
-    console.log(&quot;Server is ready on http://%s:%s&quot;, host, port);
+    console.log("Server is ready on http://%s:%s", host, port);
 })
 </code></pre>
 <ol start="4">
 <li>跨域策略</li>
 </ol>
 <p>默认情况下可能不允许不同域名下进行交互，我们对请求进行一些基本的设置，允许跨域和所有的请求方式请求头格式化，并设置请求头内容为json格式</p>
-<pre><code class="language-js">app.all(&quot;*&quot;, function (req, res, next) {
-    res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
-    res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;Content-Type&quot;);
-    res.header(&quot;Access-Control-Allow-Methods&quot;, &quot;*&quot;);
-    res.header(&quot;Content-Type&quot;, &quot;application/json;charset=utf-8&quot;);
+<pre><code class="language-js">app.all("*", function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
 </code></pre>
 <h2 id="第一个接口"><a class="header" href="#第一个接口">第一个接口</a></h2>
 <h3 id="概念"><a class="header" href="#概念">概念</a></h3>
-<p>前后端交互是在后端暴露的接口进行的，而不同的接口对于后端端口上不同的url路径。前端使用不同的方式（GET,POST...）请求指定的路径，当后端有定义监听某种方式下的某种路径接口时，获取请求携带的数据，对请求进行处理，并返回结果给前端 </p>
+<p>前后端交互是在后端暴露的接口进行的，而不同的接口对于后端端口上不同的url路径。前端使用不同的方式（GET,POST...）请求指定的路径，当后端有定义监听某种方式下的某种路径接口时，获取请求携带的数据，对请求进行处理，并返回结果给前端</p>
 <h3 id="实践"><a class="header" href="#实践">实践</a></h3>
 <p>接下来，我们将添加一个以服务器的根路径（GET）作为返回欢迎信息的接口</p>
 <pre><code class="language-js">app.get('/', function (req, res) {
@@ -302,16 +331,16 @@ class Item {
 //get接口
 app.get('/request', function (req, res) {
     let result = [];
-    result.push(new Item(&quot;baseUrl&quot;,req.baseUrl));
-    result.push(new Item(&quot;fresh&quot;,req.fresh));   //请求是否存活
-    result.push(new Item(&quot;hostname&quot;,req.hostname)); //请求源域名
-    result.push(new Item(&quot;ip&quot;,req.ip)); //请求源IP
-    result.push(new Item(&quot;originalUrl&quot;,req.originalUrl));
-    result.push(new Item(&quot;params&quot;,req.path));   //路径参数: /x/y/z/
-    result.push(new Item(&quot;protocol&quot;,req.protocol)); //请求协议
-    result.push(new Item(&quot;query&quot;,req.query));   //查询参数
-    result.push(new Item(&quot;route&quot;,req.route));   //请求路由
-    result.push(new Item(&quot;is:Content-Type&quot;,req.is('application/json')));
+    result.push(new Item("baseUrl",req.baseUrl));
+    result.push(new Item("fresh",req.fresh));   //请求是否存活
+    result.push(new Item("hostname",req.hostname)); //请求源域名
+    result.push(new Item("ip",req.ip)); //请求源IP
+    result.push(new Item("originalUrl",req.originalUrl));
+    result.push(new Item("params",req.path));   //路径参数: /x/y/z/
+    result.push(new Item("protocol",req.protocol)); //请求协议
+    result.push(new Item("query",req.query));   //查询参数
+    result.push(new Item("route",req.route));   //请求路由
+    result.push(new Item("is:Content-Type",req.is('application/json')));
 
     res.send(result);
 });
@@ -326,17 +355,17 @@ app.use(express.json({type: 'application/json'}));
 
 app.post('/post', function (req, res) {
     let result = [];
-    result.push(new Item(&quot;baseUrl&quot;,req.baseUrl));
-    result.push(new Item(&quot;fresh&quot;,req.fresh));
-    result.push(new Item(&quot;hostname&quot;,req.hostname));
-    result.push(new Item(&quot;ip&quot;,req.ip));
-    result.push(new Item(&quot;originalUrl&quot;,req.originalUrl));
-    result.push(new Item(&quot;params&quot;,req.path));
-    result.push(new Item(&quot;protocol&quot;,req.protocol));
-    result.push(new Item(&quot;query&quot;,req.query));
-    result.push(new Item(&quot;body&quot;,req.body));
-    result.push(new Item(&quot;route&quot;,req.route));
-    result.push(new Item(&quot;is:Content-Type&quot;,req.is('application/json')));
+    result.push(new Item("baseUrl",req.baseUrl));
+    result.push(new Item("fresh",req.fresh));
+    result.push(new Item("hostname",req.hostname));
+    result.push(new Item("ip",req.ip));
+    result.push(new Item("originalUrl",req.originalUrl));
+    result.push(new Item("params",req.path));
+    result.push(new Item("protocol",req.protocol));
+    result.push(new Item("query",req.query));
+    result.push(new Item("body",req.body));
+    result.push(new Item("route",req.route));
+    result.push(new Item("is:Content-Type",req.is('application/json')));
 
     res.send(result);
 });
@@ -356,7 +385,7 @@ app.post('/post', function (req, res) {
 <h2 id="动态路径"><a class="header" href="#动态路径">动态路径</a></h2>
 <p>很多时候我们需要处理一些类似但有操作差别或不同对象的业务，我们可以监听一段基本路径，将其中某一个段或者某几段路径作为变量，在接口中根据不同的路径变量执行不同的业务操作，这是一种REST风格比较鲜明的动态接口设计策略</p>
 <h3 id="实践-2"><a class="header" href="#实践-2">实践</a></h3>
-<p>由于post也可以url传参，本节所有实例均采用post请求 </p>
+<p>由于post也可以url传参，本节所有实例均采用post请求</p>
 <h4 id="第一个接口-1"><a class="header" href="#第一个接口-1">第一个接口</a></h4>
 <p>这个接口以 /request/data/ 作为基路由，之后的kind变化的，在接口内部根据kind的值进行分支化处理。我指定了kind的3个值：PathVarible, RequestParam 和 body.<br />
 所有的路径参数则可以由<code>req.params</code>（大概是个json对象）来获取，我要指定获取kind的值，就req.params.kind，而静态路径变量的值就等于它名字.</p>
@@ -372,16 +401,16 @@ app.use(express.json({type: 'application/json'}));
 app.post('/request/data/:kind', function (req, res) {
     let result = [];
     if (req.params.kind == 'PathVarible') {
-        result.push(new Item(&quot;lesson&quot;,&quot;路径变量&quot;));
-        result.push(new Item(&quot;info&quot;,&quot;在express中叫做params，路径上每个被双单斜杠'/'隔开的一个个词语就是路径参数，当你需要在同一个接口内动态响应不同的情景时，可以让某一处或多出的路径参数前面加上一个冒号，长得比较像vue中的动态绑定，动态路径在REST风格上被广泛运行，比如操作某个用户: 'user/:id =&gt; 'user/1&quot;))
+        result.push(new Item("lesson","路径变量"));
+        result.push(new Item("info","在express中叫做params，路径上每个被双单斜杠'/'隔开的一个个词语就是路径参数，当你需要在同一个接口内动态响应不同的情景时，可以让某一处或多出的路径参数前面加上一个冒号，长得比较像vue中的动态绑定，动态路径在REST风格上被广泛运行，比如操作某个用户: 'user/:id =&gt; 'user/1"))
     } else if (req.params.kind == 'RequestParam') {
-        result.push(new Item(&quot;lesson&quot;,&quot;请求参数&quot;));
-        result.push(new Item(&quot;info&quot;,&quot;在express中叫做query，和路径变量相比，前者更像是前端主动携带参数去访问特定的资源，而后者更像是后端要求必须携带的数据，前端被迫携带，反应在路径上形式一般是: '/stu?class=2&amp;sid=1&amp;name='evanp',在基本路径之后添上一个问号，然后在后面加上请求的参数，不同参数之间用'&amp;'符号隔开&quot;))
+        result.push(new Item("lesson","请求参数"));
+        result.push(new Item("info","在express中叫做query，和路径变量相比，前者更像是前端主动携带参数去访问特定的资源，而后者更像是后端要求必须携带的数据，前端被迫携带，反应在路径上形式一般是: '/stu?class=2&amp;sid=1&amp;name='evanp',在基本路径之后添上一个问号，然后在后面加上请求的参数，不同参数之间用'&amp;'符号隔开"))
     } else if (req.params.kind == 'body') {
-        result.push(new Item(&quot;lesson&quot;,&quot;请求体&quot;));
-        result.push(new Item(&quot;info&quot;,&quot;路径变量和请求参数的数据都是透明的，这非常不注重隐私，因此更多时候前端应该将携带的数据放在请求体内进行传输。请求体的形式有很多，最常用的是表单和JSON，请在路径后新增一个路径变量，form-urlencode, multi-form-data或json导向不同的接口进行查看&quot;));
+        result.push(new Item("lesson","请求体"));
+        result.push(new Item("info","路径变量和请求参数的数据都是透明的，这非常不注重隐私，因此更多时候前端应该将携带的数据放在请求体内进行传输。请求体的形式有很多，最常用的是表单和JSON，请在路径后新增一个路径变量，form-urlencode, multi-form-data或json导向不同的接口进行查看"));
     } else {
-        result.push(new Item(&quot;error&quot;,&quot;这个参数不认识&quot;));
+        result.push(new Item("error","这个参数不认识"));
     }
     res.send(result);
 });
@@ -393,18 +422,18 @@ app.post('/request/data/:kind', function (req, res) {
 <pre><code class="language-js">app.post('/request/data/body/:kind', function (req, res) {
     let result = [];
     if (req.params.kind == 'json') {
-        result.push(new Item(&quot;lesson&quot;,&quot;json请求体&quot;));
-        result.push(new Item(&quot;body&quot;,req.body));
-        result.push(new Item(&quot;info&quot;,&quot;express想解析json形式的body，必须先开启express.json: 'app.use(express.json)'，之后就可以用req.body来接收请求体了&quot;));
-        result.push(new Item(&quot;trick&quot;,&quot;进阶技巧，读取请求体时可以用match模式匹配成自己想要的格式或命名，常用于实体注入及转化等&quot;));
+        result.push(new Item("lesson","json请求体"));
+        result.push(new Item("body",req.body));
+        result.push(new Item("info","express想解析json形式的body，必须先开启express.json: 'app.use(express.json)'，之后就可以用req.body来接收请求体了"));
+        result.push(new Item("trick","进阶技巧，读取请求体时可以用match模式匹配成自己想要的格式或命名，常用于实体注入及转化等"));
     } else if (req.params.kind == 'form-urlencode') {
-        result.push(new Item(&quot;lesson&quot;,&quot;form-urlencode请求体&quot;));
-        result.push(new Item(&quot;body&quot;,req.body));
+        result.push(new Item("lesson","form-urlencode请求体"));
+        result.push(new Item("body",req.body));
     } else if (req.params.kind == 'multi-form-data') {
-        result.push(new Item(&quot;lesson&quot;,&quot;multi-form-data请求体&quot;));
-        result.push(new Item(&quot;body&quot;,req.body));
+        result.push(new Item("lesson","multi-form-data请求体"));
+        result.push(new Item("body",req.body));
     } else {
-        result.push(new Item(&quot;error&quot;,&quot;这个参数不认识&quot;));
+        result.push(new Item("error","这个参数不认识"));
     }
     res.send(result);
 });
@@ -428,7 +457,7 @@ app.post('/request/data/:kind', function (req, res) {
         req.query.id == null ||
         req.query.name == undefined ||
         req.query.name == null){
-        res.send({&quot;msg&quot;: &quot;query不齐全&quot;});
+        res.send({"msg": "query不齐全"});
     } else {
         next();
     }
@@ -451,25 +480,25 @@ app.post('/request/data/:kind', function (req, res) {
 <pre><code class="language-js">app.use(express.urlencoded({extended: true}));
 </code></pre>
 <p>关于extended参数，是指将（URL编码字符串形式的）表单数据解析为简单对象还是深度嵌套对象.<br />
-什么意思呢？就比如当extended=false时，表单里是这么传数据的: 
+什么意思呢？就比如当extended=false时，表单里是这么传数据的:
 其中，有两个相同的键名: 比如传了2个x
 解析后该字段的指将是所有它们的值的数组集合：<code>x=1&amp;x=2</code> -&gt; <code>{'x': ['1','2']}</code>，即便2个x都为1，也是数组: <code>{'x': ['1','1']}</code><br />
 其中，又有的键名是以对象属性格式传递的，比如下图的user[uname]:
 <img src="https://evan-oss-bucket1.oss-cn-hangzhou.aliyuncs.com/express-demo/x-form.png" alt="表单传嵌套对象" />
-假如我们在api调试工具访问之前那个body/form-urlencode接口，同时以表单方式传输了这两种情况的数据，将得到这样的返回结果: </p>
+假如我们在api调试工具访问之前那个body/form-urlencode接口，同时以表单方式传输了这两种情况的数据，将得到这样的返回结果:</p>
 <pre><code class="language-json">[
     {
-        &quot;name&quot;: &quot;lesson&quot;,
-        &quot;value&quot;: &quot;form-urlencode请求体&quot;
+        "name": "lesson",
+        "value": "form-urlencode请求体"
     },
     {
-        &quot;name&quot;: &quot;body&quot;,
-        &quot;value&quot;: {
-            &quot;user[uname]&quot;: &quot;evanp&quot;,
-            &quot;user[passwd]&quot;: &quot;iloveu&quot;,
-            &quot;x&quot;: [
-                &quot;1&quot;,
-                &quot;2&quot;
+        "name": "body",
+        "value": {
+            "user[uname]": "evanp",
+            "user[passwd]": "iloveu",
+            "x": [
+                "1",
+                "2"
             ]
         }
     }
@@ -478,19 +507,19 @@ app.post('/request/data/:kind', function (req, res) {
 <p>当extended=true时，则是:</p>
 <pre><code class="language-json">[
     {
-        &quot;name&quot;: &quot;lesson&quot;,
-        &quot;value&quot;: &quot;form-urlencode请求体&quot;
+        "name": "lesson",
+        "value": "form-urlencode请求体"
     },
     {
-        &quot;name&quot;: &quot;body&quot;,
-        &quot;value&quot;: {
-            &quot;user&quot;: {
-                &quot;uname&quot;: &quot;evanp&quot;,
-                &quot;passwd&quot;: &quot;iloveu&quot;
+        "name": "body",
+        "value": {
+            "user": {
+                "uname": "evanp",
+                "passwd": "iloveu"
             },
-            &quot;x&quot;: [
-                &quot;1&quot;,
-                &quot;2&quot;
+            "x": [
+                "1",
+                "2"
             ]
         }
     }
@@ -503,7 +532,7 @@ app.post('/request/data/:kind', function (req, res) {
 <h2 id="表单multi-form-data"><a class="header" href="#表单multi-form-data">表单（multi-form-data）</a></h2>
 <p>这个是可以一边传字符串，还可以传文件的表单，其实就是基础表单的一个升级版</p>
 <p>需要事先安装<strong>multer</strong>依赖: <code>npm install multer</code><br />
-引入依赖中间件: </p>
+引入依赖中间件:</p>
 <pre><code class="language-js">const multer = require('multer');
 const uploads = multer();
 </code></pre>
@@ -559,7 +588,7 @@ app.get('/end',(req,res)=&gt;{
 app.get('/json',(req,res)=&gt;{
     let resp = {
         code: 200,
-        msg: &quot;json&quot;,
+        msg: "json",
         toPrint: function(){
             console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
         }
@@ -573,7 +602,7 @@ app.get('/json',(req,res)=&gt;{
 app.get('/jsonp',(req,res)=&gt;{
     let resp = {
         code: 200,
-        msg: &quot;jsonp&quot;,
+        msg: "jsonp",
         toPrint: function(){
             console.log(`resp[code: ${this.code}, msg: ${this.msg}]`);
         }
@@ -586,7 +615,7 @@ app.get('/jsonp',(req,res)=&gt;{
 <pre><code class="language-js">//sendfile，传输文件
 app.get('/sendfile',(req,res)=&gt;{
     //只能是静态路径，需要相对路径的话有很多方法，以下是其中一个
-    res.sendFile(&quot;hello.txt&quot;, {root: __dirname});
+    res.sendFile("hello.txt", {root: __dirname});
 })
 </code></pre>
 <h2 id="download"><a class="header" href="#download">download</a></h2>
@@ -594,7 +623,7 @@ app.get('/sendfile',(req,res)=&gt;{
 <pre><code class="language-js">//download，下载文件
 app.get('/download',(req,res)=&gt;{
     //可以直接相对路径
-    res.download(&quot;./hello.txt&quot;);
+    res.download("./hello.txt");
 })
 </code></pre>
 <h2 id="sendstatus"><a class="header" href="#sendstatus">sendStatus</a></h2>
@@ -620,7 +649,7 @@ app.get('/location/2',(req,res)=&gt;{
 })
 
 app.get('/location/index',(req,res)=&gt;{
-    res.send(&quot;welcome to learn express.js by demos&quot;);
+    res.send("welcome to learn express.js by demos");
 })
 </code></pre>
 <h2 id="redirect"><a class="header" href="#redirect">redirect</a></h2>
@@ -739,8 +768,8 @@ const knex = require('knex');
 app.put('/db/:tbname/record', async function (req, res) {
     /*前端请求体格式:
     {
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;iloveu&quot;
+        "uname": "evanp",
+        "passwd": "iloveu"
     }
     */
    let resultSet = null;
@@ -775,9 +804,9 @@ app.put('/db/:tbname/record', async function (req, res) {
 <p>尝试用api调试工具GET 127.0.0.1:8080/db/user/record?uname=evanp，将会得到:</p>
 <pre><code class="language-json">[
     {
-        &quot;id&quot;: 1,
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;iloveu&quot;
+        "id": 1,
+        "uname": "evanp",
+        "passwd": "iloveu"
     }
 ]
 </code></pre>
@@ -787,7 +816,7 @@ app.put('/db/:tbname/record', async function (req, res) {
     //前端携带query: uname=evanp
     /*前端请求体格式:
     {
-        &quot;passwd&quot;: &quot;123456&quot;
+        "passwd": "123456"
     }
     */
    let resultSet = null;
@@ -808,8 +837,8 @@ app.put('/db/:tbname/record', async function (req, res) {
 <pre><code class="language-js">app.delete('/db/:tbname/record', async function (req, res) {
     /*前端请求体格式:
     {
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;123456&quot;
+        "uname": "evanp",
+        "passwd": "123456"
     }
     */
    let resultSet = null;
@@ -828,7 +857,7 @@ app.put('/db/:tbname/record', async function (req, res) {
 <h2 id="原生sql"><a class="header" href="#原生sql">原生sql</a></h2>
 <p>当然了，如果你需要直接使用sql语句，也是可以的，调用<code>raw(sqlStr)</code>即可，既可以作为某一段sql的绑定，也可以直接当作整句sql</p>
 <p>格式: <code>knex.raw(sql, [bindings]</code></p>
-<pre><code class="language-json">sqlite.raw(&quot;select * from user&quot;,[1]).then((resp)=&gt;{//..})
+<pre><code class="language-json">sqlite.raw("select * from user",[1]).then((resp)=&gt;{//..})
 </code></pre>
 <p>在这里不做介绍</p>
 <h2 id="总结"><a class="header" href="#总结">总结</a></h2>
@@ -939,7 +968,7 @@ User.init(
 <li>如果数据库中不存在对应的表，将根据模型直接创建表；若存在，不操作<br />
 <code>Model.sync({force: true})</code>: 底层是先 drop if 然后 create</li>
 <li>如果表已存在，将删除再根据模型创建表<br />
-<code>Model.sync({alter: true})</code>: </li>
+<code>Model.sync({alter: true})</code>:</li>
 <li>如果表已存在，将修改表结构使之与模型匹配</li>
 </ul>
 <p>花里胡哨的，总之就是保证数据库中有和该模型对应的表</p>
@@ -980,8 +1009,8 @@ updatedAt: 'updateTime'
 app.put('/db/user/record', async function (req, res) {
     /**前端请求体
     {
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;iloveu&quot;
+        "uname": "evanp",
+        "passwd": "iloveu"
     }
     */
     try {
@@ -996,11 +1025,11 @@ app.put('/db/user/record', async function (req, res) {
 </code></pre>
 <p>使用api调试工具PUT 127.0.0.1:8080/db/user/record，携带相应的请求体，将会得到:</p>
 <pre><code class="language-json">{
-    &quot;id&quot;: 1,
-    &quot;uname&quot;: &quot;evanp&quot;,
-    &quot;passwd&quot;: &quot;iloveu&quot;,
-    &quot;updatedAt&quot;: &quot;2023-03-19T08:03:37.964Z&quot;,
-    &quot;createdAt&quot;: &quot;2023-03-19T08:03:37.964Z&quot;
+    "id": 1,
+    "uname": "evanp",
+    "passwd": "iloveu",
+    "updatedAt": "2023-03-19T08:03:37.964Z",
+    "createdAt": "2023-03-19T08:03:37.964Z"
 }
 
 </code></pre>
@@ -1040,12 +1069,12 @@ app.get('/db/user/record', async function (req, res) {
 <pre><code class="language-js">app.post('/db/user/record', async function (req, res) {
     /*请求体
     {
-        &quot;set&quot;:{
-            &quot;passwd&quot;: &quot;123456&quot;
+        "set":{
+            "passwd": "123456"
         },
-        &quot;where&quot;: {
-            &quot;uname&quot;: &quot;evanp&quot;,
-            &quot;passwd&quot;: &quot;iloveu&quot;
+        "where": {
+            "uname": "evanp",
+            "passwd": "iloveu"
         }
     }
     */
@@ -1059,8 +1088,8 @@ app.get('/db/user/record', async function (req, res) {
 <pre><code class="language-js">app.delete('/db/user/record', async function (req, res) {
     /*请求体
     {
-        &quot;uname&quot;: &quot;evanp&quot;,
-        &quot;passwd&quot;: &quot;123456&quot;
+        "uname": "evanp",
+        "passwd": "123456"
     }
     */
     let what = await User.destroy({where: req.body})
@@ -1074,7 +1103,7 @@ app.get('/db/user/record', async function (req, res) {
 <pre><code class="language-js">app.post('/db/user/record/freely', async function (req, res) {
     /*json请求体
     {
-        &quot;sql&quot;: &quot;xxx&quot;
+        "sql": "xxx"
     }
     */
     let what = null;
@@ -1118,7 +1147,7 @@ app.get('/matchall/*',(req, res)=&gt;{
 <p>前端发来请求时，如何有2个定义的接口都能匹配到，优先匹配先定义的</p>
 <pre><code class="language-js">//不起效
 app.get('/matchall/w/xf',(req, res)=&gt;{
-    res.send(&quot;there is w.xf&quot;);
+    res.send("there is w.xf");
 });
 </code></pre>
 <ul>
@@ -1142,12 +1171,12 @@ app.get('/match/w*/x', function (req, res) {
 <p>问号前的字符可有可无，gback,goback</p>
 <pre><code class="language-js">//问号前面这个字符可有可无
 app.get('/match/go?back',(req, res)=&gt;{
-    res.send(&quot;问号前面这个字符可有可无&quot;);
+    res.send("问号前面这个字符可有可无");
 });
 </code></pre>
 <p>问号前被括号括住的字符串可有可无，xback,xgoback</p>
 <pre><code class="language-js">app.get('/match/x(go)?back',(req, res)=&gt;{
-    res.send(&quot;问号前面这个字符串可有可无，注意被括住的字符串前面不能没有字符&quot;);
+    res.send("问号前面这个字符串可有可无，注意被括住的字符串前面不能没有字符");
 });
 </code></pre>
 <p>加号前的字符可以重复，goback,gooback,goooback...</p>
@@ -1157,7 +1186,7 @@ app.get('/match/go+back',(req, res)=&gt;{
     let what = {
         match: '/match/go+back',
         url: req.url,
-        tip: &quot;加号前面的那个字符可以无限重复&quot;
+        tip: "加号前面的那个字符可以无限重复"
     }
     res.send(what);
 });
@@ -1168,7 +1197,7 @@ app.get('/match/go+back',(req, res)=&gt;{
 //匹配了127.0.0.1:8080/x//数字useremm//
 app.get('/x/(\/[0-9]useremm\/)', function (req,res) {
     console.log(req.body);
-    res.send(&quot;正则可用于复杂路径的匹配&quot;);
+    res.send("正则可用于复杂路径的匹配");
 })
 </code></pre>
 <h2 id="路由重定向"><a class="header" href="#路由重定向">路由重定向</a></h2>
@@ -1184,13 +1213,13 @@ app.post('/redirect',(req,res)=&gt;{
 });
 
 app.get('/1/2/3/4/5',(req,res)=&gt;{
-    res.send(&quot;上山打老虎&quot;);
+    res.send("上山打老虎");
 })
 </code></pre>
 <p>301或302都是可以的，301代表临时，302代表永久</p>
 <p>接下来我们把转发后的路由改成POST，再去访问redirect:</p>
 <pre><code class="language-js">app.post('/1/2/3/4/5',(req,res)=&gt;{
-    res.send(&quot;上山打老虎&quot;);
+    res.send("上山打老虎");
 })
 </code></pre>
 <p>是的，响应不到了，转发到POST路由，应当使用307或308，前者临时后者永久<br />
@@ -1209,7 +1238,7 @@ app.get('/1/2/3/4/5',(req,res)=&gt;{
 <p>自定义一个选择性body-json的中间件，判定 PUT:/some/json 时局部开启json解析:</p>
 <pre><code class="language-js">app.use((req, res, next) =&gt; {
     // 判断当前请求路径是否需要解析JSON请求体
-    if (req.path === '/some/json'&amp;&amp; req.method.match(&quot;PUT&quot;)) {
+    if (req.path === '/some/json'&amp;&amp; req.method.match("PUT")) {
       bodyParser.json()(req, res, next);
     } else {
       next();
@@ -1279,7 +1308,7 @@ app.get('/1/2/3/4/5',(req,res)=&gt;{
     if(token!=null) {
         res.send(token);
     } else {
-        res.status(401).send(&quot;wrong&quot;);
+        res.status(401).send("wrong");
     }    
 });
 </code></pre>
@@ -1320,8 +1349,8 @@ app.use(exhandler);
 <h3 id="测试"><a class="header" href="#测试">测试</a></h3>
 <p>使用api调试工具GET 127.0.0.1:8080/，我们的程序不会崩溃，并且你将得到被封装好的错误信息，并且响应码是500。</p>
 <pre><code class="language-JSON">{
-    &quot;name&quot;: &quot;无法访问&quot;,
-    &quot;message&quot;: &quot;对不起，网站正在维护中&quot;
+    "name": "无法访问",
+    "message": "对不起，网站正在维护中"
 }
 </code></pre>
 <h3 id="异步异常"><a class="header" href="#异步异常">异步异常</a></h3>
@@ -1333,7 +1362,7 @@ app.use(exhandler);
 
 function error() {
     let err = new Error('网站维护');
-    err.message = &quot;自定义的错误&quot;;
+    err.message = "自定义的错误";
     return Promise.reject(err);
 }
 </code></pre>
@@ -1393,15 +1422,15 @@ app.use(router_root);
 <p>异常处理中间件，全局捕捉异常，防止服务器崩溃</p>
 <pre><code class="language-javascript">//异常中间件
 const exhandler = (err,req,res,next)=&gt; {
-    return res.json({ &quot;err&quot;:{ &quot;name&quot;: err.name, &quot;msg&quot;: err.message }});
+    return res.json({ "err":{ "name": err.name, "msg": err.message }});
 }
 app.use(exhandler);
 
 //测试接口
 router_err.get('/error', auth, (req,res)=&gt; {
-    const err = new Error(&quot;error!&quot;);
-    err.name = &quot;故意err&quot;;
-    err.message = &quot;error!&quot;;
+    const err = new Error("error!");
+    err.name = "故意err";
+    err.message = "error!";
     throw err;
     res.status(200).json({msg: 'good!'});
 })
@@ -1716,7 +1745,7 @@ module.exports = {
 <h2 id="用法"><a class="header" href="#用法">用法</a></h2>
 <p>这里是一些示例。</p>
 <h3 id="命令"><a class="header" href="#命令">命令</a></h3>
-<p><code>evp-express</code>: </p>
+<p><code>evp-express</code>:</p>
 <ul>
 <li><code>-v</code>, <code>--version</code>: 显示版本</li>
 <li><code>-i</code>, <code>--info</code>: 显示详细信息</li>
@@ -1737,7 +1766,7 @@ module.exports = {
 <pre><code class="language-shell">evp-express new &lt;projectName&gt;
 </code></pre>
 <h3 id="运行"><a class="header" href="#运行">运行</a></h3>
-<p>切换至项目根目录下，通过以下命令运行: 
+<p>切换至项目根目录下，通过以下命令运行:
 手脚架局部安装时:</p>
 <pre><code class="language-shell">npx evp-express start
 </code></pre>
@@ -1763,7 +1792,7 @@ module.exports = {
 }
 </code></pre>
 <ul>
-<li>validator 是 &quot;express-validator&quot;。</li>
+<li>validator 是 "express-validator"。</li>
 <li>ValidRace 是并发的验证检验链，并抛出最早检验出错误的那个。</li>
 <li>ValidAll 是并发的验证检验链，并抛出全部错误。</li>
 <li>ValidQueue 是串行的验证检验链，并抛出最早检验出错误的那个。</li>
@@ -1774,10 +1803,10 @@ module.exports = {
 
 router.get('/',
   ValidQueue([
-    validator.query('name').trim().notEmpty().withMessage(&quot;name cannot be empty&quot;),
+    validator.query('name').trim().notEmpty().withMessage("name cannot be empty"),
     validator.query('age').trim()
-      .notEmpty().withMessage(&quot;age cannot be empty&quot;).bail()
-      .isInt().withMessage(&quot;age must be Int&quot;).bail().toInt()
+      .notEmpty().withMessage("age cannot be empty").bail()
+      .isInt().withMessage("age must be Int").bail().toInt()
   ]),
 (req, res, next) =&gt; {
   res.send(`Hello ${req.query.name}, you are ${req.query.age} years old!`);
@@ -1785,11 +1814,11 @@ router.get('/',
 </code></pre>
 <p>你将会得到如下结果:</p>
 <pre><code class="language-json">{
-  &quot;code&quot;:500,
-  &quot;msg&quot;:&quot;name cannot be empty&quot;,
-  &quot;data&quot;:null,
-  &quot;symbol&quot;:-1,
-  &quot;type&quot;:&quot;Bad Request&quot;
+  "code":500,
+  "msg":"name cannot be empty",
+  "data":null,
+  "symbol":-1,
+  "type":"Bad Request"
 }
 </code></pre>
 <h4 id="数据库"><a class="header" href="#数据库">数据库</a></h4>
@@ -1804,7 +1833,7 @@ router.get('/',
 <h4 id="auth"><a class="header" href="#auth">Auth</a></h4>
 <p>认证模板只是安装了 <strong>passport.js</strong> 你需要自行配置。</p>
 <h4 id="rabbitmq"><a class="header" href="#rabbitmq">RabbitMQ</a></h4>
-<p>RabbitMQ模板依赖于 <strong>ampqlb.js</strong> 并使用 &quot;guest:guest&quot; 作为默认用户.</p>
+<p>RabbitMQ模板依赖于 <strong>ampqlb.js</strong> 并使用 "guest:guest" 作为默认用户.</p>
 <p>你可以引用 异步的 rabbitmqProxy 通过 <code>const { instance } = require('utils/rabbitmqProxy');</code>. 你可以使用 <code>instance.conn</code> 去获取 rabbitmq连接实例.你可以使用 <code>instance.channel</code> 去获取rabbitmq的默认通道实例。</p>
 <p><strong>注意它是一个promise</strong>, 当被在任何地方引用时，请使用异步语法糖去获取实例，或者通过同步流的方式。</p>
 <pre><code class="language-javascript">const { instance } = require('../utils/rabbitmqProxy');
@@ -1812,7 +1841,7 @@ router.get('/',
 app.get('/', async(req, res)=&gt;{
 const rbmqProxy = await instance;
   const { channel: rbmq } = rbmqProxy;
-  rbmq.sendToQueue(&quot;queue&quot;, &quot;hello&quot;);
+  rbmq.sendToQueue("queue", "hello");
 })
 </code></pre>
 <p><strong>Or like this:</strong></p>
@@ -1821,7 +1850,7 @@ const rbmqProxy = await instance;
 app.get('/', async(req, res)=&gt;{
   const rbmqProxy = await RabbitmqProxy.instance;
   const { channel: rbmq } = rbmqProxy;
-  rbmq.sendToQueue(&quot;queue&quot;, &quot;hello&quot;);
+  rbmq.sendToQueue("queue", "hello");
 })
 </code></pre>
 <p><strong>Or like this:</strong></p>
@@ -1835,7 +1864,7 @@ RabbitmqProxy.instance.then(rabbitmq=&gt;{
 })
 
 app.get('/', async(req, res)=&gt;{
-  rbmq.sendToQueue(&quot;queue&quot;, &quot;hello&quot;);
+  rbmq.sendToQueue("queue", "hello");
 })
 </code></pre>
 <p>更多的配置信息可以在config.yaml找到.</p>
@@ -1855,11 +1884,11 @@ app.get('/', async(req, res)=&gt;{
 <p>Eslint工具只是安装了基本的依赖</p>
 <p>你需要更多的自定义它。</p>
 <h4 id="jest"><a class="header" href="#jest">Jest</a></h4>
-<p>Jest工具只是安装了基本的依赖和创建了一个配置文件。此外, <code>package.json's scripts.test</code> 被替换为 &quot;jest&quot;,你可以使用Jest进行快速测试通过 &quot;npm test&quot;命令.</p>
+<p>Jest工具只是安装了基本的依赖和创建了一个配置文件。此外, <code>package.json's scripts.test</code> 被替换为 "jest",你可以使用Jest进行快速测试通过 "npm test"命令.</p>
 <p>你需要更多的自定义它。</p>
 <h4 id="pkg"><a class="header" href="#pkg">Pkg</a></h4>
 <p>Pkg工具用于构建可执行的exe程序，输出目录为dist。</p>
-<p><code>package.json's scripts.build</code> 被替换为 &quot;npx pkg . --out-path dist -t node16-win-x64&quot;. 你可以进行快速的构建通过&quot;npm build&quot;命令. 默认的编译目标是 node16-win-x64, 你可以在 package.json 中修改它并且你通常需要去Github上下载对应的目标node.</p>
+<p><code>package.json's scripts.build</code> 被替换为 "npx pkg . --out-path dist -t node16-win-x64". 你可以进行快速的构建通过"npm build"命令. 默认的编译目标是 node16-win-x64, 你可以在 package.json 中修改它并且你通常需要去Github上下载对应的目标node.</p>
 <h4 id="pm2"><a class="header" href="#pm2">PM2</a></h4>
 <p>PM2是一个由node驱动的进程管理器. 框架创建了一个基础的配置文件(ecosystem.consig.js)</p>
 <p>你可以更多的自定义它。</p>
@@ -1904,10 +1933,10 @@ app.get('/', async(req, res)=&gt;{
 }
 </code></pre>
 <p>通常，在捕获全局异常后，默认的是坏响应，但有时候我们不想要坏响应。</p>
-<pre><code class="language-javascript">throw new Error(JSON.stringify({code:400,msg:&quot;Invalid arguments.&quot;});
+<pre><code class="language-javascript">throw new Error(JSON.stringify({code:400,msg:"Invalid arguments."});
 </code></pre>
-<p>甚至我们可能不需要返回响应，我们可以把 back 设置为 &quot;false&quot;。</p>
-<pre><code class="language-javascript">throw new Error(JSON.stringify({code:400,msg:&quot;Invalid arguments.&quot;,back:false});
+<p>甚至我们可能不需要返回响应，我们可以把 back 设置为 "false"。</p>
+<pre><code class="language-javascript">throw new Error(JSON.stringify({code:400,msg:"Invalid arguments.",back:false});
 </code></pre>
 <p>框架只预置了 200 和 400 两个code，你可以自行拓展。</p>
 <hr />
@@ -1924,7 +1953,7 @@ app.get('/', async(req, res)=&gt;{
     Ok: (...args)=&gt;{
         return {
             code: 200,
-            msg: args[0]?args[0]:&quot;Ok&quot;,
+            msg: args[0]?args[0]:"Ok",
             data: args[1]?args[1]:null
         }
     }
@@ -1934,11 +1963,11 @@ app.get('/', async(req, res)=&gt;{
 <p>在<strong>global</strong>对象中挂载我们需要全局共享的量，比如我们想要挂载一个全局的config作为整个express应用的配置，就在项目的唯一入口文件（如: index.js, app.js等）的最顶上（优先于任何模块）设置一次：</p>
 <pre><code class="language-js">// index.js
 global.config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 /** 更简洁的写法，隐变量，首次被执行到后，会自动挂载到全局
 config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 */
 //创建app应用...
@@ -1947,7 +1976,7 @@ config = {
 <pre><code class="language-js">// router.js
 const routes = require('express').Router();
 routes.get('/global', (req, res, next)=&gt;{
-    res.send(Resp.Ok(&quot;global中的全局变量&quot;, {&quot;appname&quot;:config.appname}));
+    res.send(Resp.Ok("global中的全局变量", {"appname":config.appname}));
 });
 
 module.exports = routes;
@@ -1958,7 +1987,7 @@ app.use(routes);
 <p>如果我们有很多需要全局共享的配置，挤在index.js的上方多少有点不雅观，那我们可以把它们写在一个文件里，然后在index.js最顶上引入一下</p>
 <pre><code class="language-js">// global.js
 global.config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 
 // index.js
@@ -1966,7 +1995,7 @@ require('./global');
 </code></pre>
 <p>**注意：**由于global中的变量是可以直接以变量名<code>xxx</code>调用的，无需<code>global.xxx</code>，如果变量名设置的比较普通，就比如上面的<code>config</code>，甚至更简单的<code>a</code>之类的，很可能跟其它模块中定义的临时变量冲突，造成变量污染，因此在global上挂载变量时取名一定要特殊点，比如：之前的<code>config</code>替换为<code>__config</code></p>
 <pre><code class="language-js">global.__config = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 </code></pre>
 <p><strong>优点：</strong></p>
@@ -1983,7 +2012,7 @@ require('./global');
 比如：我们自建一个config.js</p>
 <pre><code class="language-js">// config.js
 module.exports = {
-    appname: &quot;GlobalVar&quot;
+    appname: "GlobalVar"
 }
 </code></pre>
 <p>在router.js中引入config.js</p>
@@ -1991,7 +2020,7 @@ module.exports = {
 const CONFIG = require('./config');
 
 routes.get('/module', (req, res, next)=&gt;{
-    res.send(Resp.Ok(&quot;config模块当作全局变量&quot;, {&quot;appname&quot;:CONFIG.appname}));
+    res.send(Resp.Ok("config模块当作全局变量", {"appname":CONFIG.appname}));
 });
 </code></pre>
 <p><strong>优点：</strong></p>
@@ -2006,12 +2035,12 @@ routes.get('/module', (req, res, next)=&gt;{
 <h2 id="appset"><a class="header" href="#appset">app.set</a></h2>
 <p>在 express 的应用设置表中设置应用内的全局变量：</p>
 <pre><code class="language-js">// index.js
-app.set(&quot;appname&quot;, &quot;GlobalVar&quot;);
+app.set("appname", "GlobalVar");
 </code></pre>
 <p>在其它地方调用app，如挂载在app上的router：</p>
 <pre><code class="language-js">// router.js
 routes.get('/app', (req, res, next)=&gt;{
-    res.send(Resp.Ok(&quot;app中的'全局'变量&quot;, {&quot;appname&quot;:req.app.get(&quot;appname&quot;)}));
+    res.send(Resp.Ok("app中的'全局'变量", {"appname":req.app.get("appname")}));
 });
 </code></pre>
 <p>在挂载在app下的子应用中，调用父app中的设置，当某字段在子应用中没有设置时，会继承父应用中的字段</p>
@@ -2019,10 +2048,10 @@ routes.get('/app', (req, res, next)=&gt;{
 const app = require('express')();
 const Resp = require('./Resp');
 //当子应用没有设置时，会继承父应用中设置的字段
-// app.set('appname', &quot;subapp&quot;);
+// app.set('appname', "subapp");
 app.all('/', (req, res, next) =&gt; {
-    res.send(Resp.Ok(&quot;子应用获取父应用中的全局变量&quot;, {
-        appname: req.app.get(&quot;appname&quot;)
+    res.send(Resp.Ok("子应用获取父应用中的全局变量", {
+        appname: req.app.get("appname")
     }));
 })
 
@@ -2039,7 +2068,7 @@ app.use('/subapp',subapp);
 <h2 id="processenv"><a class="header" href="#processenv">process.env</a></h2>
 <p>在进程的环境变量中挂载全局变量：</p>
 <pre><code class="language-js">//index.js
-process.env.appname = &quot;GlobalVar&quot;;
+process.env.appname = "GlobalVar";
 </code></pre>
 <p>在其它地方调用<code>process.env.appname</code>：</p>
 <pre><code class="language-js">// subapp2.js
@@ -2048,7 +2077,7 @@ const Resp = require('./Resp');
 
 app.all('/', (req, res, next) =&gt; {
     // console.log(app.settings.env);
-    res.send(Resp.Ok(&quot;在process.env上挂载全局变量&quot;, {
+    res.send(Resp.Ok("在process.env上挂载全局变量", {
         appname: process.env.appname
     }));
 })
@@ -2067,13 +2096,13 @@ app.use('/process.env',subapp2);
 <p>以上的方案都是将配置信息写在js文件中的，对于一个正规的项目来说多少有点儿戏，毕竟写在js中的变量是很容易就能被改变的。绝大多数时候，配置信息是需要变化也不允许变化的，我们只需要静态的信息即可。在Js项目中，经常用json文件作为静态配置文件。</p>
 <p>新建一个<strong>config.json</strong>文件：</p>
 <pre><code class="language-json">{
-	&quot;appname&quot;: &quot;GlobalVar&quot;
+	"appname": "GlobalVar"
 }
 </code></pre>
 <p>在我们的router中新加一条测试一下，不管你在哪里require，在首次被require之后，修改json文件内容将不会再产生影响</p>
 <pre><code class="language-JS">routes.get('/json', (req, res, next)=&gt;{
     let configJson = require('./config.json');
-    res.send(Resp.Ok(&quot;json静态配置文件&quot;, {&quot;appname&quot;:configJson.appname}));
+    res.send(Resp.Ok("json静态配置文件", {"appname":configJson.appname}));
 });
 </code></pre>
 <p>json文件不支持注释，如果想要注释，要么曲线救国(加与被备注键相关的键值对)，要么使用<strong>Json5</strong>规范</p>
@@ -2081,7 +2110,7 @@ app.use('/process.env',subapp2);
 </code></pre>
 <p>新建一个<strong>config.json5</strong>文件：</p>
 <pre><code class="language-json5">{
-    &quot;appname&quot;: &quot;GlobalVar&quot;  //应用名
+    "appname": "GlobalVar"  //应用名
 }
 </code></pre>
 <p>接着在项目的入口文件中引入register，会挂载到全局：</p>
@@ -2090,7 +2119,7 @@ app.use('/process.env',subapp2);
 <p>之后require就可以解析<code>json5</code>文件了：</p>
 <pre><code class="language-js">routes.get('/json5', (req, res, next)=&gt;{
     let configJson5 = require('./config.json5');
-    res.send(Resp.Ok(&quot;json5静态配置文件&quot;, {&quot;appname&quot;:configJson5.appname}));
+    res.send(Resp.Ok("json5静态配置文件", {"appname":configJson5.appname}));
 });
 </code></pre>
 <h2 id="yaml"><a class="header" href="#yaml">yaml</a></h2>
@@ -2112,7 +2141,7 @@ npm install js-yaml
 routes.get('/yaml', (req, res, next)=&gt;{
     /*Object */
     let configYaml = yaml.load(fs.readFileSync('./config.yaml'));
-    res.send(Resp.Ok(&quot;yaml动态配置文件&quot;, {&quot;appname&quot;:configYaml.appname}));
+    res.send(Resp.Ok("yaml动态配置文件", {"appname":configYaml.appname}));
 });
 </code></pre>
 <p>由于是通过fs读取yaml文件的，因此在改变yaml文件中的内容后，访问路由的结果也会变</p>
@@ -2142,7 +2171,7 @@ routes.get('/yaml', (req, res, next)=&gt;{
 <p>自定义分类的方法，其实很简单，无非是在抛出的异常上增加用以标识分类的属性即可。我没有选择这种方式，手动抛出时要略微多写几行代码，error.message 是一个描述字符串，我选择抛出自定义异常时，传递的message是一个json字符串，json里面再放置具体描述，分类信息以及其它等等的信息载体。</p>
 <pre><code class="language-js">throw new Error(JSON.stringfy(
   code: 400,
-  msg: &quot;自定义异常1&quot;,
+  msg: "自定义异常1",
   back: true
 ));
 </code></pre>
@@ -2162,12 +2191,12 @@ routes.get('/yaml', (req, res, next)=&gt;{
       if (back != false) {
         const handler = exhandleStrategy.get(code);
         if ( handler ) { handler(res,msg,symbol,data,status); }
-        else { res.json(Resp.bad(&quot;System Exception&quot;)); }
+        else { res.json(Resp.bad("System Exception")); }
       } else {
-        res.json(Resp.bad(&quot;System Exception&quot;));
+        res.json(Resp.bad("System Exception"));
       }
     } catch (_) { // cannot be parsed to JSON object =&gt; common error
-      res.json(Resp.bad(&quot;System Exception&quot;));
+      res.json(Resp.bad("System Exception"));
     }
     next(err);
   } else {
@@ -2213,21 +2242,21 @@ exhandleStrategy.set(500, (res, ...args)=&gt;{
 <pre><code class="language-js">const config = require('../config').get();
 const log4js = require('log4js');
 
-let logger = log4js.getLogger(&quot;&quot;);
+let logger = log4js.getLogger("");
     
 log4js.configure({
   appenders: {
     out: {
-      type: &quot;stdout&quot;,
+      type: "stdout",
       layout: {
-          &quot;type&quot;: &quot;pattern&quot;,
-          &quot;pattern&quot;: &quot;[%d{yyyy-MM-dd hh:mm:ss}] %p %m&quot;
+          "type": "pattern",
+          "pattern": "[%d{yyyy-MM-dd hh:mm:ss}] %p %m"
       }
     }
   },
   categories: {
     default: {
-      appenders: [&quot;out&quot;],
+      appenders: ["out"],
       level: config.log4js.level
     }
   }
@@ -2235,7 +2264,7 @@ log4js.configure({
 
 module.exports = logger;
 </code></pre>
-<p>日志级别总共有 <strong>&quot;ALL&quot;</strong>，<strong>&quot;TRACE&quot;</strong>, <strong>&quot;DEBUG&quot;</strong>, <strong>&quot;INFO&quot;</strong>, <strong>&quot;WARN&quot;</strong>, <strong>&quot;ERROR&quot;</strong>, <strong>&quot;FATAL&quot;</strong>（致命）, <strong>&quot;MARK&quot;</strong>, <strong>&quot;OFF&quot;</strong>（关闭） 这几级（大小写均支持），重要性逐级递增，在当前设置的 level 之下的日志将不会被记录，如日志级别设置为 <strong>&quot;INFO&quot;</strong>，则 <strong>logger.all</strong>, <strong>logger.trace</strong>, <strong>logger.debug</strong> 将不会进行日志记录。</p>
+<p>日志级别总共有 <strong>"ALL"</strong>，<strong>"TRACE"</strong>, <strong>"DEBUG"</strong>, <strong>"INFO"</strong>, <strong>"WARN"</strong>, <strong>"ERROR"</strong>, <strong>"FATAL"</strong>（致命）, <strong>"MARK"</strong>, <strong>"OFF"</strong>（关闭） 这几级（大小写均支持），重要性逐级递增，在当前设置的 level 之下的日志将不会被记录，如日志级别设置为 <strong>"INFO"</strong>，则 <strong>logger.all</strong>, <strong>logger.trace</strong>, <strong>logger.debug</strong> 将不会进行日志记录。</p>
 <p>这些文字的级别对应以下数字，依次为 <code>5e-324</code>, <code>5000</code>, <code>10000</code>, <code>20000</code>, <code>30000</code>, <code>40000</code>, <code>50000</code>, <code>9007199254740992</code>, <code>1.7976931348623157e+308</code></p>
 <p>日志器当前的级别可由 <code>logger.level</code> 或者 <code>logger.level.levelStr</code> 获取，当前级别对应的数字可由 <code>logger.level.level</code> 获取，不过还是更建议自定义一个数组或者Map，把所有的级别文字按序放入，然后需要的时候根据索引来判断级别的高低。</p>
 <h2 id="下一节-数据库初始化"><a class="header" href="#下一节-数据库初始化">下一节-数据库初始化</a></h2>
@@ -2379,7 +2408,7 @@ module.exports = sqlClient;
 </ol>
 <pre><code class="language-js">sqlClient.runSql = (path)=&gt;{
     const script = fs.readFileSync(path).toString();
-    console.log(&quot;Going to run a sql file:&quot;);
+    console.log("Going to run a sql file:");
     console.log(script);
     /**
      * 拆成一句句sql来执行是因为，knex执行一串语句时，会把它们都算进一个事务内
@@ -2392,12 +2421,12 @@ module.exports = sqlClient;
     const sqls = script.replace(/\/\*[\s\S]*?\*\/|(--|\#)[^\r\n]*/gm, '').trim().replaceAll('\r','').split(';').filter(str=&gt;{
         return str.trim() ? true : false;
     });
-    console.log(&quot;sqls&quot;);
+    console.log("sqls");
     console.log(sqls);
-    console.log(&quot;start run:&quot;);
+    console.log("start run:");
     const promises = sqls.map(sql=&gt;{
         sql += ';';  // knex会自动补上冒号，加不加无所谓其实
-        console.log(&quot;Going to run a sql:&quot;);
+        console.log("Going to run a sql:");
         console.log(sql);
         return sqlClient.raw(sql);
     })
@@ -2413,7 +2442,7 @@ const knex = require('./knex.js')
 const promises = knex.runSql(`${__root}/db/schema.sql`);
 Promise.all(promises)
     .then(res=&gt;{
-        console.log(&quot;Database inits successfully!&quot;)
+        console.log("Database inits successfully!")
     }).catch(err=&gt;{
     console.error(err);
 })
@@ -2460,7 +2489,7 @@ Database inits successfully!
 <p>        如果你把<code>knex</code>这套照搬过去，把<code>knex.raw</code>换成<code>sequelize.query</code>，你也许会尴尬的发现，不太对劲，它先创建了user表，接着又把它给删了，还大言不惭地打印了成功信息（我的环境下是这样，不清楚别人会不会，但既然发生了就说明存在一定的问题）。尝试反复执行knex示例和seuelize示例，前者永远正确，后者永远错误，而且sequelize似乎更慢一点，产生这样的区别，可能是它们执行sql语句的实现机制不太一样，花费精力去看它源码没有必要，既然在这个场景下我们这两个步骤有着明确的先后顺序，那我们就通过async/await让它们完全的顺序执行即可：</p>
 <pre><code class="language-js">sqlClient.runSql = async (path)=&gt; {
     const script = fs.readFileSync(path).toString();
-    console.log(&quot;Going to run a sql file:&quot;);
+    console.log("Going to run a sql file:");
     console.log(script);
     /**
      * 拆成一句句sql来执行是因为，knex执行一串语句时，会把它们都算进一个事务内
@@ -2473,9 +2502,9 @@ Database inits successfully!
     const sqls = script.replace(/\/\*[\s\S]*?\*\/|(--|\#)[^\r\n]*/gm, '').trim().replaceAll('\r','').split(';').filter(str=&gt;{
         return str.trim() ? true : false;
     });
-    console.log(&quot;sqls&quot;);
+    console.log("sqls");
     console.log(sqls);
-    console.log(&quot;start run:&quot;);
+    console.log("start run:");
     for (let sql of sqls) {
         const res = await sqlClient.query(`${sql};`);
     }
@@ -2537,7 +2566,7 @@ Database inits successfully!
 原本的css,js等等路径都是在<code>/</code>下的，我们调整到<code>/static/</code>下面去</li>
 </ol>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
 	&lt;meta charset='utf-8'&gt;
 	&lt;meta name='viewport' content='width=device-width,initial-scale=1'&gt;
@@ -2594,7 +2623,7 @@ html
     style
       include css/index.css
   body
-    div(class=&quot;container&quot;)
+    div(class="container")
       h1= message
       a(href= express_demo, target= '_blank') Go to express-demo
 </code></pre>
@@ -2628,7 +2657,7 @@ html
 </code></pre>
 <h3 id="定义变量"><a class="header" href="#定义变量">定义变量</a></h3>
 <p>在 pug 中我们可以写 js 脚本，定义变量，然后嵌入到标签中去渲染</p>
-<pre><code class="language-pug">- const hello_msg=&quot;Welcome to express pug!
+<pre><code class="language-pug">- const hello_msg="Welcome to express pug!
 
 //...
   span #{hello_msg}
@@ -2640,25 +2669,25 @@ html
 <p>如果你的 js 代码很长，不方便写在一行，比如定义一个数组</p>
 <p>错误示范，这样子是错误的，这是单行脚本的写法</p>
 <pre><code class="language-pug">- const list = [
-    &quot;a&quot;,
-    &quot;b&quot;,
+    "a",
+    "b",
   ]
 </code></pre>
 <p>正确示范，空出一行即可：</p>
 <pre><code class="language-pug">- 
   const list = [
-    &quot;a&quot;,
-    &quot;b&quot;,
+    "a",
+    "b",
   ]
 </code></pre>
 <h3 id="标签属性"><a class="header" href="#标签属性">标签属性</a></h3>
 <p>通常我们需要给标签赋予一些属性，比如元素的类名、a 标签的地址、图片的地址等等</p>
-<pre><code class="language-pug">a(href= express_demo, target= &quot;_blank&quot;) Go to express-demo'
+<pre><code class="language-pug">a(href= express_demo, target= "_blank") Go to express-demo'
 </code></pre>
 <p>多个属性用逗号分隔开，变量直接赋给属性，硬编码的属性则以字符串传入</p>
 <h3 id="列表渲染"><a class="header" href="#列表渲染">列表渲染</a></h3>
 <p>通常我们会需要渲染列表，vue 中有 <code>v-for</code>，React用 map 迭代列表，而 pug 可以用 <code>each in</code> 直接迭代列表</p>
-<pre><code>- const apps = [{ name: &quot;qq&quot; },{ name: &quot;wechat&quot; },{ name: &quot;ins&quot; }]
+<pre><code>- const apps = [{ name: "qq" },{ name: "wechat" },{ name: "ins" }]
 
   each app in list
     p #{app.name}
@@ -2711,7 +2740,7 @@ case day
 <pre><code class="language-shell">npm install jstransformer-markdown-it
 </code></pre>
 <p>然后划定一块区域，放置我们的markdown</p>
-<pre><code class="language-pug">div(class=&quot;md&quot;)
+<pre><code class="language-pug">div(class="md")
   :markdown-it(linkify langPrefix='highlight-js')
   # Markdown
   use markdown in pug file
@@ -2743,7 +2772,7 @@ case day
 </ul>
 <p>以<code>validator.query</code>为例，我们可以检查query参数中的某一项</p>
 <pre><code class="language-js">router.get('/greet', 
-	validator.query('person').trim().notEmpty().escape().withMessage(&quot;person不能为空&quot;),
+	validator.query('person').trim().notEmpty().escape().withMessage("person不能为空"),
 (req, res, next) =&gt; {
   const valires = validator.validationResult(req);
   if (!valires.isEmpty()) {
@@ -2763,16 +2792,16 @@ case day
 <p>errors需要通过valires.array()来得到，当然序列反序列化也行
 每一项error结构如下：</p>
 <pre><code class="language-ts">{
-	&quot;type&quot;: string,
-	&quot;msg&quot;: string,
-	&quot;path&quot;: string, //如上面检查的person
-	&quot;location&quot;: string //如query,body..
+	"type": string,
+	"msg": string,
+	"path": string, //如上面检查的person
+	"location": string //如query,body..
 }
 </code></pre>
 <p>如果需要检验多个参数，就放进数组即可：</p>
 <pre><code class="language-js">[
-  validator.query('person').trim().notEmpty().escape().withMessage(&quot;person不能为空&quot;),
-  validator.query('address').trim().notEmpty().escape().withMessage(&quot;address不能为空&quot;)
+  validator.query('person').trim().notEmpty().escape().withMessage("person不能为空"),
+  validator.query('address').trim().notEmpty().escape().withMessage("address不能为空")
 ]
 </code></pre>
 <h2 id="封装剥离"><a class="header" href="#封装剥离">封装剥离</a></h2>
@@ -2801,8 +2830,8 @@ const ValidRace = (validChain)=&gt;{
 <pre><code class="language-js">router.get('/greet2',
   ValidRace([
     validator.query('age').trim()
-      .notEmpty().withMessage(&quot;age不能为空&quot;).bail()
-      .isInt().withMessage(&quot;age必须是正整数&quot;).bail().toInt()
+      .notEmpty().withMessage("age不能为空").bail()
+      .isInt().withMessage("age必须是正整数").bail().toInt()
   ]),
 (req, res, next) =&gt; {
   logger.info(`Hello ${req.query.person}!`);
@@ -2813,8 +2842,8 @@ const ValidRace = (validChain)=&gt;{
 <p>当然你也可以赋给一个变量，然后再引进来:</p>
 <pre><code class="language-js">const CheckGreet2 = ValidRace([
   validator.query('age').trim()
-    .notEmpty().withMessage(&quot;age不能为空&quot;).bail()
-    .isInt().withMessage(&quot;age必须是正整数&quot;).bail().toInt()
+    .notEmpty().withMessage("age不能为空").bail()
+    .isInt().withMessage("age必须是正整数").bail().toInt()
 ]);
 router.get('/greet2', CheckGreet2, (req, res, next) =&gt; {
   logger.info(`Hello ${req.query.person}!`);
@@ -2835,10 +2864,10 @@ router.get('/greet2', CheckGreet2, (req, res, next) =&gt; {
 <ol>
 <li>定义待检验的数据格式</li>
 </ol>
-<pre><code class="language-js">const { z } = requie(&quot;zod&quot;);
+<pre><code class="language-js">const { z } = requie("zod");
 
 const schema = z.object({
-  username: z.string().nonempty(&quot;username cannot be empty&quot;)
+  username: z.string().nonempty("username cannot be empty")
 })
 </code></pre>
 <p>这个 schema 就是 Zod 检验一个对象或者变量的<strong>检验器</strong>，如果检验目标只是一个值，<code>z.string()</code>之类的即可
@@ -2852,7 +2881,7 @@ const schema = z.object({
 <h2 id="封装中间件"><a class="header" href="#封装中间件">封装中间件</a></h2>
 <p>在 midwares 目录下创建 zod.js：<br />
 导出了一个 ZodValid函数：该函数传入一个对象，包含了 headers, params, query 和 body 四个可选属性，分别对应请求可以传入数据的四个部分，如果需要检验，就传入定义好的检验器给需要检验的部分；ZodValid会返回一个 request handler，在处理器里面根据传入的检验器分别去进行检验，这个<strong>处理器才是最后的中间件</strong>，ZodValid其实是一个<strong>中间件工厂</strong>。我在这里取出了第一个错误，并将错误的 message 抛出，evp-express 默认直接捕捉并返回错误信息，我这样写是为了让读者对错误信息能看的更清楚，非特定场景下，不一定要返回这样细致的错误信息，<strong>可以抛出统一错误信息</strong>。</p>
-<pre><code class="language-js">const { z } = require(&quot;zod&quot;);
+<pre><code class="language-js">const { z } = require("zod");
 
 /**
  * @typedef {{
@@ -2889,7 +2918,7 @@ module.exports = {
    */
   ZodValid: ({headers, params, query, body})=&gt;{
     /**
-     * @type {import(&quot;express&quot;).RequestHandler}
+     * @type {import("express").RequestHandler}
      */
     const handler = (req,res,next)=&gt;{
       if (headers) {
@@ -2935,7 +2964,7 @@ const { Json } = require('../midwares/bodyParser');
 const router = Router();
 
 router.get('/', ZodValid({
-  query: z.object({ name: z.string().nonempty(&quot;name cannot be empty&quot;) })
+  query: z.object({ name: z.string().nonempty("name cannot be empty") })
 }), async (req, res, next) =&gt; {
   const name = req.query.name;
   logger.info(`Hello World! ${name}`);
@@ -2945,9 +2974,9 @@ router.get('/', ZodValid({
 
 router.post('/', Json, ZodValid({
   body: z.object({ 
-    name: z.string().nonempty(&quot;name cannot be empty&quot;).min(8, &quot;name at least 8 length&quot;),
-    pass: z.string().nonempty(&quot;password cannot be empty&quot;).min(8, &quot;password at least 8 lenght&quot;),
-    email: z.string().email(&quot;email is invalid&quot;) })
+    name: z.string().nonempty("name cannot be empty").min(8, "name at least 8 length"),
+    pass: z.string().nonempty("password cannot be empty").min(8, "password at least 8 lenght"),
+    email: z.string().email("email is invalid") })
 }), async (req, res, next) =&gt; {
   const name = req.body.name;
   logger.info(`Hello World! ${name}`);
@@ -2959,19 +2988,19 @@ module.exports = router;
 <h2 id="测试-1"><a class="header" href="#测试-1">测试</a></h2>
 <p>调整请求数据，分别访问这两个接口，你将得到类似这样的结果：</p>
 <pre><code class="language-json">{
-  &quot;code&quot;: 500,
-  &quot;msg&quot;: &quot;name cannot be empty&quot;,
-  &quot;data&quot;: null,
-  &quot;symbol&quot;: 0,
-  &quot;type&quot;: &quot;Bad Request&quot;
+  "code": 500,
+  "msg": "name cannot be empty",
+  "data": null,
+  "symbol": 0,
+  "type": "Bad Request"
 }
 </code></pre>
 <pre><code class="language-json">{
-    &quot;code&quot;: 500,
-    &quot;msg&quot;: &quot;email is invalid&quot;,
-    &quot;data&quot;: null,
-    &quot;symbol&quot;: 0,
-    &quot;type&quot;: &quot;Bad Request&quot;
+    "code": 500,
+    "msg": "email is invalid",
+    "data": null,
+    "symbol": 0,
+    "type": "Bad Request"
 }
 </code></pre>
 <hr />
@@ -3041,8 +3070,8 @@ module.exports = {
 const redisProxy = RedisProxy.instance;
 const redis = redisProxy.client;
 
-redis.set(&quot;name&quot;, &quot;evpantchouli&quot;);  //设置键
-console.log(await redis.get(&quot;name&quot;); //取键
+redis.set("name", "evpantchouli");  //设置键
+console.log(await redis.get("name"); //取键
 </code></pre>
 <p>你可以自己手动配置一遍，也可以使用evp-express-cli作为手脚架创建项目并选择redis模板。</p>
 <p>关于redis.js的详细用法请见官方文档: <a href="http://npmjs.com/package/redis">http://npmjs.com/package/redis</a></p>
@@ -3082,14 +3111,14 @@ class RabbitmqProxy {
         hostname: `127.0.0.1`,
         port: `5672`,
       });
-      logger.info(&quot;Connected to RabbitMQ!&quot;);
+      logger.info("Connected to RabbitMQ!");
       ins.conn = conn;
       const channel = await ins.conn.createChannel();
       //确认队列
-      channel.assertQueue(&quot;hellos&quot;);
+      channel.assertQueue("hellos");
       //订阅队列
-      channel.consume(&quot;hellos&quot;, async (message) =&gt; {
-      	console.log(&quot;hello, two!&quot;);
+      channel.consume("hellos", async (message) =&gt; {
+      	console.log("hello, two!");
       	channel.ack(message); //报告处理完毕
       });
       ins.channel = channel;
@@ -3116,8 +3145,8 @@ module.exports = {
 app.post('/', async(req,res,next)=&gt;{
 	const rbmqproxy = await rabbitmqProxy.instance;
 	const channel = rbmqproxy.channel;
-	//发送消息到&quot;hellos&quot;队列
-    channel.sendToQueue(&quot;hellos&quot;, &quot;hello!&quot;);
+	//发送消息到"hellos"队列
+    channel.sendToQueue("hellos", "hello!");
     res.send();
 })
 </code></pre>
@@ -3151,15 +3180,15 @@ class WebsocketProxy {
 
     this.server = _server;
     
-    _server.on(&quot;listening&quot;, () =&gt; {
+    _server.on("listening", () =&gt; {
       console.log(`websocket server is listening.`);
       
     })
 
-    _server.on(&quot;connection&quot;, (ws) =&gt; {
+    _server.on("connection", (ws) =&gt; {
       console.log(`websocket client connection`);
       ws.send(`Hello, I'm WebSocket server.`);
-      ws.on(&quot;message&quot;, (message) =&gt; {
+      ws.on("message", (message) =&gt; {
         ws.send(`${message}`);
       })
     })
@@ -3183,12 +3212,12 @@ module.exports = {
 </code></pre>
 <p>最后把服务器导出来:</p>
 <pre><code class="language-js">async function init() {
-  return RedisProxy.instance();
+  return WebsocketProxy.instance();
 }
 
 module.exports = {
   init,
-  instance: RedisProxy.instance(),
+  instance: WebsocketProxy.instance(),
 };
 </code></pre>
 <p>然后在任意其它地方调用 wsProxy.instance 即可获取单例，在从单例中获取server即可主动操作websocket.</p>
@@ -3253,12 +3282,12 @@ module.exports = {
 </code></pre>
 <p>最后把服务器导出来:</p>
 <pre><code class="language-js">async function init() {
-  return RedisProxy.instance();
+  return SocketIoProxy.instance();
 }
 
 module.exports = {
   init,
-  instance: RedisProxy.instance(),
+  instance: SocketIoProxy.instance(),
 };
 </code></pre>
 <p>然后在任意其它地方调用 socketioProxy.instance 即可获取单例，在从单例中获取server即可主动操作socketio.</p>
@@ -3296,41 +3325,41 @@ const socketioServer = socketioProxy.server;
 <p>在 public 目录下面创建 <code>index.html</code>, <code>fail.html</code>, <code>home.html</code> 3个页面：</p>
 <p><strong>index.html:</strong></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot;&gt;
-  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Document&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
-    &lt;input name=&quot;username&quot; placeholder=&quot;username...&quot; /&gt;
-    &lt;input name=&quot;password&quot; placeholder=&quot;password...&quot; /&gt;
-    &lt;button type=&quot;submit&quot;&gt;Login&lt;/button&gt;
+  &lt;form action="/login" method="post"&gt;
+    &lt;input name="username" placeholder="username..." /&gt;
+    &lt;input name="password" placeholder="password..." /&gt;
+    &lt;button type="submit"&gt;Login&lt;/button&gt;
   &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p><strong>fail.html</strong></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot;&gt;
-  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Fail&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;h1&gt;Fail&lt;/h1&gt;
-  &lt;a title=&quot;gologin&quot; href=&quot;/views&quot;&gt;Go login&lt;/a&gt;
+  &lt;a title="gologin" href="/views"&gt;Go login&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p><strong>home.html</strong></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+&lt;html lang="en"&gt;
 &lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot;&gt;
-  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Home&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -3381,7 +3410,7 @@ passport.use(new LocalStrategy(
     if (username == 'root' &amp;&amp; password == 'root') {
       return done(null, { username, password});
     }
-    return done(null, false, {message: &quot;None&quot;});
+    return done(null, false, {message: "None"});
   }
 ))
 
@@ -3604,11 +3633,11 @@ const sqlite = knex({
     },
 });
 
-app.all(&quot;*&quot;, function (req, res, next) {
-    res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
-    res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;Content-Type&quot;);
-    res.header(&quot;Access-Control-Allow-Methods&quot;, &quot;*&quot;);
-    res.header(&quot;Content-Type&quot;, &quot;application/json;charset=utf-8&quot;);
+app.all("*", function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
 
@@ -3629,18 +3658,18 @@ const server = app.listen(config.server.port, config.server.host, () =&gt; {
     let port = server.address().port;
 
     let str = config.app.name;
-    let mode = [ &quot;close&quot;, &quot;far&quot;, undefined ];
+    let mode = [ "close", "far", undefined ];
     let chart = evchart.convert(str, mode[0]);
     console.log(chart);
 
-    console.log(&quot;Server is ready on http://%s:%s&quot;, host, port);
+    console.log("Server is ready on http://%s:%s", host, port);
 })
 </code></pre>
 <p>此时我们访问这些接口都是可以正常用的：</p>
 <pre><code class="language-console">C:\Users\GrapeX&gt;curl -X GET http://127.0.0.1:8080
 Hello World!
 C:\Users\GrapeX&gt;curl -X GET http://127.0.0.1:8080/config
-{&quot;app&quot;:{&quot;name&quot;:&quot;pkg-demo&quot;,&quot;version&quot;:&quot;0.0.1&quot;},&quot;server&quot;:{&quot;host&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8080}}
+{"app":{"name":"pkg-demo","version":"0.0.1"},"server":{"host":"127.0.0.1","port":8080}}
 </code></pre>
 <p>接下来，我们就来实现把这个小项目构建为一个可以直接运行的exe程序，并且assets内置其中，db则还是在外边，方便我们管理数据库</p>
 <h2 id="安装并配置pkg"><a class="header" href="#安装并配置pkg">安装并配置pkg</a></h2>
@@ -3694,7 +3723,7 @@ C:\Users\GrapeX&gt;curl -X GET http://127.0.0.1:8080/config
 </code></pre>
 <p>或者在 package.json中添加 bin 选项：</p>
 <pre><code class="language-json">{
-	&quot;bin&quot;: &quot;index.js&quot;
+	"bin": "index.js"
 }
 </code></pre>
 <p>然后使用<code>.</code>替代，pkg此时会去读取package.json中的bin：</p>
@@ -3728,19 +3757,19 @@ Error: ENOENT: no such file or directory, open './assets/config.yaml'
 <h3 id="配置内置资源目录"><a class="header" href="#配置内置资源目录">配置内置资源目录</a></h3>
 <p>当我们需要将静态资源，比如配置文件(.yaml,.json等)或者其它的非.js文件，需要事先设置资源，pkg才会把指定的资源打包进exe中<br />
 配置方法是在 package.json 中配置 pkg:assets 选项：</p>
-<pre><code class="language-json">  &quot;pkg&quot;: {
-    &quot;assets&quot;: [
-      &quot;assets**/*&quot;
+<pre><code class="language-json">  "pkg": {
+    "assets": [
+      "assets**/*"
     ]
   },
 </code></pre>
 <p>assets接收一个数组，每个元素是你指定的资源路径，可以使用通配，上面这个就是把assets下所有文件都指定为资源文件<br />
 官方文档给了这么个示例：</p>
-<pre><code class="language-json">  &quot;pkg&quot;: {
-    &quot;scripts&quot;: &quot;build/**/*.js&quot;,
-    &quot;assets&quot;: &quot;views/**/*&quot;,
-    &quot;targets&quot;: [ &quot;node14-linux-arm64&quot; ],
-    &quot;outputPath&quot;: &quot;dist&quot;
+<pre><code class="language-json">  "pkg": {
+    "scripts": "build/**/*.js",
+    "assets": "views/**/*",
+    "targets": [ "node14-linux-arm64" ],
+    "outputPath": "dist"
   }
 </code></pre>
 <p>scripts是指那些额外编译后的js，比如你用了大量高级esm语法的代码，被你用babel编译成的普通js，比如你用了v8的然后被编译好的js等等</p>
@@ -3803,13 +3832,13 @@ app.get('/toConfig', function (req, res) {
 <li><strong>方案1</strong>：拷贝axios.cjs</li>
 </ul>
 <p>拷贝<code>node_modules\axios\dist\node\axios.cjs</code>放到自己的源码下并引用：</p>
-<pre><code class="language-js">const axios = require(&quot;./axios.cjs&quot;).default; // 方案1
+<pre><code class="language-js">const axios = require("./axios.cjs").default; // 方案1
 </code></pre>
 <p>此时，把原先的axios依赖删了都行，pkg构建的时候还不会WARN</p>
 <ul>
 <li><strong>方案2</strong>：把axios.cjs作为资源脚本</li>
 </ul>
-<pre><code class="language-js">const axioscjs = path.join(__dirname,&quot;../node_modules/axios/dist/node/axios.cjs&quot;);
+<pre><code class="language-js">const axioscjs = path.join(__dirname,"../node_modules/axios/dist/node/axios.cjs");
 const axios = require(axioscjs).default;  // 方案2
 </code></pre>
 <p>pkg构建的虽然会WARN，但能正常运行即可</p>
@@ -3847,21 +3876,21 @@ COPY . .
 RUN npm install
 
 EXPOSE 8080
-CMD [&quot;node src/index.js&quot;]
+CMD ["node src/index.js"]
 </code></pre>
 <p>基本流程就是：</p>
 <ol>
-<li>拉取node镜像 </li>
-<li>指定工作目录 </li>
-<li>拷贝项目源码及资源文件 </li>
-<li>安装依赖 </li>
-<li>暴露端口 </li>
+<li>拉取node镜像</li>
+<li>指定工作目录</li>
+<li>拷贝项目源码及资源文件</li>
+<li>安装依赖</li>
+<li>暴露端口</li>
 <li>设置启动命令</li>
 </ol>
 <h2 id="在-docker-中构建部署"><a class="header" href="#在-docker-中构建部署">在 Docker 中构建部署</a></h2>
 <p>上面采取的是直接部署源代码，当然也可以先对源码进行构建再部署。这里又可以分为两种，一种仍然需要 node 运行时，仅仅借助 rollup 之类的工具将源码打包为单个 <code>.js</code> 文件，然后部署时只需拷贝这单个文件即可，具体过程无需再做介绍</p>
 <p>另一种是脱离 node 运行时，使用 pkg 构建 express 项目，最终部署构建产物到纯净的 linux 镜像即可。如果你在进行 docker 部署前，事先构建好再部署，那具体做法也不需介绍，本文介绍的是在 docker 中阶段的从零构建到部署的过程：</p>
-<p><strong>编写 Dockerfile</strong>: </p>
+<p><strong>编写 Dockerfile</strong>:</p>
 <ol>
 <li>拉取合适的 node 镜像作为构建环境，<code>builder</code> 是构建镜像别名，可以随便取（后面有用）：</li>
 </ol>
@@ -3874,7 +3903,7 @@ ENV NODE_ENV=production
 </ol>
 <pre><code class="language-dockerfile">WORKDIR /app
 
-COPY [&quot;package.json&quot;, &quot;package-lock.json*&quot;, &quot;./&quot;]
+COPY ["package.json", "package-lock.json*", "./"]
 </code></pre>
 <ol start="3">
 <li>安装依赖包</li>
@@ -3917,7 +3946,7 @@ RUN echo 'Asia/Shanghai' &gt;/etc/timezone
 <pre><code class="language-dockerfile">WORKDIR /app
 
 EXPOSE 8080
-CMD [&quot;./starfolder-service&quot;]
+CMD ["./starfolder-service"]
 </code></pre>
 <p>以下是完整的 Dockerfile 示例：</p>
 <pre><code class="language-dockerfile"># Build environment
@@ -3926,7 +3955,7 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY [&quot;package.json&quot;, &quot;package-lock.json*&quot;, &quot;./&quot;]
+COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install
 
@@ -3945,7 +3974,7 @@ COPY --from=builder /app/dist/starfolder-service /app/
 WORKDIR /app
 
 EXPOSE 8080
-CMD [&quot;./DockerDeploy&quot;]
+CMD ["./DockerDeploy"]
 </code></pre>
 <p>这样的分阶段构建过程，可以尽可能得减小最终的镜像体积</p>
 <hr />
@@ -3955,19 +3984,19 @@ CMD [&quot;./DockerDeploy&quot;]
 <h2 id="准备工作-19"><a class="header" href="#准备工作-19">准备工作</a></h2>
 <ul>
 <li>一个 express 项目</li>
-<li>全局安装 pm2 </li>
+<li>全局安装 pm2</li>
 </ul>
 <pre><code class="language-shell">npm install -g pm2
 </code></pre>
 <h2 id="pm2使用介绍"><a class="header" href="#pm2使用介绍">pm2使用介绍</a></h2>
 <h3 id="启动应用"><a class="header" href="#启动应用">启动应用</a></h3>
 <p>你可以用纯命令去运行一个node项目，假设原本运行项目使用 <code>node src/index.js</code>可以跑起来一个项目，则：</p>
-<pre><code class="language-shell">pm2 start -name &quot;pm2-node-app&quot; node -- src/index
+<pre><code class="language-shell">pm2 start -name "pm2-node-app" node -- src/index
 </code></pre>
 <p>当然你还可以通过将部分信息写到配置文件中，文件可以是 js, json 等，js格式的可以通过以下命令生成：</p>
 <pre><code class="language-shell">pm2 init
 </code></pre>
-<p>这将得到一个名为 &quot;ecosystem.config.js&quot; 的文件，内容如下：</p>
+<p>这将得到一个名为 "ecosystem.config.js" 的文件，内容如下：</p>
 <pre><code class="language-js">module.exports = {
   apps : [{
     script: 'index.js',
@@ -3993,7 +4022,7 @@ CMD [&quot;./DockerDeploy&quot;]
 </code></pre>
 <p>deploy那部分是构建，在本节我们仅将 pm2 用于项目的运行管理，无需关注构建。重点是 apps 列表，每一个元素分别对应一个应用的配置信息，包括启动时运行的脚本命令（script），文件变动监控（watch）等</p>
 <h3 id="热重载"><a class="header" href="#热重载">热重载</a></h3>
-<p>假设我们的源码入口位于 &quot;src\index.js&quot;，我们需要开发时热重启项目（仅src内文件变动）：</p>
+<p>假设我们的源码入口位于 "src\index.js"，我们需要开发时热重启项目（仅src内文件变动）：</p>
 <pre><code class="language-js">module.exports = {
   apps : [{
     script: 'src/index.js',
@@ -4049,7 +4078,7 @@ CMD [&quot;./DockerDeploy&quot;]
 <p>编程规范，对于一个优秀的项目是不可或缺的，有了良好的代码规范，有益于项目的维护与拓展。</p>
 <h2 id="命名规范"><a class="header" href="#命名规范">命名规范</a></h2>
 <p>命名的第一要义是明了，要让阅读者看到命名就能大概猜测出其意义或用处。<br />
-以用户身份（userRole）为例，不可过度简略为 &quot;ur&quot;，本身这个单词也不算长，拼全 &quot;userRole&quot; 即可，或者 &quot;uRole&quot;，因为字母 &quot;u&quot; 通常代表用户，这是约定俗成的。</p>
+以用户身份（userRole）为例，不可过度简略为 "ur"，本身这个单词也不算长，拼全 "userRole" 即可，或者 "uRole"，因为字母 "u" 通常代表用户，这是约定俗成的。</p>
 <p>命名规范可以跟据被命名的目标再细分：</p>
 <p><strong>变量命名</strong>：<br />
 可变变量通常用 <code>let</code> 声明，命名时可以采取首字母小写的驼峰（userRole）或者小写蛇形命名法（user_role）；常量变量通常用 <code>const</code> 声明，命名时通常采用全大写（USERROLE）或者大写蛇形命名法（USER_ROLE）</p>
@@ -4063,7 +4092,7 @@ CMD [&quot;./DockerDeploy&quot;]
   }
 }
 </code></pre>
-<p>以上代码的 &quot;userLogin&quot; 就是典型的前缀冗余。</p>
+<p>以上代码的 "userLogin" 就是典型的前缀冗余。</p>
 <p><strong>文件命名</strong>：<br />
 文件命名通常采用小写驼峰命名（strUtil.js）或者小写点隔式命名（str.util.js），小写蛇形命名法也不是不行，但在 js 项目中较为罕见。</p>
 <h2 id="排版规范"><a class="header" href="#排版规范">排版规范</a></h2>
@@ -4104,7 +4133,7 @@ CMD [&quot;./DockerDeploy&quot;]
 <div style="break-before: page; page-break-before: always;"></div><h1 id="高性能"><a class="header" href="#高性能">高性能</a></h1>
 <p>在生产环境下，真实的访问流量远超测试与开发环境，而且往往是不稳定的访问。以下是有助于提高你的 Express 应用性能的一些建议。</p>
 <h2 id="设置生产环境"><a class="header" href="#设置生产环境">设置生产环境</a></h2>
-<p>NODE_ENV 环境变量指定运行应用程序的环境（通常是开发或者生产环境）。为了改进性能，最简单的方法是将 NODE_ENV 设置为 &quot;production&quot;：</p>
+<p>NODE_ENV 环境变量指定运行应用程序的环境（通常是开发或者生产环境）。为了改进性能，最简单的方法是将 NODE_ENV 设置为 "production"：</p>
 <pre><code class="language-shell">env NODE_ENV=production
 </code></pre>
 <p>将 NODE_ENV 设置为“production”会使 Express：</p>
@@ -4155,15 +4184,15 @@ app.use(compression());
 <pre><code class="language-shell">npm install helmet --save
 </code></pre>
 <p>挂载到 app：</p>
-<pre><code class="language-javascript">const helmet = require(&quot;helmet&quot;)();
+<pre><code class="language-javascript">const helmet = require("helmet")();
 
 app.use(helmet);
 </code></pre>
 <h2 id="安全地使用-cookie"><a class="header" href="#安全地使用-cookie">安全地使用 Cookie</a></h2>
 <p>为确保 Cookie 不会打开您的应用而受攻击，请不要使用默认 Cookie 会话名称：</p>
-<pre><code class="language-javascript">const Session = require(&quot;express-session&quot;);
+<pre><code class="language-javascript">const Session = require("express-session");
 
-app.set(&quot;trust proxy&quot;, 1);
+app.set("trust proxy", 1);
 app.use(Session({
   secret: 'express-demo',
   name: 'sessionX'
@@ -4171,8 +4200,8 @@ app.use(Session({
 </code></pre>
 <p>此外，设置一些安全选项来确保 Session 安全：</p>
 <pre><code class="language-javascript">app.use(Session({
-  name: &quot;sessionX&quot;,
-  keys: [&quot;evp-key-1&quot;, &quot;evp-key-2&quot;],
+  name: "sessionX",
+  keys: ["evp-key-1", "evp-key-2"],
   cookie: {
     secure: true,
     httpOnly: true,
@@ -4237,50 +4266,50 @@ app.use(actuator({
 </code></pre>
 <p>其中有一些配置选项：</p>
 <ul>
-<li><strong>basePath：</strong> actuator的基路由，如果不设置，则其所有路由（&quot;/info&quot;, &quot;health&quot;, &quot;metrics&quot;）将挂载在 app 的路由上</li>
+<li><strong>basePath：</strong> actuator的基路由，如果不设置，则其所有路由（"/info", "health", "metrics"）将挂载在 app 的路由上</li>
 <li><strong>infoGitMode：</strong> 暴露的Git信息, 'simple' 或者 'full'</li>
 <li><strong>infoBuildOptions：</strong> 额外暴露的信息</li>
 <li><strong>infoDateFormat：</strong> Git提交信息的时间格式</li>
-<li><strong>customEndpoints：</strong> 自定义端点（初始仅提供了&quot;/info&quot;, &quot;health&quot;, &quot;metrics&quot;）</li>
+<li><strong>customEndpoints：</strong> 自定义端点（初始仅提供了"/info", "health", "metrics"）</li>
 </ul>
 <p><strong>访问端点：</strong></p>
 <ul>
-<li>&quot;/info&quot;：会包含你的项目信息（从 package.json 读取）和Git信息，如：</li>
+<li>"/info"：会包含你的项目信息（从 package.json 读取）和Git信息，如：</li>
 </ul>
 <pre><code class="language-json">{
-    &quot;build&quot;: {
-        &quot;description&quot;: &quot;This is my new app&quot;,
-        &quot;name&quot;: &quot;MyApp&quot;,
-        &quot;version&quot;: &quot;1.0.0&quot;
+    "build": {
+        "description": "This is my new app",
+        "name": "MyApp",
+        "version": "1.0.0"
     },
-    &quot;git&quot;: {
-        &quot;branch&quot;: &quot;master&quot;,
-        &quot;commit&quot;: {
-            &quot;id&quot;: &quot;329a314&quot;,
-            &quot;time&quot;: &quot;2016-11-18 08:16:39-0500&quot;
+    "git": {
+        "branch": "master",
+        "commit": {
+            "id": "329a314",
+            "time": "2016-11-18 08:16:39-0500"
         }
     }
 }
 </code></pre>
 <ul>
-<li>&quot;/metrics&quot;：express 应用的健康详情，如：</li>
+<li>"/metrics"：express 应用的健康详情，如：</li>
 </ul>
 <pre><code class="language-json">{
-    &quot;mem&quot;: {
-        &quot;rss&quot;: 39350272,
-        &quot;heapTotal&quot;: 11038720,
-        &quot;heapUsed&quot;: 8889952,
-        &quot;external&quot;: 892742,
-        &quot;arrayBuffers&quot;: 32982
+    "mem": {
+        "rss": 39350272,
+        "heapTotal": 11038720,
+        "heapUsed": 8889952,
+        "external": 892742,
+        "arrayBuffers": 32982
     },
-    &quot;uptime&quot;: 58.3234052
+    "uptime": 58.3234052
 }
 </code></pre>
 <ul>
-<li>&quot;/health&quot;：当下的健康状况，如：</li>
+<li>"/health"：当下的健康状况，如：</li>
 </ul>
 <pre><code class="language-json">{
-    &quot;status&quot;: &quot;UP&quot;
+    "status": "UP"
 }
 </code></pre>
 <h2 id="lightship"><a class="header" href="#lightship">lightship</a></h2>
@@ -4316,11 +4345,11 @@ app.use(actuator({
     let port = server.address().port;
   
     let str = config.app.name;
-    let mode = [ &quot;close&quot;, &quot;far&quot;, undefined ];
+    let mode = [ "close", "far", undefined ];
     let chart = jsTextChart.convert(str, mode[0]);
     console.log(chart);
   
-    console.log(&quot;Server is ready on http://%s:%s&quot;, host, port);
+    console.log("Server is ready on http://%s:%s", host, port);
 
     lightship.registerShutdownHandler(() =&gt; {
       lightship.shutdown();
@@ -4345,23 +4374,23 @@ start();
 </ul>
 <p><strong>访问端点：</strong></p>
 <ul>
-<li>&quot;/health&quot;： 健康状况，有如下几种返回：
+<li>"/health"： 健康状况，有如下几种返回：
 <ul>
-<li>200 status code, message &quot;SERVER_IS_READY&quot; 服务器就绪</li>
-<li>500 status code, message &quot;SERVER_IS_NOT_READY&quot; 服务器正在初始化</li>
-<li>500 status code, message &quot;SERVER_IS_SHUTTING_DOWN&quot; 服务器挂了</li>
+<li>200 status code, message "SERVER_IS_READY" 服务器就绪</li>
+<li>500 status code, message "SERVER_IS_NOT_READY" 服务器正在初始化</li>
+<li>500 status code, message "SERVER_IS_SHUTTING_DOWN" 服务器挂了</li>
 </ul>
 </li>
-<li>&quot;/live&quot;： 还活着吗，有如下几种返回：
+<li>"/live"： 还活着吗，有如下几种返回：
 <ul>
-<li>200 status code, message &quot;SERVER_IS_NOT_SHUTTING_DOWN&quot;.</li>
-<li>500 status code, message &quot;SERVER_IS_SHUTTING_DOWN&quot;.</li>
+<li>200 status code, message "SERVER_IS_NOT_SHUTTING_DOWN".</li>
+<li>500 status code, message "SERVER_IS_SHUTTING_DOWN".</li>
 </ul>
 </li>
-<li>&quot;/ready&quot;： 是否就绪，有如下几种返回：
+<li>"/ready"： 是否就绪，有如下几种返回：
 <ul>
-<li>200 status code, message &quot;SERVER_IS_READY&quot;.</li>
-<li>500 status code, message &quot;SERVER_IS_NOT_READY&quot;.</li>
+<li>200 status code, message "SERVER_IS_READY".</li>
+<li>500 status code, message "SERVER_IS_NOT_READY".</li>
 </ul>
 </li>
 </ul>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -31,7 +31,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -61,42 +61,71 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html" class="active"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html" class="active"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -167,7 +196,7 @@
 <p>自定义分类的方法，其实很简单，无非是在抛出的异常上增加用以标识分类的属性即可。我没有选择这种方式，手动抛出时要略微多写几行代码，error.message 是一个描述字符串，我选择抛出自定义异常时，传递的message是一个json字符串，json里面再放置具体描述，分类信息以及其它等等的信息载体。</p>
 <pre><code class="language-js">throw new Error(JSON.stringfy(
   code: 400,
-  msg: &quot;自定义异常1&quot;,
+  msg: "自定义异常1",
   back: true
 ));
 </code></pre>
@@ -187,12 +216,12 @@
       if (back != false) {
         const handler = exhandleStrategy.get(code);
         if ( handler ) { handler(res,msg,symbol,data,status); }
-        else { res.json(Resp.bad(&quot;System Exception&quot;)); }
+        else { res.json(Resp.bad("System Exception")); }
       } else {
-        res.json(Resp.bad(&quot;System Exception&quot;));
+        res.json(Resp.bad("System Exception"));
       }
     } catch (_) { // cannot be parsed to JSON object =&gt; common error
-      res.json(Resp.bad(&quot;System Exception&quot;));
+      res.json(Resp.bad("System Exception"));
     }
     next(err);
   } else {
@@ -238,21 +267,21 @@ exhandleStrategy.set(500, (res, ...args)=&gt;{
 <pre><code class="language-js">const config = require('../config').get();
 const log4js = require('log4js');
 
-let logger = log4js.getLogger(&quot;&quot;);
+let logger = log4js.getLogger("");
     
 log4js.configure({
   appenders: {
     out: {
-      type: &quot;stdout&quot;,
+      type: "stdout",
       layout: {
-          &quot;type&quot;: &quot;pattern&quot;,
-          &quot;pattern&quot;: &quot;[%d{yyyy-MM-dd hh:mm:ss}] %p %m&quot;
+          "type": "pattern",
+          "pattern": "[%d{yyyy-MM-dd hh:mm:ss}] %p %m"
       }
     }
   },
   categories: {
     default: {
-      appenders: [&quot;out&quot;],
+      appenders: ["out"],
       level: config.log4js.level
     }
   }
@@ -260,7 +289,7 @@ log4js.configure({
 
 module.exports = logger;
 </code></pre>
-<p>日志级别总共有 <strong>&quot;ALL&quot;</strong>，<strong>&quot;TRACE&quot;</strong>, <strong>&quot;DEBUG&quot;</strong>, <strong>&quot;INFO&quot;</strong>, <strong>&quot;WARN&quot;</strong>, <strong>&quot;ERROR&quot;</strong>, <strong>&quot;FATAL&quot;</strong>（致命）, <strong>&quot;MARK&quot;</strong>, <strong>&quot;OFF&quot;</strong>（关闭） 这几级（大小写均支持），重要性逐级递增，在当前设置的 level 之下的日志将不会被记录，如日志级别设置为 <strong>&quot;INFO&quot;</strong>，则 <strong>logger.all</strong>, <strong>logger.trace</strong>, <strong>logger.debug</strong> 将不会进行日志记录。</p>
+<p>日志级别总共有 <strong>"ALL"</strong>，<strong>"TRACE"</strong>, <strong>"DEBUG"</strong>, <strong>"INFO"</strong>, <strong>"WARN"</strong>, <strong>"ERROR"</strong>, <strong>"FATAL"</strong>（致命）, <strong>"MARK"</strong>, <strong>"OFF"</strong>（关闭） 这几级（大小写均支持），重要性逐级递增，在当前设置的 level 之下的日志将不会被记录，如日志级别设置为 <strong>"INFO"</strong>，则 <strong>logger.all</strong>, <strong>logger.trace</strong>, <strong>logger.debug</strong> 将不会进行日志记录。</p>
 <p>这些文字的级别对应以下数字，依次为 <code>5e-324</code>, <code>5000</code>, <code>10000</code>, <code>20000</code>, <code>30000</code>, <code>40000</code>, <code>50000</code>, <code>9007199254740992</code>, <code>1.7976931348623157e+308</code></p>
 <p>日志器当前的级别可由 <code>logger.level</code> 或者 <code>logger.level.levelStr</code> 获取，当前级别对应的数字可由 <code>logger.level.level</code> 获取，不过还是更建议自定义一个数组或者Map，把所有的级别文字按序放入，然后需要的时候根据索引来判断级别的高低。</p>
 <h2 id="下一节-数据库初始化"><a class="header" href="#下一节-数据库初始化">下一节-数据库初始化</a></h2>
@@ -273,7 +302,7 @@ module.exports = logger;
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../chapter_3/数据库初始化.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter_3/数据库初始化.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -287,7 +316,7 @@ module.exports = logger;
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../chapter_3/数据库初始化.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter_3/数据库初始化.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

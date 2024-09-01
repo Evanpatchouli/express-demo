@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -31,7 +31,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -61,42 +61,71 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html" class="active"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html" class="active"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -154,10 +183,10 @@
 <ol>
 <li>定义待检验的数据格式</li>
 </ol>
-<pre><code class="language-js">const { z } = requie(&quot;zod&quot;);
+<pre><code class="language-js">const { z } = requie("zod");
 
 const schema = z.object({
-  username: z.string().nonempty(&quot;username cannot be empty&quot;)
+  username: z.string().nonempty("username cannot be empty")
 })
 </code></pre>
 <p>这个 schema 就是 Zod 检验一个对象或者变量的<strong>检验器</strong>，如果检验目标只是一个值，<code>z.string()</code>之类的即可
@@ -171,7 +200,7 @@ const schema = z.object({
 <h2 id="封装中间件"><a class="header" href="#封装中间件">封装中间件</a></h2>
 <p>在 midwares 目录下创建 zod.js：<br />
 导出了一个 ZodValid函数：该函数传入一个对象，包含了 headers, params, query 和 body 四个可选属性，分别对应请求可以传入数据的四个部分，如果需要检验，就传入定义好的检验器给需要检验的部分；ZodValid会返回一个 request handler，在处理器里面根据传入的检验器分别去进行检验，这个<strong>处理器才是最后的中间件</strong>，ZodValid其实是一个<strong>中间件工厂</strong>。我在这里取出了第一个错误，并将错误的 message 抛出，evp-express 默认直接捕捉并返回错误信息，我这样写是为了让读者对错误信息能看的更清楚，非特定场景下，不一定要返回这样细致的错误信息，<strong>可以抛出统一错误信息</strong>。</p>
-<pre><code class="language-js">const { z } = require(&quot;zod&quot;);
+<pre><code class="language-js">const { z } = require("zod");
 
 /**
  * @typedef {{
@@ -208,7 +237,7 @@ module.exports = {
    */
   ZodValid: ({headers, params, query, body})=&gt;{
     /**
-     * @type {import(&quot;express&quot;).RequestHandler}
+     * @type {import("express").RequestHandler}
      */
     const handler = (req,res,next)=&gt;{
       if (headers) {
@@ -254,7 +283,7 @@ const { Json } = require('../midwares/bodyParser');
 const router = Router();
 
 router.get('/', ZodValid({
-  query: z.object({ name: z.string().nonempty(&quot;name cannot be empty&quot;) })
+  query: z.object({ name: z.string().nonempty("name cannot be empty") })
 }), async (req, res, next) =&gt; {
   const name = req.query.name;
   logger.info(`Hello World! ${name}`);
@@ -264,9 +293,9 @@ router.get('/', ZodValid({
 
 router.post('/', Json, ZodValid({
   body: z.object({ 
-    name: z.string().nonempty(&quot;name cannot be empty&quot;).min(8, &quot;name at least 8 length&quot;),
-    pass: z.string().nonempty(&quot;password cannot be empty&quot;).min(8, &quot;password at least 8 lenght&quot;),
-    email: z.string().email(&quot;email is invalid&quot;) })
+    name: z.string().nonempty("name cannot be empty").min(8, "name at least 8 length"),
+    pass: z.string().nonempty("password cannot be empty").min(8, "password at least 8 lenght"),
+    email: z.string().email("email is invalid") })
 }), async (req, res, next) =&gt; {
   const name = req.body.name;
   logger.info(`Hello World! ${name}`);
@@ -278,19 +307,19 @@ module.exports = router;
 <h2 id="测试"><a class="header" href="#测试">测试</a></h2>
 <p>调整请求数据，分别访问这两个接口，你将得到类似这样的结果：</p>
 <pre><code class="language-json">{
-  &quot;code&quot;: 500,
-  &quot;msg&quot;: &quot;name cannot be empty&quot;,
-  &quot;data&quot;: null,
-  &quot;symbol&quot;: 0,
-  &quot;type&quot;: &quot;Bad Request&quot;
+  "code": 500,
+  "msg": "name cannot be empty",
+  "data": null,
+  "symbol": 0,
+  "type": "Bad Request"
 }
 </code></pre>
 <pre><code class="language-json">{
-    &quot;code&quot;: 500,
-    &quot;msg&quot;: &quot;email is invalid&quot;,
-    &quot;data&quot;: null,
-    &quot;symbol&quot;: 0,
-    &quot;type&quot;: &quot;Bad Request&quot;
+    "code": 500,
+    "msg": "email is invalid",
+    "data": null,
+    "symbol": 0,
+    "type": "Bad Request"
 }
 </code></pre>
 <hr />
@@ -305,7 +334,7 @@ module.exports = router;
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../chapter_3/集成redis.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter_3/集成redis.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -319,7 +348,7 @@ module.exports = router;
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../chapter_3/集成redis.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter_3/集成redis.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

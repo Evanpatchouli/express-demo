@@ -61,12 +61,12 @@ module.exports = {
 最后把服务器导出来:
 ```js
 async function init() {
-  return RedisProxy.instance();
+  return SocketIoProxy.instance();
 }
 
 module.exports = {
   init,
-  instance: RedisProxy.instance(),
+  instance: SocketIoProxy.instance(),
 };
 ```
 

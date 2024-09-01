@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -31,7 +31,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -61,42 +61,71 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html" class="active"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">模块化学习</li><li class="chapter-item expanded "><a href="../chapter_1/intro.html"><strong aria-hidden="true">1.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_1/HelloWorld.html"><strong aria-hidden="true">2.</strong> HelloWorld</a></li><li class="chapter-item expanded "><a href="../chapter_1/请求类型.html"><strong aria-hidden="true">3.</strong> 请求类型</a></li><li class="chapter-item expanded "><a href="../chapter_1/处理请求数据.html" class="active"><strong aria-hidden="true">4.</strong> 处理请求数据</a></li><li class="chapter-item expanded "><a href="../chapter_1/响应.html"><strong aria-hidden="true">5.</strong> 响应</a></li><li class="chapter-item expanded "><a href="../chapter_1/knex增删改查.html"><strong aria-hidden="true">6.</strong> Sql-knex增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/ORM增删改查.html"><strong aria-hidden="true">7.</strong> Sql-ORM增删改查</a></li><li class="chapter-item expanded "><a href="../chapter_1/路由控制.html"><strong aria-hidden="true">8.</strong> 路由控制</a></li><li class="chapter-item expanded "><a href="../chapter_1/JWT基础鉴权.html"><strong aria-hidden="true">9.</strong> JWT基础鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_1/全局错误处理.html"><strong aria-hidden="true">10.</strong> 全局错误处理</a></li><li class="chapter-item expanded "><a href="../chapter_1/中间件.html"><strong aria-hidden="true">11.</strong> 中间件</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">架构整合</li><li class="chapter-item expanded "><a href="../chapter_2/intro.html"><strong aria-hidden="true">12.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_2/express-cli.html"><strong aria-hidden="true">13.</strong> express-cli</a></li><li class="chapter-item expanded "><a href="../chapter_2/MVC层级架构.html"><strong aria-hidden="true">14.</strong> MVC层级架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/分布式结构.html"><strong aria-hidden="true">15.</strong> 分布式结构</a></li><li class="chapter-item expanded "><a href="../chapter_2/微服务架构.html"><strong aria-hidden="true">16.</strong> 微服务架构</a></li><li class="chapter-item expanded "><a href="../chapter_2/evp-express-cli.html"><strong aria-hidden="true">17.</strong> evp-express-cli</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">高级进阶</li><li class="chapter-item expanded "><a href="../chapter_3/intro.html"><strong aria-hidden="true">18.</strong> 本章简介</a></li><li class="chapter-item expanded "><a href="../chapter_3/全局变量与配置文件.html"><strong aria-hidden="true">19.</strong> 全局变量与配置文件</a></li><li class="chapter-item expanded "><a href="../chapter_3/错误分类和日志分级.html"><strong aria-hidden="true">20.</strong> 错误分类和日志分级</a></li><li class="chapter-item expanded "><a href="../chapter_3/数据库初始化.html"><strong aria-hidden="true">21.</strong> 数据库初始化</a></li><li class="chapter-item expanded "><a href="../chapter_3/页面渲染.html"><strong aria-hidden="true">22.</strong> 页面渲染</a></li><li class="chapter-item expanded "><a href="../chapter_3/express-validator.html"><strong aria-hidden="true">23.</strong> express-validator</a></li><li class="chapter-item expanded "><a href="../chapter_3/使用zod检验.html"><strong aria-hidden="true">24.</strong> 使用zod检验</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成redis.html"><strong aria-hidden="true">25.</strong> 集成Redis</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成rabbitmq.html"><strong aria-hidden="true">26.</strong> 集成RabbitMQ</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成websocket.html"><strong aria-hidden="true">27.</strong> 集成Websocket</a></li><li class="chapter-item expanded "><a href="../chapter_3/集成SocketIO.html"><strong aria-hidden="true">28.</strong> 集成SocketIO</a></li><li class="chapter-item expanded "><a href="../chapter_3/全面鉴权.html"><strong aria-hidden="true">29.</strong> 全面鉴权</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件测试.html"><strong aria-hidden="true">30.</strong> 软件测试</a></li><li class="chapter-item expanded "><a href="../chapter_3/软件构建.html"><strong aria-hidden="true">31.</strong> 软件构建</a></li><li class="chapter-item expanded "><a href="../chapter_3/Docker部署.html"><strong aria-hidden="true">32.</strong> Docker部署</a></li><li class="chapter-item expanded "><a href="../chapter_3/pm2进程管理.html"><strong aria-hidden="true">33.</strong> pm2进程管理</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">最佳实践</li><li class="chapter-item expanded "><a href="../chapter_4/代码规范.html"><strong aria-hidden="true">34.</strong> 代码规范</a></li><li class="chapter-item expanded "><a href="../chapter_4/高性能.html"><strong aria-hidden="true">35.</strong> 高性能</a></li><li class="chapter-item expanded "><a href="../chapter_4/安全性.html"><strong aria-hidden="true">36.</strong> 安全性</a></li><li class="chapter-item expanded "><a href="../chapter_4/健康检查.html"><strong aria-hidden="true">37.</strong> 健康检查</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../后记.html">后记</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -149,7 +178,7 @@
 <h2 id="动态路径"><a class="header" href="#动态路径">动态路径</a></h2>
 <p>很多时候我们需要处理一些类似但有操作差别或不同对象的业务，我们可以监听一段基本路径，将其中某一个段或者某几段路径作为变量，在接口中根据不同的路径变量执行不同的业务操作，这是一种REST风格比较鲜明的动态接口设计策略</p>
 <h3 id="实践"><a class="header" href="#实践">实践</a></h3>
-<p>由于post也可以url传参，本节所有实例均采用post请求 </p>
+<p>由于post也可以url传参，本节所有实例均采用post请求</p>
 <h4 id="第一个接口"><a class="header" href="#第一个接口">第一个接口</a></h4>
 <p>这个接口以 /request/data/ 作为基路由，之后的kind变化的，在接口内部根据kind的值进行分支化处理。我指定了kind的3个值：PathVarible, RequestParam 和 body.<br />
 所有的路径参数则可以由<code>req.params</code>（大概是个json对象）来获取，我要指定获取kind的值，就req.params.kind，而静态路径变量的值就等于它名字.</p>
@@ -165,16 +194,16 @@ app.use(express.json({type: 'application/json'}));
 app.post('/request/data/:kind', function (req, res) {
     let result = [];
     if (req.params.kind == 'PathVarible') {
-        result.push(new Item(&quot;lesson&quot;,&quot;路径变量&quot;));
-        result.push(new Item(&quot;info&quot;,&quot;在express中叫做params，路径上每个被双单斜杠'/'隔开的一个个词语就是路径参数，当你需要在同一个接口内动态响应不同的情景时，可以让某一处或多出的路径参数前面加上一个冒号，长得比较像vue中的动态绑定，动态路径在REST风格上被广泛运行，比如操作某个用户: 'user/:id =&gt; 'user/1&quot;))
+        result.push(new Item("lesson","路径变量"));
+        result.push(new Item("info","在express中叫做params，路径上每个被双单斜杠'/'隔开的一个个词语就是路径参数，当你需要在同一个接口内动态响应不同的情景时，可以让某一处或多出的路径参数前面加上一个冒号，长得比较像vue中的动态绑定，动态路径在REST风格上被广泛运行，比如操作某个用户: 'user/:id =&gt; 'user/1"))
     } else if (req.params.kind == 'RequestParam') {
-        result.push(new Item(&quot;lesson&quot;,&quot;请求参数&quot;));
-        result.push(new Item(&quot;info&quot;,&quot;在express中叫做query，和路径变量相比，前者更像是前端主动携带参数去访问特定的资源，而后者更像是后端要求必须携带的数据，前端被迫携带，反应在路径上形式一般是: '/stu?class=2&amp;sid=1&amp;name='evanp',在基本路径之后添上一个问号，然后在后面加上请求的参数，不同参数之间用'&amp;'符号隔开&quot;))
+        result.push(new Item("lesson","请求参数"));
+        result.push(new Item("info","在express中叫做query，和路径变量相比，前者更像是前端主动携带参数去访问特定的资源，而后者更像是后端要求必须携带的数据，前端被迫携带，反应在路径上形式一般是: '/stu?class=2&amp;sid=1&amp;name='evanp',在基本路径之后添上一个问号，然后在后面加上请求的参数，不同参数之间用'&amp;'符号隔开"))
     } else if (req.params.kind == 'body') {
-        result.push(new Item(&quot;lesson&quot;,&quot;请求体&quot;));
-        result.push(new Item(&quot;info&quot;,&quot;路径变量和请求参数的数据都是透明的，这非常不注重隐私，因此更多时候前端应该将携带的数据放在请求体内进行传输。请求体的形式有很多，最常用的是表单和JSON，请在路径后新增一个路径变量，form-urlencode, multi-form-data或json导向不同的接口进行查看&quot;));
+        result.push(new Item("lesson","请求体"));
+        result.push(new Item("info","路径变量和请求参数的数据都是透明的，这非常不注重隐私，因此更多时候前端应该将携带的数据放在请求体内进行传输。请求体的形式有很多，最常用的是表单和JSON，请在路径后新增一个路径变量，form-urlencode, multi-form-data或json导向不同的接口进行查看"));
     } else {
-        result.push(new Item(&quot;error&quot;,&quot;这个参数不认识&quot;));
+        result.push(new Item("error","这个参数不认识"));
     }
     res.send(result);
 });
@@ -186,18 +215,18 @@ app.post('/request/data/:kind', function (req, res) {
 <pre><code class="language-js">app.post('/request/data/body/:kind', function (req, res) {
     let result = [];
     if (req.params.kind == 'json') {
-        result.push(new Item(&quot;lesson&quot;,&quot;json请求体&quot;));
-        result.push(new Item(&quot;body&quot;,req.body));
-        result.push(new Item(&quot;info&quot;,&quot;express想解析json形式的body，必须先开启express.json: 'app.use(express.json)'，之后就可以用req.body来接收请求体了&quot;));
-        result.push(new Item(&quot;trick&quot;,&quot;进阶技巧，读取请求体时可以用match模式匹配成自己想要的格式或命名，常用于实体注入及转化等&quot;));
+        result.push(new Item("lesson","json请求体"));
+        result.push(new Item("body",req.body));
+        result.push(new Item("info","express想解析json形式的body，必须先开启express.json: 'app.use(express.json)'，之后就可以用req.body来接收请求体了"));
+        result.push(new Item("trick","进阶技巧，读取请求体时可以用match模式匹配成自己想要的格式或命名，常用于实体注入及转化等"));
     } else if (req.params.kind == 'form-urlencode') {
-        result.push(new Item(&quot;lesson&quot;,&quot;form-urlencode请求体&quot;));
-        result.push(new Item(&quot;body&quot;,req.body));
+        result.push(new Item("lesson","form-urlencode请求体"));
+        result.push(new Item("body",req.body));
     } else if (req.params.kind == 'multi-form-data') {
-        result.push(new Item(&quot;lesson&quot;,&quot;multi-form-data请求体&quot;));
-        result.push(new Item(&quot;body&quot;,req.body));
+        result.push(new Item("lesson","multi-form-data请求体"));
+        result.push(new Item("body",req.body));
     } else {
-        result.push(new Item(&quot;error&quot;,&quot;这个参数不认识&quot;));
+        result.push(new Item("error","这个参数不认识"));
     }
     res.send(result);
 });
@@ -221,7 +250,7 @@ app.post('/request/data/:kind', function (req, res) {
         req.query.id == null ||
         req.query.name == undefined ||
         req.query.name == null){
-        res.send({&quot;msg&quot;: &quot;query不齐全&quot;});
+        res.send({"msg": "query不齐全"});
     } else {
         next();
     }
@@ -244,25 +273,25 @@ app.post('/request/data/:kind', function (req, res) {
 <pre><code class="language-js">app.use(express.urlencoded({extended: true}));
 </code></pre>
 <p>关于extended参数，是指将（URL编码字符串形式的）表单数据解析为简单对象还是深度嵌套对象.<br />
-什么意思呢？就比如当extended=false时，表单里是这么传数据的: 
+什么意思呢？就比如当extended=false时，表单里是这么传数据的:
 其中，有两个相同的键名: 比如传了2个x
 解析后该字段的指将是所有它们的值的数组集合：<code>x=1&amp;x=2</code> -&gt; <code>{'x': ['1','2']}</code>，即便2个x都为1，也是数组: <code>{'x': ['1','1']}</code><br />
 其中，又有的键名是以对象属性格式传递的，比如下图的user[uname]:
 <img src="https://evan-oss-bucket1.oss-cn-hangzhou.aliyuncs.com/express-demo/x-form.png" alt="表单传嵌套对象" />
-假如我们在api调试工具访问之前那个body/form-urlencode接口，同时以表单方式传输了这两种情况的数据，将得到这样的返回结果: </p>
+假如我们在api调试工具访问之前那个body/form-urlencode接口，同时以表单方式传输了这两种情况的数据，将得到这样的返回结果:</p>
 <pre><code class="language-json">[
     {
-        &quot;name&quot;: &quot;lesson&quot;,
-        &quot;value&quot;: &quot;form-urlencode请求体&quot;
+        "name": "lesson",
+        "value": "form-urlencode请求体"
     },
     {
-        &quot;name&quot;: &quot;body&quot;,
-        &quot;value&quot;: {
-            &quot;user[uname]&quot;: &quot;evanp&quot;,
-            &quot;user[passwd]&quot;: &quot;iloveu&quot;,
-            &quot;x&quot;: [
-                &quot;1&quot;,
-                &quot;2&quot;
+        "name": "body",
+        "value": {
+            "user[uname]": "evanp",
+            "user[passwd]": "iloveu",
+            "x": [
+                "1",
+                "2"
             ]
         }
     }
@@ -271,19 +300,19 @@ app.post('/request/data/:kind', function (req, res) {
 <p>当extended=true时，则是:</p>
 <pre><code class="language-json">[
     {
-        &quot;name&quot;: &quot;lesson&quot;,
-        &quot;value&quot;: &quot;form-urlencode请求体&quot;
+        "name": "lesson",
+        "value": "form-urlencode请求体"
     },
     {
-        &quot;name&quot;: &quot;body&quot;,
-        &quot;value&quot;: {
-            &quot;user&quot;: {
-                &quot;uname&quot;: &quot;evanp&quot;,
-                &quot;passwd&quot;: &quot;iloveu&quot;
+        "name": "body",
+        "value": {
+            "user": {
+                "uname": "evanp",
+                "passwd": "iloveu"
             },
-            &quot;x&quot;: [
-                &quot;1&quot;,
-                &quot;2&quot;
+            "x": [
+                "1",
+                "2"
             ]
         }
     }
@@ -296,7 +325,7 @@ app.post('/request/data/:kind', function (req, res) {
 <h2 id="表单multi-form-data"><a class="header" href="#表单multi-form-data">表单（multi-form-data）</a></h2>
 <p>这个是可以一边传字符串，还可以传文件的表单，其实就是基础表单的一个升级版</p>
 <p>需要事先安装<strong>multer</strong>依赖: <code>npm install multer</code><br />
-引入依赖中间件: </p>
+引入依赖中间件:</p>
 <pre><code class="language-js">const multer = require('multer');
 const uploads = multer();
 </code></pre>
@@ -330,7 +359,7 @@ const uploads = multer();
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../chapter_1/响应.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter_1/响应.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -344,7 +373,7 @@ const uploads = multer();
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../chapter_1/响应.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter_1/响应.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
