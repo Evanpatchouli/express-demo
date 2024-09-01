@@ -1,6 +1,6 @@
 # express-demo
 
-Read this book online： <https://jun-laner.gitee.io/express-demo/>
+Read this book online： <https://evanpatchouli.github.io/express-demo/>
 
 The reason for writing this was that one of my friends was willing to learn node as web backend and I had not used node lang. Therefore, I decided to combed it and tried to make an easy-going tutorial, hoping it useful to everyone and myself.
 

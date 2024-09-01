@@ -1,6 +1,6 @@
 # express-demo
 
-在线阅读本书： <https://jun-laner.gitee.io/express-demo/>
+在线阅读本书： <https://evanpatchouli.github.io/express-demo/>
 
 撰写本书的起因，是我的一个故人有学习node后端的兴趣，加之node在我手里落灰已久，于是决定趁着这个机会好好梳理一下，在空闲之余谱一份还算简明的渐进式教程，希望能对各位朋友以及未来又淡忘了express的自己有所帮助.
 
